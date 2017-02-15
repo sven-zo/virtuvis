@@ -23,7 +23,7 @@ gulp.task('styles', function(){
 });
 
 gulp.task('scripts', function(){
-    return gulp.src('src/scripts/**/*.js')
+    return gulp.src('src/script/**/*.js')
         .pipe(plumber({
             errorHandler: function (error) {
                 console.log(error.message);
@@ -37,5 +37,5 @@ gulp.task('scripts', function(){
 
 gulp.task('default', function(){
     gulp.watch("src/style/**/*.sass", ['styles']);
-    gulp.watch("src/scripts/**/*.js", ['scripts']);
+    gulp.watch("src/script/**/*.js", ['scripts']);
 });
