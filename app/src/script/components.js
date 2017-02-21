@@ -2,10 +2,18 @@
 
 //Homepage
 const home = {
-    template: '<p>Home</p>'
+    template:
+        '<div>' +
+        '<p>Home</p>' +
+        '<router-link to="/fish">Vis</router-link>' +
+        '</div>'
 };
 
 //Detail screen for the fish
 const fishDetail = {
-    template: '<p>Fish detail</p>'
+    template:
+        '<div>' +
+        '<p>Fish detail</p>' +
+        '<router-link to="/">Ga terug</router-link>' +
+        '</div>'
 };
