@@ -5,7 +5,6 @@ var autoprefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var minifycss = require('gulp-clean-css');
 var sass = require('gulp-sass');
-var browserify = require('browserify');
 
 
 gulp.task('styles', function(){
