@@ -4,7 +4,9 @@ Vue.use(VueRouter);
 //Set paths
 const routes = [
     { path: '/', component: home },
-    { path: '/fish', component: fishDetail }
+    { path: '/fish', component: fishDetail },
+    { path: '/settings', component: settings },
+    { path: '/addrod', component: addRod }
 ];
 
 //Set up router
