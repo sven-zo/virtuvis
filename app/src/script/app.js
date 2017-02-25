@@ -17,5 +17,25 @@ const router = new VueRouter({
 
 //Initialise app
 const app = new Vue({
-    router: router
+    router: router,
+    data: {
+        lang: 'loading'
+    },
+    methods: {
+        getSettings: function(){
+            console.log('Getting language...');
+            minAjax({
+                url:'dummy-server/settings.json',
+                type:'POST',
+                success: function(data){
+                    var result = JSON.parse(data);
+                    console.log('Language:',result.lang);
+                    console.log('Setting language...');
+                    app.lang = result.lang;
+                }
+            });
+        }
+    }
 }).$mount('#app');
+
+app.getSettings();

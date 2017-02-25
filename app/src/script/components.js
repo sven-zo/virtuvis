@@ -1,37 +1,20 @@
-//JS file for all the Vue components.
 
-//Homepage
-const home = {
-    template:
-        '<div>' +
-        '<p>Home</p>' +
-        '<router-link to="/fish">Vis</router-link>' +
-        '</div>'
-};
+Vue.component('fish-menu-button', {
+    props: ['text', 'icon'],
+    template: '<div>{{ text }}</div>'
+});
 
-//Detail screen for the fish
-const fishDetail = {
+Vue.component('fish-menu-round-button', {
+    props: ['status', 'text'],
+    template: '<div>{{ text }}</div>'
+});
+
+Vue.component('fish-menu', {
+    props: ['left', 'middle', 'right', 'left-icon', 'middle-status', 'right-icon'],
     template:
-    '<div>' +
-    '<p>Fish detail</p>' +
-    '<router-link to="/">Ga terug</router-link>' +
+    '<div class="fish-menu-rectangle">' +
+    '<fish-menu-button :text="left"></fish-menu-button>' +
+    '<fish-menu-round-button :text="middle"></fish-menu-round-button>' +
+    '<fish-menu-button :text="right"></fish-menu-button>' +
     '</div>'
-};
-
-//Adding a settings screen
-const settings = {
-    template:
-    '<div>' +
-    '<p>Settings</p>' +
-    '<router-link to="/">Ga terug</router-link>' +
-    '</div>'
-};
-
-//Adding a fishing rod screen
-const addRod = {
-    template:
-    '<div>' +
-    '<p>Voeg hengel toe</p>' +
-    '<router-link to="/">Ga terug</router-link>' +
-    '</div>'
-};
+});
