@@ -14,5 +14,8 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="vue-router" level="application" />
+    <orderEntry type="library" name="index" level="application" />
   </component>
 </module>
