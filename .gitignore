@@ -1,5 +1,8 @@
-#Dependency directories
-node_modules
-.idea
+#Dependency directories and other garbage
+.DS_Store
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
 
 #Images
