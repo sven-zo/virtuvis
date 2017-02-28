@@ -1,8 +1,8 @@
 <template>
   <div class="menu">
-      <div class="button" id="rod">
+      <div @click="rodClick" class="button" id="rod">
         <div>
-          <img src="../assets/rod.png"/>
+          <img :class="rodClass" src="../assets/rod.png"/>
         </div>
         <div>Voeg hengel toe</div>
       </div>
@@ -25,7 +25,8 @@
 export default {
   data () {
     return {
-      cogClass: 'cogHover'
+      cogClass: 'cog',
+      rodClass: 'rod'
     }
   },
   methods: {
@@ -37,6 +38,15 @@ export default {
     },
     cogReset () {
       this.cogClass = 'cog'
+    },
+    rodClick (event) {
+      if (event) {
+        this.rodClass = 'rodAnimation'
+        setTimeout(this.rodReset, 1000)
+      }
+    },
+    rodReset () {
+      this.rodClass = 'rod'
     }
   }
 }
@@ -103,6 +113,16 @@ export default {
   100%
     transform: rotate(180deg)
 
+@keyframes rodAnimation
+  0%
+    transform: rotate(0deg)
+  25%
+    transform: rotate(45deg)
+  50%
+    transform: rotate(-45deg)
+  100%
+    transform: rotate(0deg)
+
 @keyframes press
   0%
     background-color: $divider-color
@@ -119,5 +139,13 @@ export default {
   animation-name: turnclick
   animation-duration: 1s
   animation-iteration-count: 1
+
+#rod:hover
+  animation-name: press
+  animation-duration: 0.5s
+
+.rodAnimation
+  animation-name: rodAnimation
+  animation-duration: 1s
 
 </style>
