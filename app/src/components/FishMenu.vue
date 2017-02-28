@@ -33,6 +33,7 @@ export default {
     cogClick (event) {
       if (event) {
         this.cogClass = 'cogTurn'
+        this.$router.push('/settings')
         setTimeout(this.cogReset, 1000)
       }
     },
@@ -42,6 +43,7 @@ export default {
     rodClick (event) {
       if (event) {
         this.rodClass = 'rodAnimation'
+        this.$router.push('/addrod')
         setTimeout(this.rodReset, 1000)
       }
     },
