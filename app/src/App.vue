@@ -1,16 +1,27 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <fish-menu></fish-menu>
   </div>
 </template>
 
 <script>
+import FishMenu from '@/components/FishMenu.vue'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    FishMenu
+  }
 }
+
+// This script runs after the loading is done, so here the loading message will be removed.
+var parent = document.getElementById('load')
+var child = document.getElementById('loadingMSG')
+parent.removeChild(child)
 </script>
 
-<style lang="sass?indentedSyntax=true">
+<style lang="sass">
 #app
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale

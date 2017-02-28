@@ -13,7 +13,8 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
-    @import 'src/style/_palette.sass'
+    @import '../style/palette.sass'
+
     h1
         color: $primary-color
         font-family: 'Roboto', sans-serif
