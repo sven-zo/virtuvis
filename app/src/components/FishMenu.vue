@@ -11,7 +11,7 @@
           Home
         </p>
       </div>
-      <div @click="cogClick" @hover="cogClass='cogHover'" class="button" id="cog">
+      <div @click="cogClick" class="button" id="cog">
         <div>
           <img :class="cogClass" src="../assets/settings.png"/>
         </div>
@@ -32,11 +32,11 @@ export default {
     cogClick (event) {
       if (event) {
         this.cogClass = 'cogTurn'
-        setTimeout(this.cogHover, 1000)
+        setTimeout(this.cogReset, 1000)
       }
     },
-    cogHover () {
-      this.cogClass = 'cogHover'
+    cogReset () {
+      this.cogClass = 'cog'
     }
   }
 }
@@ -103,15 +103,17 @@ export default {
   100%
     transform: rotate(180deg)
 
-// #cog img:hover
-//   animation-name: turn
-//   animation-duration: 1s
-//   animation-iteration-count: 1
+@keyframes press
+  0%
+    background-color: $divider-color
+  10%
+    background-color: $primary-color-light
+  100%
+    background-color: $divider-color
 
-.cogHover
-  animation-name: turn
-  animation-duration: 0.2s
-  animation-iteration-count: 1
+#cog:hover
+  animation-name: press
+  animation-duration: 0.5s
 
 .cogTurn
   animation-name: turnclick
