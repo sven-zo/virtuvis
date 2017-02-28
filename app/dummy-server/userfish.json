@@ -1,0 +1,64 @@
+{
+"fish": [
+  {
+    "id": 1,
+    "species": "Atlantic Salmon",
+    "speciesNl": "Atlantische Zalm",
+    "speciesScientific": "Salmo Salar",
+    "habitat": "Atlantic Ocean",
+    "special": true,
+    "name": "Atlantic Salmon",
+    "weight": 4,
+    "length": 73,
+    "date": 1488306014,
+    "favorite": false,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/24/Atlantischer_Lachs.jpg",
+    "description": "De Atlantische of Europese zalm (Salmo salar) is een anadrome vis die als volwassen dier hoofdzakelijk in noordelijke zeeën en de Noord-Atlantische Oceaan leeft. De zalm kwam voor de industriële revolutie in alle grote Europese rivieren voor, maar is daar nu praktisch uitgestorven. De zalm heeft een belangrijke culinaire en economische waarde. Ze kenmerkt zich onder meer door de rode kleur van het vlees."
+  },
+  {
+    "id": 2,
+    "species": "Common Dab",
+    "speciesNl": "Schar",
+    "speciesScientific": "Limanda limanda",
+    "habitat": "Iceland",
+    "special": true,
+    "name": "Common Dab",
+    "weight": 1,
+    "length": 35,
+    "date": 1488306534,
+    "favorite": false,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Limanda_limanda.jpg/800px-Limanda_limanda.jpg",
+    "description": "De schar (Limanda limanda) is een straalvinnige vis uit de familie van schollen (Pleuronectidae), orde van platvissen (Pleuronectiformes). De vis kan maximaal 40 centimeter lang en 1000 gram zwaar worden. De hoogst geregistreerde leeftijd is 12 jaar."
+  },
+  {
+    "id": 3,
+    "species": "Atlantic Herring",
+    "speciesNl": "Haring",
+    "speciesScientific": "Clupea harengus",
+    "habitat": "Atlantic Ocean",
+    "special": true,
+    "name": "Atlantic Herring",
+    "weight": 1,
+    "length": 40,
+    "date": 1488307026,
+    "favorite": false,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Clhar_u0.png/266px-Clhar_u0.png",
+    "description": "De haring (Clupea harengus) is een straalvinnige vis van het noordelijk halfrond. Het is al lang een populaire consumptievis, waar veel op gevist wordt. De geschiedenis van de haring is er dan ook een die verweven is met overbevissing en overheidsmaatregelen om dat te voorkomen."
+  },
+  {
+    "id": 4,
+    "species": "Siamese fighting fish",
+    "speciesNl": "Siamese Kempvis",
+    "speciesScientific": "Betta splendens",
+    "habitat": "Tropical monsoon climate",
+    "special": true,
+    "name": "Siamese fighting fish",
+    "weight": 1,
+    "length": 6,
+    "date": 1488307670,
+    "favorite": false,
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Betta_splendens_male_crowntail.png/266px-Betta_splendens_male_crowntail.png",
+    "description": "De Siamese kempvis (Betta splendens) is een populaire zoetwateraquariumvis, die behoort tot de Osphronemidae-familie, in de orde van de baarsachtigen. Vroeger werd de vis nog ingedeeld bij de Anabantidae-familie."
+  }
+]
+}
