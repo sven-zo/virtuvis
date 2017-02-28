@@ -67,11 +67,6 @@ export default {
   width: 100%
   bottom: 0
 
-// .button img
-//   padding-left: 20px
-//   padding-top: 10px
-//   max-height: 70px
-
 .button
   display: flex
   flex-direction: column
@@ -98,12 +93,6 @@ export default {
   padding-top: 67px
   padding-left: 31px
   display: none
-
-@keyframes turn
-  from
-    transform: rotate(0deg)
-  to
-    transform: rotate(45deg)
 
 @keyframes turnclick
   0%
