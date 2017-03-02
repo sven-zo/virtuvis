@@ -2,7 +2,6 @@
     <div class="home">
         <p>Home</p>
         <router-link to="/fish">Vis</router-link>
-        <router-link to="/settings">Instellingen</router-link>
     </div>
 </template>
 
