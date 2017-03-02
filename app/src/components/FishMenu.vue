@@ -6,7 +6,8 @@
         </div>
         <div>Voeg hengel toe</div>
       </div>
-      <div :class="middleButtonState">
+      <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
+        <!--<img src="../assets/book.png"/>-->
         <p class="homeText">
           Home
         </p>
@@ -27,8 +28,7 @@ export default {
     return {
       cogClass: 'cog',
       rodClass: 'rod',
-      middleButtonUp: false,
-      middleButtonState: 'middleButtonDown'
+      middleButtonClass: 'middleButtonDown'
     }
   },
   methods: {
@@ -37,8 +37,7 @@ export default {
         this.cogClass = 'cogTurn'
         this.$router.push('/settings')
         setTimeout(this.cogReset, 1000)
-        this.middleButtonUp = true
-        this.checkMiddleButton()
+        this.middleButtonClass = 'middleButtonUp'
       }
     },
     cogReset () {
@@ -49,18 +48,16 @@ export default {
         this.rodClass = 'rodAnimation'
         this.$router.push('/addrod')
         setTimeout(this.rodReset, 1000)
-        this.middleButtonUp = true
-        this.checkMiddleButton()
+        this.middleButtonClass = 'middleButtonUp'
       }
     },
     rodReset () {
       this.rodClass = 'rod'
     },
-    checkMiddleButton () {
-      if (this.middleButtonUp) {
-        this.middleButtonState = 'middleButtonUp'
-      } else {
-        this.middleButtonState = 'middleButtonDown'
+    middleButtonClick (event) {
+      if (event) {
+        this.$router.push('/')
+        this.middleButtonClass = 'middleButtonDown'
       }
     }
   }
@@ -106,24 +103,36 @@ export default {
   to
     transform: translate(0px, -25px)
 
+@keyframes down
+  from
+    transform: translate(0px, -25px)
+  to
+    transform: translate(0px, 0px)
+
 .middleButtonDown
+  animation-name: down
+  animation-duration: 1s
   height: 110px
   width: 110px
   border-radius: 50%
   background-color: $primary-color-dark
-  animation-name: up
-  animation-direction: reverse
-  animation-duration: 1s
   color: $primary-color-dark
 
 .middleButtonUp
+  animation-name: up
+  animation-duration: 1s
   height: 110px
   width: 110px
   border-radius: 50%
   background-color: $primary-color-dark
-  animation-name: up
-  animation-duration: 1s
+  color: $primary-color-dark
   transform: translate(0px, -25px)
+
+#middleButton img
+  max-height: 70px
+  max-width: 70px
+  padding-top: 20px
+  padding-bottom: 20px
 
 .homeText
   padding-top: 67px
