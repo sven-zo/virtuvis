@@ -7,7 +7,6 @@
         <div>Voeg hengel toe</div>
       </div>
       <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
-        <!--<img src="../assets/book.png"/>-->
         <p class="homeText">
           Home
         </p>
@@ -128,11 +127,11 @@ export default {
   color: $primary-color-dark
   transform: translate(0px, -25px)
 
-#middleButton img
-  max-height: 70px
-  max-width: 70px
-  padding-top: 20px
-  padding-bottom: 20px
+#middleButton
+  background-image: url('../assets/book.png')
+  background-size: 70px, 70px
+  background-repeat: no-repeat
+  background-position: 18px 15px
 
 .homeText
   padding-top: 67px
