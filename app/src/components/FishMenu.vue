@@ -6,7 +6,7 @@
         </div>
         <div>Voeg hengel toe</div>
       </div>
-      <div class="middleButton">
+      <div :class="middleButtonState">
         <p class="homeText">
           Home
         </p>
@@ -26,7 +26,9 @@ export default {
   data () {
     return {
       cogClass: 'cog',
-      rodClass: 'rod'
+      rodClass: 'rod',
+      middleButtonUp: false,
+      middleButtonState: 'middleButtonDown'
     }
   },
   methods: {
@@ -35,6 +37,8 @@ export default {
         this.cogClass = 'cogTurn'
         this.$router.push('/settings')
         setTimeout(this.cogReset, 1000)
+        this.middleButtonUp = true
+        this.checkMiddleButton()
       }
     },
     cogReset () {
@@ -45,10 +49,19 @@ export default {
         this.rodClass = 'rodAnimation'
         this.$router.push('/addrod')
         setTimeout(this.rodReset, 1000)
+        this.middleButtonUp = true
+        this.checkMiddleButton()
       }
     },
     rodReset () {
       this.rodClass = 'rod'
+    },
+    checkMiddleButton () {
+      if (this.middleButtonUp) {
+        this.middleButtonState = 'middleButtonUp'
+      } else {
+        this.middleButtonState = 'middleButtonDown'
+      }
     }
   }
 }
@@ -85,16 +98,40 @@ export default {
   max-width: 70px
   padding-bottom: 0px
 
-.middleButton
+// Middle button
+
+@keyframes up
+  from
+    transform: translate(0px, 0px)
+  to
+    transform: translate(0px, -25px)
+
+.middleButtonDown
   height: 110px
   width: 110px
   border-radius: 50%
   background-color: $primary-color-dark
+  animation-name: up
+  animation-direction: reverse
+  animation-duration: 1s
+  color: $primary-color-dark
+
+.middleButtonUp
+  height: 110px
+  width: 110px
+  border-radius: 50%
+  background-color: $primary-color-dark
+  animation-name: up
+  animation-duration: 1s
+  transform: translate(0px, -25px)
 
 .homeText
   padding-top: 67px
   padding-left: 31px
-  display: none
+  color: $primary-text-color
+  transform: translate(0px, 25px)
+
+// Cog and fishing rod
 
 @keyframes turnclick
   0%
