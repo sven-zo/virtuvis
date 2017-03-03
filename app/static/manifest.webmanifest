@@ -1,0 +1,14 @@
+{
+  "name": "VirtuVis",
+  "short_name": "VirtuVis",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#512DA8",
+  "description": "View all your fishes and read fun facts, in the all new VirtuVis app!",
+  "icons" : [{
+      "src": "assets/book.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }],
+  "orientation": "portrait"
+}
