@@ -1,22 +1,28 @@
 <template>
   <div class="menu">
+    <transition appear name="fade">
       <div @click="rodClick" class="button" id="rod">
         <div>
           <img :class="rodClass" src="../assets/rod.png"/>
         </div>
         <div>Voeg hengel toe</div>
       </div>
-      <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
-        <p class="homeText">
-          Home
-        </p>
-      </div>
-      <div @click="cogClick" class="button" id="cog">
-        <div>
-          <img :class="cogClass" src="../assets/settings.png"/>
+    </transition>
+    <transition appear name="fade">
+        <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
+          <p class="homeText">
+            Home
+          </p>
         </div>
-        <div>Instellingen en meer</div>
-      </div>
+    </transition>
+    <transition appear name="fade">
+        <div @click="cogClick" class="button" id="cog">
+          <div>
+            <img :class="cogClass" src="../assets/settings.png"/>
+          </div>
+          <div>Instellingen en meer</div>
+        </div>
+    </transition>
   </div>
 </template>
 
@@ -183,5 +189,12 @@ export default {
 .rodAnimation
   animation-name: rodAnimation
   animation-duration: 1s
+
+// Fade animations for app loadingMSG
+.fade-enter-active
+  transition: opacity .5s
+
+.fade-enter
+  opacity: 0
 
 </style>
