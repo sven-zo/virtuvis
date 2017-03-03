@@ -6,7 +6,7 @@
         </div>
         <div>Voeg hengel toe</div>
       </div>
-      <div class="middleButton">
+      <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
         <p class="homeText">
           Home
         </p>
@@ -26,7 +26,8 @@ export default {
   data () {
     return {
       cogClass: 'cog',
-      rodClass: 'rod'
+      rodClass: 'rod',
+      middleButtonClass: 'middleButtonDown'
     }
   },
   methods: {
@@ -35,6 +36,7 @@ export default {
         this.cogClass = 'cogTurn'
         this.$router.push('/settings')
         setTimeout(this.cogReset, 1000)
+        this.middleButtonClass = 'middleButtonUp'
       }
     },
     cogReset () {
@@ -45,10 +47,17 @@ export default {
         this.rodClass = 'rodAnimation'
         this.$router.push('/addrod')
         setTimeout(this.rodReset, 1000)
+        this.middleButtonClass = 'middleButtonUp'
       }
     },
     rodReset () {
       this.rodClass = 'rod'
+    },
+    middleButtonClick (event) {
+      if (event) {
+        this.$router.push('/')
+        this.middleButtonClass = 'middleButtonDown'
+      }
     }
   }
 }
@@ -85,16 +94,52 @@ export default {
   max-width: 70px
   padding-bottom: 0px
 
-.middleButton
+// Middle button
+
+@keyframes up
+  from
+    transform: translate(0px, 0px)
+  to
+    transform: translate(0px, -25px)
+
+@keyframes down
+  from
+    transform: translate(0px, -25px)
+  to
+    transform: translate(0px, 0px)
+
+.middleButtonDown
+  animation-name: down
+  animation-duration: 1s
   height: 110px
   width: 110px
   border-radius: 50%
   background-color: $primary-color-dark
+  color: $primary-color-dark
+
+.middleButtonUp
+  animation-name: up
+  animation-duration: 1s
+  height: 110px
+  width: 110px
+  border-radius: 50%
+  background-color: $primary-color-dark
+  color: $primary-color-dark
+  transform: translate(0px, -25px)
+
+#middleButton
+  background-image: url('../assets/book.png')
+  background-size: 70px, 70px
+  background-repeat: no-repeat
+  background-position: 18px 15px
 
 .homeText
   padding-top: 67px
   padding-left: 31px
-  display: none
+  color: $primary-text-color
+  transform: translate(0px, 25px)
+
+// Cog and fishing rod
 
 @keyframes turnclick
   0%
