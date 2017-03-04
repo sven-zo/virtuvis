@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
 // Vue
 export default {
   data () {
