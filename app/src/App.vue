@@ -18,6 +18,7 @@ export default {
 // This script runs after the loading is done, so here the loading message will be removed.
 var shell = document.getElementById('shell')
 var load = document.getElementById('load')
+
 shell.removeChild(load)
 </script>
 

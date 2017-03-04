@@ -20,7 +20,7 @@
           <div>
             <img :class="cogClass" src="../assets/settings.png"/>
           </div>
-          <div>Instellingen en meer</div>
+          <div>Instellingen</div>
         </div>
     </transition>
   </div>
@@ -74,8 +74,9 @@ export default {
 
 .menu
   font-family: 'Roboto', sans-serif
+  font-size: 12px
   color: $primary-text-color
-  height: 110px
+  height: 70px
   background-color: $divider-color
   display: flex
   flex-direction: row
@@ -85,6 +86,7 @@ export default {
   bottom: 0
 
 .button
+  width: 33%
   display: flex
   flex-direction: column
   justify-content: center
@@ -96,8 +98,8 @@ export default {
 
 .button img
   //padding-left: 20px
-  max-height: 70px
-  max-width: 70px
+  max-height: 50px
+  max-width: 50px
   padding-bottom: 0px
 
 // Middle button
@@ -106,44 +108,39 @@ export default {
   from
     transform: translate(0px, 0px)
   to
-    transform: translate(0px, -25px)
+    transform: translate(0px, -20px)
 
 @keyframes down
   from
-    transform: translate(0px, -25px)
+    transform: translate(0px, -20px)
   to
     transform: translate(0px, 0px)
 
 .middleButtonDown
   animation-name: down
-  animation-duration: 1s
-  height: 110px
-  width: 110px
-  border-radius: 50%
-  background-color: $primary-color-dark
-  color: $primary-color-dark
+  animation-duration: 0.5s
 
 .middleButtonUp
   animation-name: up
-  animation-duration: 1s
-  height: 110px
-  width: 110px
-  border-radius: 50%
-  background-color: $primary-color-dark
-  color: $primary-color-dark
-  transform: translate(0px, -25px)
+  animation-duration: 0.5s
+  transform: translate(0px, -20px)
 
 #middleButton
   background-image: url('../assets/book.png')
-  background-size: 70px, 70px
+  background-size: 50px, 50px
   background-repeat: no-repeat
-  background-position: 18px 15px
+  background-position: 50% 40%
+  height: 70px
+  width: 70px
+  border-radius: 50%
+  background-color: $primary-color-dark
+  color: $primary-color-dark
 
 .homeText
-  padding-top: 67px
-  padding-left: 31px
+  padding-top: 58%
+  padding-left: 25%
   color: $primary-text-color
-  transform: translate(0px, 25px)
+  transform: translate(0px, 20px)
 
 // Cog and fishing rod
 
@@ -189,6 +186,7 @@ export default {
 .rodAnimation
   animation-name: rodAnimation
   animation-duration: 1s
+  animation-timing-function: ease-in-out
 
 // Fade animations for app loadingMSG
 .fade-enter-active
