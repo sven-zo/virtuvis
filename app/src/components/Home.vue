@@ -1,4 +1,5 @@
 <template>
+  <transition appear name="fade">
     <div class="home">
         <div class="upperBar">
           <p>
@@ -12,6 +13,7 @@
 
         </div>
     </div>
+  </transition>
 </template>
 
 <script>
@@ -55,4 +57,12 @@ h1
 p
   color: black
   font-family: 'Roboto', sans-serif
+
+// Fade animations
+
+.fade-enter-active
+  transition: opacity .2s
+
+.fade-enter
+  opacity: 0
 </style>

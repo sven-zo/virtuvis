@@ -28,6 +28,7 @@
 
 <script>
 
+// Vue
 export default {
   data () {
     return {
@@ -207,7 +208,7 @@ $middle-button-offset: 10px
   animation-duration: 1s
   animation-timing-function: ease-in-out
 
-// Fade animations for app loadingMSG
+// Fade animations
 .fade-enter-active
   transition: opacity .5s
 
