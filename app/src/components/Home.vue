@@ -1,5 +1,5 @@
 <template>
-  <transition appear name="fade">
+  <transition appear name="page">
     <div class="home">
         <div class="upperBar">
           <p>
@@ -58,11 +58,10 @@ p
   color: black
   font-family: 'Roboto', sans-serif
 
-// Fade animations
-
-.fade-enter-active
+// Page animations
+.page-enter-active
   transition: opacity .2s
 
-.fade-enter
+.page-enter
   opacity: 0
 </style>
