@@ -72,11 +72,18 @@ export default {
 <style lang="sass" scoped>
 @import '../style/palette.sass'
 
+// Settings
+// menu height: height of the menu bar: default: 70
+// middle button offset: default: 10 / old default: 20 (the lower the more extreme)
+$menu-height: 70px
+$middle-button-offset: 10px
+
+// Menu
 .menu
   font-family: 'Roboto', sans-serif
   font-size: 12px
   color: $primary-text-color
-  height: 70px
+  height: $menu-height
   background-color: $divider-color
   display: flex
   flex-direction: row
@@ -98,8 +105,8 @@ export default {
 
 .button img
   //padding-left: 20px
-  max-height: 50px
-  max-width: 50px
+  max-height: $menu-height - 20px
+  max-width: $menu-height - 20px
   padding-bottom: 0px
 
 // Middle button
@@ -108,11 +115,11 @@ export default {
   from
     transform: translate(0px, 0px)
   to
-    transform: translate(0px, -20px)
+    transform: translate(0px, $menu-height - 100px + $middle-button-offset)
 
 @keyframes down
   from
-    transform: translate(0px, -20px)
+    transform: translate(0px, $menu-height - 100px + $middle-button-offset)
   to
     transform: translate(0px, 0px)
 
@@ -120,18 +127,22 @@ export default {
   animation-name: down
   animation-duration: 0.5s
 
+.middleButtonDownRipple
+  animation-name: pressMiddle
+  animation-duration: 0.5s
+
 .middleButtonUp
   animation-name: up
   animation-duration: 0.5s
-  transform: translate(0px, -20px)
+  transform: translate(0px, $menu-height - 100px + $middle-button-offset)
 
 #middleButton
   background-image: url('../assets/book.png')
-  background-size: 50px, 50px
+  background-size: $menu-height - 20px, $menu-height - 20px
   background-repeat: no-repeat
   background-position: 50% 40%
-  height: 70px
-  width: 70px
+  height: $menu-height
+  width: $menu-height
   border-radius: 50%
   background-color: $primary-color-dark
   color: $primary-color-dark
@@ -169,6 +180,14 @@ export default {
     background-color: $primary-color-light
   100%
     background-color: $divider-color
+
+@keyframes pressMiddle
+  0%
+    background-color: $primary-color-dark
+  10%
+    background-color: $primary-color
+  100%
+    background-color: $primary-color-dark
 
 #cog:hover
   animation-name: press
