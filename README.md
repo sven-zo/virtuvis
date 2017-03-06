@@ -42,8 +42,9 @@ Folder: `../php`
 
 --------
 ##VirtuPond
--beschrijving-
+De vijver waar de vissen in zwemmen.
 
 Folder: `-folder-`
 
--informatie-
+De vijver is het deel waar de vissen uit worden gevangen, het word geprojecteert op de grond onder de erasmusbrug, de vissen in deze vijver krijgen verschillende kleuren zodat de kleur sensor van de hengel ze kan herkennen.
+
