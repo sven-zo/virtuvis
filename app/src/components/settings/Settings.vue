@@ -11,7 +11,8 @@
 </template>
 
 <style lang="sass" scoped>
-@import '../style/palette.sass'
+@import '../../style/palette.sass'
+@import url('https://fonts.googleapis.com/css?family=Roboto')
 
 .upperBar
   background-color: $primary-color-dark

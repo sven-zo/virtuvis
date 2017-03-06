@@ -48,7 +48,8 @@ export default {
 
 .sortbar
   background-color: $divider-color
-  height: 10vw
+  //height: 10vw
+  height: 50px
   width: 100%
 
 h1

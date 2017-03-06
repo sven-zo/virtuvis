@@ -71,6 +71,7 @@ export default {
 
 <style lang="sass" scoped>
 @import '../style/palette.sass'
+@import url('https://fonts.googleapis.com/css?family=Roboto')
 
 // Settings
 // menu height: height of the menu bar: default: 70
