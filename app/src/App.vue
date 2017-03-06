@@ -16,9 +16,10 @@ export default {
 }
 
 // This script runs after the loading is done, so here the loading message will be removed.
-var parent = document.getElementById('load')
-var child = document.getElementById('loadingMSG')
-parent.removeChild(child)
+var shell = document.getElementById('shell')
+var load = document.getElementById('load')
+
+shell.removeChild(load)
 </script>
 
 <style lang="sass">

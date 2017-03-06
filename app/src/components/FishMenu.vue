@@ -1,27 +1,33 @@
 <template>
   <div class="menu">
+    <transition appear name="fade">
       <div @click="rodClick" class="button" id="rod">
         <div>
           <img :class="rodClass" src="../assets/rod.png"/>
         </div>
         <div>Voeg hengel toe</div>
       </div>
-      <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
-        <p class="homeText">
-          Home
-        </p>
-      </div>
-      <div @click="cogClick" class="button" id="cog">
-        <div>
-          <img :class="cogClass" src="../assets/settings.png"/>
+    </transition>
+    <transition appear name="fade">
+        <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
+          <p class="homeText">
+            Home
+          </p>
         </div>
-        <div>Instellingen en meer</div>
-      </div>
+    </transition>
+    <transition appear name="fade">
+        <div @click="cogClick" class="button" id="cog">
+          <div>
+            <img :class="cogClass" src="../assets/settings.png"/>
+          </div>
+          <div>Instellingen</div>
+        </div>
+    </transition>
   </div>
 </template>
 
 <script>
-
+// Vue
 export default {
   data () {
     return {
@@ -66,10 +72,18 @@ export default {
 <style lang="sass" scoped>
 @import '../style/palette.sass'
 
+// Settings
+// menu height: height of the menu bar: default: 70
+// middle button offset: default: 10 / old default: 20 (the lower the more extreme)
+$menu-height: 70px
+$middle-button-offset: 10px
+
+// Menu
 .menu
   font-family: 'Roboto', sans-serif
+  font-size: 12px
   color: $primary-text-color
-  height: 110px
+  height: $menu-height
   background-color: $divider-color
   display: flex
   flex-direction: row
@@ -79,6 +93,7 @@ export default {
   bottom: 0
 
 .button
+  width: 33%
   display: flex
   flex-direction: column
   justify-content: center
@@ -90,8 +105,8 @@ export default {
 
 .button img
   //padding-left: 20px
-  max-height: 70px
-  max-width: 70px
+  max-height: $menu-height - 20px
+  max-width: $menu-height - 20px
   padding-bottom: 0px
 
 // Middle button
@@ -100,44 +115,43 @@ export default {
   from
     transform: translate(0px, 0px)
   to
-    transform: translate(0px, -25px)
+    transform: translate(0px, $menu-height - 100px + $middle-button-offset)
 
 @keyframes down
   from
-    transform: translate(0px, -25px)
+    transform: translate(0px, $menu-height - 100px + $middle-button-offset)
   to
     transform: translate(0px, 0px)
 
 .middleButtonDown
   animation-name: down
-  animation-duration: 1s
-  height: 110px
-  width: 110px
-  border-radius: 50%
-  background-color: $primary-color-dark
-  color: $primary-color-dark
+  animation-duration: 0.5s
+
+.middleButtonDownRipple
+  animation-name: pressMiddle
+  animation-duration: 0.5s
 
 .middleButtonUp
   animation-name: up
-  animation-duration: 1s
-  height: 110px
-  width: 110px
-  border-radius: 50%
-  background-color: $primary-color-dark
-  color: $primary-color-dark
-  transform: translate(0px, -25px)
+  animation-duration: 0.5s
+  transform: translate(0px, $menu-height - 100px + $middle-button-offset)
 
 #middleButton
   background-image: url('../assets/book.png')
-  background-size: 70px, 70px
+  background-size: $menu-height - 20px, $menu-height - 20px
   background-repeat: no-repeat
-  background-position: 18px 15px
+  background-position: 50% 40%
+  height: $menu-height
+  width: $menu-height
+  border-radius: 50%
+  background-color: $primary-color-dark
+  color: $primary-color-dark
 
 .homeText
-  padding-top: 67px
-  padding-left: 31px
+  padding-top: 58%
+  padding-left: 25%
   color: $primary-text-color
-  transform: translate(0px, 25px)
+  transform: translate(0px, 20px)
 
 // Cog and fishing rod
 
@@ -167,6 +181,14 @@ export default {
   100%
     background-color: $divider-color
 
+@keyframes pressMiddle
+  0%
+    background-color: $primary-color-dark
+  10%
+    background-color: $primary-color
+  100%
+    background-color: $primary-color-dark
+
 #cog:hover
   animation-name: press
   animation-duration: 0.5s
@@ -183,5 +205,13 @@ export default {
 .rodAnimation
   animation-name: rodAnimation
   animation-duration: 1s
+  animation-timing-function: ease-in-out
+
+// Fade animations
+.fade-enter-active
+  transition: opacity .5s
+
+.fade-enter
+  opacity: 0
 
 </style>
