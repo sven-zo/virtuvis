@@ -10,7 +10,7 @@ Folder: `../app`
 
 **How to access:**
 
-1. Zorg dat je [Node.js](https://nodejs.org/en/) heb geïnstalleerd op je computer.
+1. Zorg dat je [Node.js](https://nodejs.org/en/) _versie 6.10.0_ heb geïnstalleerd op je computer.
 2. Open je terminal/console in de `../app` folder
 3. Typ de volgende commando's
 ```
