@@ -13,6 +13,11 @@ transition(appear, name='page')
 import HomeCenter from '@/components/home/HomeCenter.vue'
 
 export default {
+  data: function () {
+    return {
+
+    }
+  },
   components: {
     HomeCenter
   }
