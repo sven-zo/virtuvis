@@ -33,7 +33,7 @@ export default {
         console.log('Succes!', response)
         self.loading = false
         self.loaded = true
-        self.cards = response
+        self.cards = response.fish
         console.log('Card data attached')
       }, function (error) {
         console.log('Failed!', error)
