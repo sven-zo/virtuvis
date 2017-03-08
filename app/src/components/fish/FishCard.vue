@@ -1,37 +1,15 @@
 <template>
-  <div class="card" :id="cardId">
+  <div class="card" :id="cardId" :style="{ backgroundImage: 'url(' + image + ')' }">
     {{ name }}
   </div>
 </template>
 
 <script>
-var cards = document.getElementsByClassName('card')
-
 export default {
   props: ['id', 'name', 'image'],
   computed: {
     cardId () {
       return 'card_id_' + this.id + ' card'
-    }
-  },
-  created () {
-    this.setImage()
-  },
-  methods: {
-    setImage () {
-      var self = this
-      var img = new Image()
-      var card = cards[this.id]
-      img.src = this.image
-
-      var checkImage = setInterval(function () {
-        if (img.complete) {
-          clearInterval(checkImage)
-          console.log('card_id_' + self.id)
-          card.style.backgroundColor = 'red'
-          // document.getElementById('card_id_' + self.id).style.backgroundImage = 'url(' + img.src + ')'
-        }
-      }, 50)
     }
   }
 }
