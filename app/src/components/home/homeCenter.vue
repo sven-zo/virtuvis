@@ -4,9 +4,11 @@
     .loading(v-if='loading')
       | Loading...
     .error(v-if='error')
-      | {{ error }}
+      p Er ging iets fout :(
+      p Probeer het later opnieuw!
+      p Kijk ook even of je internet hebt
     .cardContainer(v-if='loaded', v-for='fish in cards')
-      fish-card(:name='fish.species')
+      fish-card(:name='fish.species', :image='fish.image')
 </template>
 
 <script>

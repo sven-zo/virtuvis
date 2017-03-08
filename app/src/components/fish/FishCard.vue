@@ -1,12 +1,12 @@
 <template>
-  <div class="card">
+  <div class="card" :style="{ backgroundImage: 'url(' + image + ')' }">
     {{ name }}
   </div>
 </template>
 
 <script>
 export default {
-  props: ['name']
+  props: ['name', 'image']
 }
 </script>
 
@@ -15,6 +15,8 @@ export default {
 
 .card
   background-color: $accent-color
+  background-repeat: no-repeat
+  background-size: cover
   width: 40vw
   // Later een media query voor meer cards per row in grote ipad ofzo
   height: 40vw
