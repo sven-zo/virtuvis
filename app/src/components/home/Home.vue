@@ -1,29 +1,27 @@
-<template>
-  <transition appear name="page">
-    <div class="home">
-        <div class="upperBar">
-          <p>
-            Net gevangen:
-          </p>
-        </div>
-        <div class="recent">
-
-        </div>
-        <div class="sortbar">
-
-        </div>
-    </div>
-  </transition>
+<template lang="pug">
+transition(appear, name='page')
+  .home
+    .upperBar
+      p
+        | Net gevangen:
+    .recent
+    .sortbar
+    home-center
 </template>
 
 <script>
+import HomeCenter from '@/components/home/HomeCenter.vue'
+
 export default {
+  components: {
+    HomeCenter
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
-@import '../style/palette.sass'
+@import '../../style/palette.sass'
 
 .upperBar
   background-color: $primary-color-dark
