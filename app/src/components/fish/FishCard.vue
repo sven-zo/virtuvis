@@ -1,5 +1,6 @@
 <template>
   <div class="card">
+    VISKAART
   </div>
 </template>
 
@@ -10,8 +11,12 @@ export default {
 </script>
 
 <style lang="sass">
+@import '../../style/_palette.sass'
+
 .card
   background-color: $accent-color
-  width: 123px
-  height: 123px
+  width: 40vw
+  // Later een media query voor meer cards per row in grote ipad ofzo
+  height: 40vw
+  margin: 10px
 </style>
