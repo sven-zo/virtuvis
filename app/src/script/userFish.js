@@ -1,20 +1,24 @@
 var request = new XMLHttpRequest()
+var response
 
 export function getUserFish () {
-  request.addEventListener('load', loadFish)
-  request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
-  request.send()
-}
-
-function loadFish () {
-  var response = request.responseText
-  response = JSON.parse(response)
-  console.log(response)
-  return response
-}
-
-export function getUserFish () {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
+
+    request.onload = function () {
+      if (request.status === 200) {
+        response = request.responseText
+        response = JSON.parse(response)
+        resolve(response)
+      } else {
+        reject(Error(request.statusText))
+      }
+    }
+
+    request.onerror = function () {
+      reject(Error('Network Error'))
+    }
+
+    request.send()
   })
 }

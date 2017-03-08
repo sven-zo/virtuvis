@@ -5,9 +5,8 @@
       | Loading...
     .error(v-if='error')
       | {{ error }}
-    .cardContainer(v-if='loaded', v-for='card in cards')
-      p LOADED
-      fish-card(:name='card.text')
+    .cardContainer(v-if='loaded', v-for='fish in cards')
+      fish-card(:name='fish.species')
 </template>
 
 <script>
@@ -28,11 +27,19 @@ export default {
   },
   methods: {
     fetchFish () {
+      var self = this
       this.loading = true
-      this.cards = getUserFish()
-      this.loading = false
-      this.loaded = true
-      console.log('loaded userfish')
+      getUserFish().then(function (response) {
+        console.log('Succes!', response)
+        self.loading = false
+        self.loaded = true
+        self.cards = response
+        console.log('Card data attached')
+      }, function (error) {
+        console.log('Failed!', error)
+        self.loading = false
+        self.error = true
+      })
     }
   },
   components: {
