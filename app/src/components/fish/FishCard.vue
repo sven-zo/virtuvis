@@ -1,7 +1,8 @@
-<template>
-  <div class="card" :id="cardId" :style="{ backgroundImage: 'url(' + image + ')' }">
-    {{ name }}
-  </div>
+<template lang="pug">
+transition(appear, name='card')
+  .card(:id='cardId')
+    .material(:style="{ backgroundImage: 'url(' + image + ')' }")
+    p  {{ name }}
 </template>
 
 <script>
@@ -18,13 +19,23 @@ export default {
 <style lang="sass">
 @import '../../style/_palette.sass'
 
-.card
+.material
   background-color: $accent-color
   background-repeat: no-repeat
   background-size: cover
-  background-image:
   width: 40vw
-  // Later een media query voor meer cards per row in grote ipad ofzo
   height: 40vw
+
+.card
+  background-repeat: no-repeat
+  background-size: cover
+  background-image:
+  // Later een media query voor meer cards per row in grote ipad ofzo
   margin: 10px
+
+.card-enter-active
+  transition: opacity .2s
+
+.card-enter
+  opacity: 0
 </style>
