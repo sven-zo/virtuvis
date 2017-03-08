@@ -6,11 +6,13 @@
     .error(v-if='error')
       | {{ error }}
     .cardContainer(v-if='loaded', v-for='card in cards')
-        fish-card(:name='card.text')
+      p LOADED
+      fish-card(:name='card.text')
 </template>
 
 <script>
 import FishCard from '@/components/fish/FishCard.vue'
+import {getUserFish} from '../../script/userFish.js'
 
 export default {
   data: function () {
@@ -18,7 +20,7 @@ export default {
       loading: false,
       cards: null,
       error: null,
-      response: null
+      loaded: false
     }
   },
   created () {
@@ -27,26 +29,10 @@ export default {
   methods: {
     fetchFish () {
       this.loading = true
-      this.cards = this.error = null
-
-      var request = new XMLHttpRequest()
-      request.addEventListener('load', this.loadFish)
-      request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
-      request.send()
-      // function loadFish () {
-      //   var response = request.responseText
-      //   response = JSON.parse(response)
-      //   console.log(response)
-      // }
-    },
-    loadFish () {
-      this.response = request.responseText
-      this.response = JSON.parse(this.response)
-      console.log(this.response)
-      this.setFish
-    },
-    setFish () {
+      this.cards = getUserFish()
       this.loading = false
+      this.loaded = true
+      console.log('loaded userfish')
     }
   },
   components: {
