@@ -25,28 +25,22 @@ export default {
   },
   methods: {
     fetchFish () {
-      var request = new Request('http://localhost/dummy-server/dummy_userfish.php', {
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
-      })
+      this.loading = true
+      this.cards = this.error = null
 
-      // this.error = this.cards = null
-      // this.loading = true
-      fetch(request, {
-        method: 'get'
-      }).then(function (response) {
-        var data = JSON.parse(response)
-        // this.loading = false
-        console.log('GOT A RESOnSe')
-        console.log('response', data)
-        console.log('naam eerste vis', data.fish)
-      }).catch(function (err) {
-        if (err) {
-          // this.loading = false
-          // this.error = true
-        }
-      })
+      var request = new XMLHttpRequest()
+      request.addEventListener('load', loadFish)
+      request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
+      request.send()
+
+      function loadFish () {
+        var response = request.responseText
+        response = JSON.parse(response)
+        console.log(response)
+      }
+    },
+    setFish () {
+      this.loading = false
     }
   },
   components: {
