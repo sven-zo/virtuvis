@@ -1,15 +1,23 @@
 <template lang="pug">
 .center
   .wrapper
-    .cardContainer
-      - for (var x = 0; x < 15; x++)
-        fish-card
+    .cardContainer(v-for='card in cards')
+        fish-card(:name='card.text')
 </template>
 
 <script>
 import FishCard from '@/components/fish/FishCard.vue'
 
 export default {
+  data: function () {
+    return {
+      cards: [
+        { text: 'Dolfijn' },
+        { text: 'Zalm' },
+        { text: 'Appel' }
+      ]
+    }
+  },
   components: {
     FishCard
   }

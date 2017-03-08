@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    VISKAART
+    {{ name }}
   </div>
 </template>
 
 <script>
 export default {
-
+  props: ['name']
 }
 </script>
 
