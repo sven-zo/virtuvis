@@ -1,14 +1,16 @@
 <template>
-  <div :class="cardClass">
+  <div class="card" :id="cardId">
     {{ name }}
   </div>
 </template>
 
 <script>
+var cards = document.getElementsByClassName('card')
+
 export default {
   props: ['id', 'name', 'image'],
   computed: {
-    cardClass () {
+    cardId () {
       return 'card_id_' + this.id + ' card'
     }
   },
@@ -19,14 +21,15 @@ export default {
     setImage () {
       var self = this
       var img = new Image()
+      var card = cards[this.id]
       img.src = this.image
 
       var checkImage = setInterval(function () {
         if (img.complete) {
           clearInterval(checkImage)
           console.log('card_id_' + self.id)
-          document.getElementsByTagName('card_id_' + self.id)[0].style.backgroundColor = 'red'
-          document.getElementsByTagName('card_id_' + self.id)[0].style.backgroundImage = 'url(' + img.src + ')'
+          card.style.backgroundColor = 'red'
+          // document.getElementById('card_id_' + self.id).style.backgroundImage = 'url(' + img.src + ')'
         }
       }, 50)
     }
