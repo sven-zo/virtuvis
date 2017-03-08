@@ -17,7 +17,8 @@ export default {
     return {
       loading: false,
       cards: null,
-      error: null
+      error: null,
+      response: null
     }
   },
   created () {
@@ -29,15 +30,20 @@ export default {
       this.cards = this.error = null
 
       var request = new XMLHttpRequest()
-      request.addEventListener('load', loadFish)
+      request.addEventListener('load', this.loadFish)
       request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
       request.send()
-
-      function loadFish () {
-        var response = request.responseText
-        response = JSON.parse(response)
-        console.log(response)
-      }
+      // function loadFish () {
+      //   var response = request.responseText
+      //   response = JSON.parse(response)
+      //   console.log(response)
+      // }
+    },
+    loadFish () {
+      this.response = request.responseText
+      this.response = JSON.parse(this.response)
+      console.log(this.response)
+      this.setFish
     },
     setFish () {
       this.loading = false
