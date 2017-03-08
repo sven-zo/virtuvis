@@ -8,7 +8,7 @@
       p Probeer het later opnieuw!
       p Kijk ook even of je internet hebt
     .cardContainer(v-if='loaded', v-for='fish in cards')
-      fish-card(:name='fish.species', :image='fish.image')
+      fish-card(:id='fish.id', :name='fish.species', :image='fish.image')
 </template>
 
 <script>
