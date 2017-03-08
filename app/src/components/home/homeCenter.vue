@@ -7,8 +7,10 @@
       p Er ging iets fout :(
       p Probeer het later opnieuw!
       p Kijk ook even of je internet hebt
+      p Foutmelding: promise_failed_getUserFish
     .cardContainer(v-if='loaded')
-      fish-card(v-for='fish in cards', :id='fish.id', :name='fish.species', :image='fish.image')
+      fish-card(v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.speciesNl', :image='fish.image')
+      fish-card(v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.species', :image='fish.image')
 </template>
 
 <script>
@@ -16,6 +18,7 @@ import FishCard from '@/components/fish/FishCard.vue'
 import {getUserFish} from '../../script/userFish.js'
 
 export default {
+  props: ['language'],
   data: function () {
     return {
       loading: false,
@@ -32,13 +35,13 @@ export default {
       var self = this
       this.loading = true
       getUserFish().then(function (response) {
-        console.log('Succes!', response)
+        console.log('Succes! (Cards)', response)
         self.loading = false
         self.loaded = true
         self.cards = response.fish
         console.log('Card data attached')
       }, function (error) {
-        console.log('Failed!', error)
+        console.log('Failed! (Cards)', error)
         self.loading = false
         self.error = true
       })

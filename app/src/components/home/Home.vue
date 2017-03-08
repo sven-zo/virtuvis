@@ -1,21 +1,53 @@
 <template lang="pug">
 transition(appear, name='page')
-  .home
+  .loading(v-if='loading')
+    | Loading...
+  .error(v-if='error')
+    p Er ging iets fout :(
+    p Probeer het later opnieuw!
+    p Kijk ook even of je internet hebt
+    p Foutmelding: promise_failed_getUserSettings
+  .home(v-if='loaded')
     .upperBar
       p
         | Net gevangen:
     .recent
     .sortbar
-    home-center
+    home-center(:language="userLanguage")
 </template>
 
 <script>
 import HomeCenter from '@/components/home/HomeCenter.vue'
+import {getUserSettings} from '../../script/userSettings.js'
 
 export default {
   data: function () {
     return {
-
+      userLanguage: null,
+      loaded: false,
+      loading: false,
+      error: null
+    }
+  },
+  created () {
+    this.getUserSettings()
+  },
+  methods: {
+    getUserSettings () {
+      var self = this
+      this.loading = true
+      getUserSettings().then(function (response) {
+        console.log('Succes! (Settings)', response)
+        self.loading = false
+        self.loaded = true
+        self.userLanguage = response.language
+        console.log('Language data attached')
+        console.log('Language: ', self.userLanguage)
+      }, function (error) {
+        console.log('Failed! (Settings)', error)
+        self.loading = false
+        self.error = true
+      })
     }
   },
   components: {
@@ -68,4 +100,7 @@ p
 
 .page-enter
   opacity: 0
+
+.center
+  padding-bottom: 70px
 </style>
