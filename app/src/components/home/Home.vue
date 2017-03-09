@@ -1,28 +1,31 @@
 <!-- Dit is de homepagina die je te zien krijgt als je de app opent nadat het is geladen. -->
 <template lang="pug">
-//-
-  'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
-  'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
-  'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
-transition(appear, name='page')
+.homeWrapper
   //- Loading wordt getoond als de instellingen van de gebruiker worden opgehaald.
-  .loading(v-if='loading')
-    | Loading...
+  transition(appear, name='loading')
+    .loading(v-if='loading')
+      p#loadingMSG Loading home...
+      #loader Loading...
   //- Error wordt getoond als er iets misging bij het ophalen van de instellingen van de gebruiker.
   .error(v-if='error')
     p Er ging iets fout :(
     p Probeer het later opnieuw!
     p Kijk ook even of je internet hebt
     p Foutmelding: promise_failed_getUserSettings
-  //- Dit wordt getoond als alles goed ging, en alles geladen is.
-  .home(v-if='loaded')
-    .upperBar
-      p
-        | Net gevangen:
-    .recent
-    .sortbar
-    //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
-    home-center(:language="userLanguage")
+  //-
+    'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+    'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+    'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
+  transition(appear, name='page')
+    //- Dit wordt getoond als alles goed ging, en alles geladen is.
+    .home(v-if='loaded')
+      .upperBar
+        p
+          | Net gevangen:
+      .recent
+      .sortbar
+      //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
+      home-center(:language="userLanguage")
 </template>
 
 <script>
@@ -92,9 +95,10 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
 //*
-// Dit importeert de palette file.
+// Dit importeert de palette file en het loading animatietje.
 // De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
-@import '../../style/palette.sass'
+@import '../../style/_palette.sass'
+@import '../../style/loading.css'
 
 .upperBar
   background-color: $primary-color-dark
@@ -132,6 +136,15 @@ p
   transition: opacity .2s
 
 .page-enter
+  opacity: 0
+
+//*
+// Animaties voor wanneer de loading animatie wordt weergeven.
+// Dit zorgt ervoor dat alleen mensen die lang moeten wachten de animatie zien.
+.loading-enter-active
+  transition: opacity 1s
+
+.loading-enter
   opacity: 0
 
 //*

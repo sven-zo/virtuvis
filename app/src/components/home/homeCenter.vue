@@ -2,8 +2,9 @@
 .center
   .wrapper
     //- De gebruiker ziet loading als de userFish nog worden gedownload.
-    .loading(v-if='loading')
-      | Loading...
+    transition(appear, name='loading')
+      .loading(v-if='loading')
+        #loader Loading...
     //- Er verschijnt een waarschuwing als er iets fout ging bij het ophalen van de vissen.
     .error(v-if='error')
       p Er ging iets fout :(
@@ -88,9 +89,10 @@ export default {
 
 <style lang="sass">
 //*
-// Dit importeert de palette file.
+// Dit importeert de palette file en de loader animatie.
 // De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
-@import '../../style/palette.sass'
+@import '../../style/_palette.sass'
+@import '../../style/loading.css'
 
 .center
   text-align: center
@@ -98,6 +100,16 @@ export default {
 .wrapper
   display: inline-block
   margin-top: 10px
+
+//*
+// Animaties voor wanneer de loading animatie wordt weergeven.
+// Dit zorgt ervoor dat alleen mensen die lang moeten wachten de animatie zien.
+// Gaat 'flashes' tegen
+.loading-enter-active
+  transition: opacity 1s
+
+.loading-enter
+  opacity: 0
 
 //*
 // Deze container zit om de FishCards HomeCenter
