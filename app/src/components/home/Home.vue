@@ -1,26 +1,48 @@
+<!-- Dit is de homepagina die je te zien krijgt als je de app opent nadat het is geladen. -->
 <template lang="pug">
+//-
+  'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+  'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+  'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
 transition(appear, name='page')
+  //- Loading wordt getoond als de instellingen van de gebruiker worden opgehaald.
   .loading(v-if='loading')
     | Loading...
+  //- Error wordt getoond als er iets misging bij het ophalen van de instellingen van de gebruiker.
   .error(v-if='error')
     p Er ging iets fout :(
     p Probeer het later opnieuw!
     p Kijk ook even of je internet hebt
     p Foutmelding: promise_failed_getUserSettings
+  //- Dit wordt getoond als alles goed ging, en alles geladen is.
   .home(v-if='loaded')
     .upperBar
       p
         | Net gevangen:
     .recent
     .sortbar
+    //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
     home-center(:language="userLanguage")
 </template>
 
 <script>
+/*
+/ Deze twee commando's importeren bestanden die nodig zijn voor dit script.
+/ HomeCenter is een component dat onder de sorteerbalk leeft.
+/ {getUserSettings} is een script die de instellingen van de gebruiker ophaalt, dit is nodig om de taal van de gebruiker te bepalen.
+*/
 import HomeCenter from '@/components/home/HomeCenter.vue'
 import {getUserSettings} from '../../script/userSettings.js'
-
+/*
+/ Parent: 'App.vue'
+*/
 export default {
+  /*
+  / In data staan alle variabeles die dit component gebruikt.
+  / Standaard wordt de 'userLanguage' op null gezet omdat de taal later wordt opgehaald.
+  / 'loading' is false om te zorgen dat de app alleen gaat laden als getUserSettings () wordt opgeroepen.
+  / Loaded is false om te zorgen dat de app alleen maar heel de pagina laadt als de benodigde bestanden aanwezig zijn.
+  */
   data: function () {
     return {
       userLanguage: null,
@@ -29,10 +51,18 @@ export default {
       error: null
     }
   },
+  /*
+  / Deze hook wordt opgeroepen wanneer dit component wordt geschapen.
+  / Als het component wordt geschapen, wordt de taal van de gebruiker opgezocht.
+  */
   created () {
     this.getUserSettings()
   },
   methods: {
+    /*
+    / Deze methode haalt de taal van de gebruiker op.
+    / Dit wordt gedaan via een apart script met een functie met dezelfde naam.
+    */
     getUserSettings () {
       var self = this
       this.loading = true
@@ -50,6 +80,9 @@ export default {
       })
     }
   },
+  /*
+  / Dit zijn de componenten die home gebruikt.
+  */
   components: {
     HomeCenter
   }
@@ -58,11 +91,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="sass" scoped>
+//*
+// Dit importeert de palette file.
+// De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
 @import '../../style/palette.sass'
 
 .upperBar
   background-color: $primary-color-dark
-  //height: 5vw
   height: 30px
   width: 100%
 
@@ -72,18 +107,15 @@ export default {
   margin-top: 0px
   padding-top: 4px
   font-family: 'Roboto', sans-serif
-  //font-size: 3vw
   font-size: 18px
 
 .recent
   background-color: $primary-color
-  //height: 26vw
   height: 200px
   width: 100%
 
 .sortbar
   background-color: $divider-color
-  //height: 10vw
   height: 50px
   width: 100%
 
@@ -94,13 +126,16 @@ p
   color: black
   font-family: 'Roboto', sans-serif
 
-// Page animations
+//*
+// Animaties voor wanneer het component wordt gecreërd.
 .page-enter-active
   transition: opacity .2s
 
 .page-enter
   opacity: 0
 
+//*
+// Dit zorgt ervoor dat de FishMenu niet in de weg zit als je dingen probeert te lezen aan de onderkant.
 .center
   padding-bottom: 70px
 </style>

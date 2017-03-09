@@ -1,4 +1,9 @@
+<!-- Dit is het component voor de kaarten met vissen die je ziet op het homescreen. -->
 <template lang="pug">
+//-
+  'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+  'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+  'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
 transition(appear, name='card')
   .card(:id='cardId')
     .material(:style="{ backgroundImage: 'url(' + image + ')' }")
@@ -6,9 +11,17 @@ transition(appear, name='card')
 </template>
 
 <script>
+/*
+/ Parent: 'HomeCenter.vue'
+*/
 export default {
   props: ['id', 'name', 'image'],
   computed: {
+    /*
+    / Dit zet het ID van de card op een unieke waarde bij het creëren.
+    / Een card met id 1 zou als DOM-id card_id_1 krijgen.
+    / Dit is handig om de cards later te kunnen selecteren via de DOM API vanuit andere componenten.
+    */
     cardId () {
       return 'card_id_' + this.id + ' card'
     }
@@ -17,8 +30,13 @@ export default {
 </script>
 
 <style lang="sass">
+//*
+// Dit importeert de palette file.
+// De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
 @import '../../style/_palette.sass'
 
+//*
+// Dit is het uiterlijk van de kaart met de foto
 .material
   background-color: $accent-color
   background-repeat: no-repeat
@@ -26,13 +44,14 @@ export default {
   width: 40vw
   height: 40vw
 
+//*
+// Wrapper voor de kaart met de tekst er onder
 .card
-  background-repeat: no-repeat
-  background-size: cover
-  background-image:
-  // Later een media query voor meer cards per row in grote ipad ofzo
+  // TODO: Add more media queries for smaller/bigger screen sizes
   margin: 10px
 
+//*
+// Animaties voor wanneer het component wordt gecreërd.
 .card-enter-active
   transition: opacity .2s
 

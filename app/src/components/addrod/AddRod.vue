@@ -1,21 +1,27 @@
-<template>
-  <transition appear name="page">
-    <div class="settings">
-      <div class="upperBar">
-        <p>
-          Vishengel toevoegen:
-        </p>
-      </div>
-      <div class="bottomBar">
-        <p>
-          Leg je dobber op het scherm.
-        </p>
-      </div>
-    </div>
-  </transition>
+<!-- Dit is het component voor de pagina waar je je vishengel kan toevoegen. -->
+<template lang="pug">
+//-
+  'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+  'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+  'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
+transition(appear, name='page')
+  .settings
+    .upperBar
+      p  Vishengel toevoegen:
+    .bottomBar
+      p  Leg je dobber op het scherm.
 </template>
 
+<script>
+/*
+/ Parent: 'App.vue'
+*/
+</script>
+
 <style lang="sass" scoped>
+//*
+// Dit importeert de palette file.
+// De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
 @import '../../style/palette.sass'
 
 .bottomBar
@@ -33,7 +39,6 @@
 
 .upperBar
   background-color: $primary-color-dark
-  //height: 5vw
   height: 30px
   width: 100%
 
@@ -43,7 +48,6 @@
   margin-top: 0px
   padding-top: 4px
   font-family: 'Roboto', sans-serif
-  //font-size: 3vw
   font-size: 18px
 
 h1

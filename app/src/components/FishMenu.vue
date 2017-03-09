@@ -1,34 +1,38 @@
-<template>
-  <div class="menu">
-    <transition appear name="fade">
-      <div @click="rodClick" class="button" id="rod">
-        <div>
-          <img :class="rodClass" src="../assets/rod.png"/>
-        </div>
-        <div>Voeg hengel toe</div>
-      </div>
-    </transition>
-    <transition appear name="fade">
-        <div @click="middleButtonClick" :class="middleButtonClass" id="middleButton">
-          <p class="homeText">
-            Home
-          </p>
-        </div>
-    </transition>
-    <transition appear name="fade">
-        <div @click="cogClick" class="button" id="cog">
-          <div>
-            <img :class="cogClass" src="../assets/settings.png"/>
-          </div>
-          <div>Instellingen</div>
-        </div>
-    </transition>
-  </div>
+<!-- Dit is het menu wat je ziet aan de onderkant van het scherm. -->
+<template lang="pug">
+.menu
+  //-
+    'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+    'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+    'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
+  transition(appear, name='fade')
+    //- Als er wordt geklikt op deze button, wordt de methode rodClick() opgeroepen
+    #rod.button(@click='rodClick')
+      div
+        //- De class van de images worden dynamisch aangepast zodat deze kunnen worden geanimeerd.
+        img(:class='rodClass', src='../assets/rod.png')
+      div Voeg hengel toe
+  transition(appear, name='fade')
+    //- De class van #middleButton wordt dynamisch bepaald zodat de hoogte kan worden aangepast.
+    #middleButton(@click='middleButtonClick', :class='middleButtonClass')
+      p.homeText  Home
+  transition(appear, name='fade')
+    #cog.button(@click='cogClick')
+      div
+        img(:class='cogClass', src='../assets/settings.png')
+      div Instellingen
 </template>
 
 <script>
-// Vue
+/*
+/ Parent: 'App.vue'
+*/
 export default {
+  /*
+  / In data bevinden zich de variabeles die dit component gebruikt.
+  / cogClass en rodClass worden gedefault zodat er geen visuele glitches onstaan bij het laden.
+  / De middleButtonClass is standaard 'middleButtonDown' zodat de homeknop naar beneden staat.
+  */
   data () {
     return {
       cogClass: 'cog',
@@ -37,6 +41,11 @@ export default {
     }
   },
   methods: {
+    /*
+    / cogClick en cogReset worden gebruikt om te animeren.
+    / Ook stuurt cogClick de gebruiker naar de juiste pagina.
+    / Als de gebruiker op een button klikt die niet naar home gaat, wordt de middleButton omhoog geanimeerd.
+    */
     cogClick (event) {
       if (event) {
         this.cogClass = 'cogTurn'
@@ -48,6 +57,9 @@ export default {
     cogReset () {
       this.cogClass = 'cog'
     },
+    /*
+    / Hetzelfde geldt voor rodClick
+    */
     rodClick (event) {
       if (event) {
         this.rodClass = 'rodAnimation'
@@ -59,6 +71,10 @@ export default {
     rodReset () {
       this.rodClass = 'rod'
     },
+    /*
+    / Als er op de homeknop wordt gedrukt navigeert de app naar home.
+    / Ook wordt de homebutton naar beneden geanimeerd.
+    */
     middleButtonClick (event) {
       if (event) {
         this.$router.push('/')
@@ -70,16 +86,21 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+//*
+// Dit importeert de palette file.
+// De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
+// Ook wordt de Roboto font ingeladen.
 @import '../style/palette.sass'
 @import url('https://fonts.googleapis.com/css?family=Roboto')
 
-// Settings
-// menu height: height of the menu bar: default: 70
-// middle button offset: default: 10 / old default: 20 (the lower the more extreme)
+// Settings:
+// menu-height: height of the menu bar [default: 70]
+// middle-button-offset: [default: 10 / old default: 20] (the lower the more extreme)
 $menu-height: 70px
 $middle-button-offset: 10px
 
-// Menu
+//*
+// Menu:
 .menu
   font-family: 'Roboto', sans-serif
   font-size: 12px
@@ -93,6 +114,8 @@ $middle-button-offset: 10px
   width: 100%
   bottom: 0
 
+//*
+// Buttons:
 .button
   width: 33%
   display: flex
@@ -105,13 +128,12 @@ $middle-button-offset: 10px
   justify-content: center
 
 .button img
-  //padding-left: 20px
   max-height: $menu-height - 20px
   max-width: $menu-height - 20px
   padding-bottom: 0px
 
-// Middle button
-
+//*
+// Home button:
 @keyframes up
   from
     transform: translate(0px, 0px)
@@ -154,8 +176,8 @@ $middle-button-offset: 10px
   color: $primary-text-color
   transform: translate(0px, 20px)
 
-// Cog and fishing rod
-
+//*
+// Animations for the cog and rod:
 @keyframes turnclick
   0%
     transform: rotate(0deg)
@@ -208,7 +230,8 @@ $middle-button-offset: 10px
   animation-duration: 1s
   animation-timing-function: ease-in-out
 
-// Fade animations
+//*
+// Animaties voor wanneer het component wordt gecreërd.
 .fade-enter-active
   transition: opacity .5s
 
