@@ -6,12 +6,6 @@
     </div>
 </template>
 
-<script>
-/*
-/ Parent: 'HomeCenter.vue'
-*/
-</script>
-
 <style lang="sass">
 //*
 // Dit importeert de palette file.

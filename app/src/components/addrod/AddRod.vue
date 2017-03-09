@@ -12,12 +12,6 @@ transition(appear, name='page')
       p  Leg je dobber op het scherm.
 </template>
 
-<script>
-/*
-/ Parent: 'App.vue'
-*/
-</script>
-
 <style lang="sass" scoped>
 //*
 // Dit importeert de palette file.
