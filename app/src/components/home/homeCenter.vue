@@ -60,20 +60,20 @@ export default {
   },
   methods: {
     /*
-    / Deze methode haalt de taal van de gebruiker op.
+    / Deze methode haalt de vissen van de gebruiker op.
     / Dit wordt gedaan via een apart script met de functie 'getUserFish'.
     */
     fetchFish () {
       var self = this
       this.loading = true
       getUserFish().then(function (response) {
-        console.log('Succes! (Cards)', response)
+        console.log('Succes! (Cards)', response.fish)
         self.loading = false
         self.loaded = true
         self.cards = response.fish
         console.log('Card data attached')
       }, function (error) {
-        self.errorMessage = '[promise_failed_getUserFish@fetchFish] (Error: ' + error + ')'
+        self.errorMessage = '[promise_failed_getUserFish@fetchFish@HomeCenter] (Error: ' + error + ')'
         console.log('Failed! (Cards)', error)
         self.loading = false
         self.error = true
@@ -89,7 +89,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 //*
 // Dit importeert de palette file en de loader animatie.
 // De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.

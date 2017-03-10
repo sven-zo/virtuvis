@@ -10,7 +10,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
       { path: '/', component: Home },
-      { path: '/fish', component: FishDetail },
+      { path: '/fish/:id', component: FishDetail },
       { path: '/settings', component: Settings },
       { path: '/addrod', component: AddRod }
   ]
