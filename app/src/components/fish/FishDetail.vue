@@ -7,11 +7,14 @@
       #loader Loading...
   .error(v-if='error')
   .fishDetail(v-if='loaded')
-    .fishPicture(:style="{ backgroundImage: 'url(' + image + ')' }")
+    .fishPicture(:style="{ backgroundImage: 'url(' + fish.image + ')' }")
     .fishName(v-if='userLanguage == "nl"')
-      .fishText {{ fish.speciesNl }}
+      .fishWrapper
+        .fishText {{ fish.speciesNl }}
+        .fishDate Gevangen op: {{ date }}
     .fishName(v-if='userLanguage == "en"')
       .fishText {{ fish.species }}
+      .fishDate Caught at: {{ date }}
 </template>
 
 <script>
@@ -34,32 +37,10 @@ export default {
   created () {
     console.log('Fish opened, bound to id: ', this.$route.params.id)
     this.loading = true
-    this.getUserSettings()
-    this.fetchFish()
+    this.fetchDetailPage()
   },
   methods: {
-    fetchFish () {
-      var self = this
-      getUserFish().then(function (response) {
-        console.log('Succes! (Detail)', response.fish[self.$route.params.id])
-        var fishResponse = response.fish[self.$route.params.id]
-        if (fishResponse === undefined) {
-          self.errorMessage = '[self.fish_undefined@fetchFish@fishDetail]'
-          self.error = true
-          self.loading = false
-        }
-        self.fish = response.fish[self.$route.params.id]
-        console.log('Detail data attached')
-        self.loading = false
-        self.loaded = true
-      }, function (error) {
-        self.errorMessage = '[promise_failed_getUserFish@fetchFish@FishDetail] (Error: ' + error + ')'
-        console.log('Failed! (Detail)', error)
-        self.loading = false
-        self.error = true
-      })
-    },
-    getUserSettings () {
+    fetchDetailPage () {
       var self = this
       this.loading = true
       getUserSettings().then(function (response) {
@@ -68,11 +49,38 @@ export default {
         console.log('Language data attached')
         console.log('Language: ', self.userLanguage)
       }, function (error) {
-        self.errorMessage = '[promise_failed_getUserSettings@getUserSettings@FishDetail] (' + error + ')'
+        self.errorMessage = '[promise_failed_getUserSettings@fetchDetailPage@FishDetail] (' + error + ')'
         console.log('Failed! (Settings)', error)
         self.loading = false
         self.error = true
       })
+      getUserFish().then(function (response) {
+        console.log('Succes! (Detail)', response.fish[self.$route.params.id])
+        var fishResponse = response.fish[self.$route.params.id]
+        if (fishResponse === undefined) {
+          self.errorMessage = '[self.fish_undefined@fetchDetailPage@fishDetail]'
+          self.error = true
+          self.loading = false
+        }
+        self.fish = response.fish[self.$route.params.id]
+        console.log('Detail data attached')
+        self.loading = false
+        self.loaded = true
+      }, function (error) {
+        self.errorMessage = '[promise_failed_getUserFish@fetchDetailPage@FishDetail] (Error: ' + error + ')'
+        console.log('Failed! (Detail)', error)
+        self.loading = false
+        self.error = true
+      })
+    }
+  },
+  computed: {
+    date () {
+      var date = new Date(this.fish.date * 1000)
+      var hours = date.getHours()
+      var minutes = '0' + date.getMinutes()
+      var seconds = '0' + date.getSeconds()
+      return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
     }
   }
 }
