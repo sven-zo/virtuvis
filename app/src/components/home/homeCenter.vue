@@ -10,7 +10,7 @@
       p Er ging iets fout :(
       p Probeer het later opnieuw!
       p Kijk ook even of je internet hebt
-      p Foutmelding: promise_failed_getUserFish
+      p Foutmelding: {{ errorMessage }}
     //-
       Als de vissen geladen zijn verschijnen de FishCards.
       Er zijn twee soorten FishCards, een voor Nederlands en een voor Engels.
@@ -47,7 +47,8 @@ export default {
       loading: false,
       cards: null,
       error: null,
-      loaded: false
+      loaded: false,
+      errorMessage: 'Failed to get error message'
     }
   },
   /*
@@ -72,6 +73,7 @@ export default {
         self.cards = response.fish
         console.log('Card data attached')
       }, function (error) {
+        self.errorMessage = '[promise_failed_getUserFish@fetchFish] (Error: ' + error + ')'
         console.log('Failed! (Cards)', error)
         self.loading = false
         self.error = true

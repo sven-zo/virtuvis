@@ -11,7 +11,7 @@
     p Er ging iets fout :(
     p Probeer het later opnieuw!
     p Kijk ook even of je internet hebt
-    p Foutmelding: promise_failed_getUserSettings
+    p Foutmelding: {{ errorMessage }}
   //-
     'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
     'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
@@ -51,7 +51,8 @@ export default {
       userLanguage: null,
       loaded: false,
       loading: false,
-      error: null
+      error: null,
+      errorMessage: 'Failed to get error message'
     }
   },
   /*
@@ -77,6 +78,7 @@ export default {
         console.log('Language data attached')
         console.log('Language: ', self.userLanguage)
       }, function (error) {
+        self.errorMessage = '[promise_failed_getUserSettings@getUserSettings] (' + error + ')'
         console.log('Failed! (Settings)', error)
         self.loading = false
         self.error = true
