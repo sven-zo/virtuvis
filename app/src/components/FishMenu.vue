@@ -82,7 +82,14 @@ export default {
         this.middleButtonClass = 'middleButtonDown'
       }
     }
-  }// ,
+  },
+  // },
+  // computed: {
+  //   state: function () {
+  //     console.log(this.state)
+  //   }
+  // }
+  // ,
   // computed: {
   //   state: function () {
   //     if (this.state === 'up') {
@@ -90,14 +97,16 @@ export default {
   //     }
   //   }
   // }
-  // watch: {
-  //   'state': function (val, oldVal) {
-  //     console.log(oldVal + 'has been changed to ' + val + ' from outside.')
-  //     if (val === 'up') {
-  //       this.middleButtonClass = 'middleButtonUp'
-  //     }
-    // }
-  // }
+  watch: {
+    'state': function (val, oldVal) {
+      // console.log(oldVal + 'has been changed to ' + val + ' from outside.')
+      if (val === 'up') {
+        this.middleButtonClass = 'middleButtonUp'
+        console.log('(FishMenu) Emitting back to App, to reset the watcher.')
+        this.$emit('buttonReset', 'true')
+      }
+    }
+  }
 }
 </script>
 

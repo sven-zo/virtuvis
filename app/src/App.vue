@@ -2,7 +2,7 @@
   <div id="app">
     <div class="eventHandler"></div>
     <router-view @buttonState='buttonStateManager($event)'></router-view>
-    <fish-menu :state="buttonState"></fish-menu>
+    <fish-menu :state="buttonState" @buttonReset="buttonReset()"></fish-menu>
   </div>
 </template>
 
@@ -24,6 +24,10 @@ export default {
       console.log('(App) Got data from Home: buttonState')
       console.log('(App) Setting prop in: FishMenu')
       this.buttonState = data
+    },
+    buttonReset () {
+      console.log('(App) Resetting button state')
+      this.buttonState = 'null'
     }
   }
 }
