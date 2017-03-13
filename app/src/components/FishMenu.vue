@@ -20,7 +20,7 @@
     #cog.button(@click='cogClick')
       div
         img(:class='cogClass', src='../assets/settings.png')
-      div Instellingen
+      div Instellingen s:{{ state }}
 </template>
 
 <script>
@@ -39,6 +39,12 @@ export default {
       rodClass: 'rod',
       middleButtonClass: 'middleButtonDown'
     }
+  },
+  props: ['state'],
+  compiled () {
+    this.$on('homeButtonUp', function () {
+      this.middleButtonClass = 'middleButtonUp'
+    })
   },
   methods: {
     /*

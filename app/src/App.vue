@@ -1,7 +1,8 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    <fish-menu></fish-menu>
+    <div class="eventHandler"></div>
+    <router-view @buttonState="setButtonState($event)"></router-view>
+    <fish-menu :state="buttonState" ></fish-menu>
   </div>
 </template>
 
@@ -12,6 +13,22 @@ export default {
   name: 'app',
   components: {
     FishMenu
+  },
+  data: function () {
+    return {
+      buttonState: null
+    }
+  },
+  created () {
+    this.$on('buttonState', function (data) {
+      console.log('(App) Got an emit: buttonState')
+    })
+  },
+  methods: {
+    setButtonState (event) {
+      console.log('(App) Got an emit: buttonState')
+      this.buttonState = event
+    }
   }
 }
 

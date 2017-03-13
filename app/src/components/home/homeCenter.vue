@@ -68,9 +68,9 @@ export default {
       this.loading = true
       getUserFish().then(function (response) {
         console.log('Succes! (Cards)', response.fish)
+        self.cards = response.fish
         self.loading = false
         self.loaded = true
-        self.cards = response.fish
         console.log('Card data attached')
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserFish@fetchFish@HomeCenter] (Error: ' + error + ')'

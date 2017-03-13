@@ -15,6 +15,14 @@
     .fishName(v-if='userLanguage == "en"')
       .fishText {{ fish.species }}
       .fishDate Caught at: {{ date }}
+    .fishInfo(v-if='userLanguage == "nl"')
+      p Length: {{ fish.length }} centimeter
+      p Weight: {{ fish.weight }} kilo
+      p {{ fish.description }}
+    .fishIngo(v-if='userLanguage == "en"')
+      p Length: {{ inches }} inches
+      p Weight: {{ pounds }} pounds
+      p {{ fish.description }}
 </template>
 
 <script>
@@ -28,16 +36,15 @@ export default {
       loading: false,
       error: null,
       userLanguage: null,
-      image: null,
-      fish: [
-        'speciesNl', 'error'
-      ]
+      image: null
     }
   },
   created () {
     console.log('Fish opened, bound to id: ', this.$route.params.id)
     this.loading = true
     this.fetchDetailPage()
+    // console.log('(FishDetail Emitting buttonState to: App')
+    // this.$emit('buttonState', 'up')
   },
   methods: {
     fetchDetailPage () {
@@ -55,13 +62,13 @@ export default {
         self.error = true
       })
       getUserFish().then(function (response) {
-        console.log('Succes! (Detail)', response.fish[self.$route.params.id])
-        var fishResponse = response.fish[self.$route.params.id]
-        if (fishResponse === undefined) {
+        if (response === false) {
           self.errorMessage = '[self.fish_undefined@fetchDetailPage@fishDetail]'
           self.error = true
           self.loading = false
         }
+        var fishResponse = response.fish[self.$route.params.id]
+        console.log('Succes! (Detail)', fishResponse)
         self.fish = response.fish[self.$route.params.id]
         console.log('Detail data attached')
         self.loading = false
@@ -81,6 +88,12 @@ export default {
       var minutes = '0' + date.getMinutes()
       var seconds = '0' + date.getSeconds()
       return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
+    },
+    inches () {
+      return (this.fish.length * 0.393700787).toFixed(2)
+    },
+    pounds () {
+      return (this.fish.weight * 2.2046).toFixed(2)
     }
   }
 }
