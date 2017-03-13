@@ -1,8 +1,7 @@
 <?php
-namespace virtuvis\library\system;
 
 /**
- * Class Database
+ * Database Class
  * This class is written to speed up the process of doing simple database queries.
  */
 class Database
@@ -19,6 +18,7 @@ class Database
      * @param $user
      * @param $password
      * @param $database
+     * @return Database
      */
     public function __construct($host, $user, $password, $database)
     {
