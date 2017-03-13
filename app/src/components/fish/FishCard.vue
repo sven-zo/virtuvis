@@ -29,8 +29,8 @@ export default {
   methods: {
     navigate () {
       if (event) {
-        console.log('(FishCard) Emitting buttonState to: App')
-        this.$router.app.$emit('buttonState', 'up')
+        console.log('(FishCard) Emitting buttonState to: HomeCenter')
+        this.$emit('buttonState', 'up')
         this.$router.push('/fish/' + (this.id - 1))
       }
     }

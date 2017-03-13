@@ -20,7 +20,7 @@
     #cog.button(@click='cogClick')
       div
         img(:class='cogClass', src='../assets/settings.png')
-      div Instellingen s:{{ state }}
+      div Instellingen {{ state }}
 </template>
 
 <script>
@@ -41,11 +41,6 @@ export default {
     }
   },
   props: ['state'],
-  compiled () {
-    this.$on('homeButtonUp', function () {
-      this.middleButtonClass = 'middleButtonUp'
-    })
-  },
   methods: {
     /*
     / cogClick en cogReset worden gebruikt om te animeren.
@@ -87,7 +82,22 @@ export default {
         this.middleButtonClass = 'middleButtonDown'
       }
     }
-  }
+  }// ,
+  // computed: {
+  //   state: function () {
+  //     if (this.state === 'up') {
+  //       this.middleButtonClass = 'middleButtonUp'
+  //     }
+  //   }
+  // }
+  // watch: {
+  //   'state': function (val, oldVal) {
+  //     console.log(oldVal + 'has been changed to ' + val + ' from outside.')
+  //     if (val === 'up') {
+  //       this.middleButtonClass = 'middleButtonUp'
+  //     }
+    // }
+  // }
 }
 </script>
 

@@ -25,7 +25,7 @@
       .recent
       .sortbar
       //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
-      home-center(:language="userLanguage")
+      home-center(@buttonState='buttonStateManager($event)', :language="userLanguage")
 </template>
 
 <script>
@@ -83,6 +83,14 @@ export default {
         self.loading = false
         self.error = true
       })
+    },
+    /*
+    /
+    */
+    buttonStateManager (data) {
+      console.log('(Home) Got data from homeCenter: buttonState')
+      console.log('(Home) Emitting buttonState to: App')
+      this.$emit('buttonState', data)
     }
   },
   /*

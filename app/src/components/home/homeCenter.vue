@@ -18,8 +18,8 @@
       Deze instellingen worden meegegeven als prop vanuit het 'Home' component.
       Via 'v-for' laden we alle vissen vanuit een json bestand.
     .cardContainer(v-if='loaded')
-      fish-card(v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.speciesNl', :image='fish.image')
-      fish-card(v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.species', :image='fish.image')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.speciesNl', :image='fish.image')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.species', :image='fish.image')
 </template>
 
 <script>
@@ -78,6 +78,14 @@ export default {
         self.loading = false
         self.error = true
       })
+    },
+    /*
+    /
+    */
+    buttonStateManager (data) {
+      console.log('(HomeCenter) Got data from userFish: buttonState')
+      console.log('(HomeCenter) Emitting buttonState to: Home')
+      this.$emit('buttonState', data)
     }
   },
   /*

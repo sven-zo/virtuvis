@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="eventHandler"></div>
-    <router-view @buttonState="setButtonState($event)"></router-view>
-    <fish-menu :state="buttonState" ></fish-menu>
+    <router-view @buttonState='buttonStateManager($event)'></router-view>
+    <fish-menu :state="buttonState"></fish-menu>
   </div>
 </template>
 
@@ -19,15 +19,11 @@ export default {
       buttonState: null
     }
   },
-  created () {
-    this.$on('buttonState', function (data) {
-      console.log('(App) Got an emit: buttonState')
-    })
-  },
   methods: {
-    setButtonState (event) {
-      console.log('(App) Got an emit: buttonState')
-      this.buttonState = event
+    buttonStateManager (data) {
+      console.log('(App) Got data from Home: buttonState')
+      console.log('(App) Setting prop in: FishMenu')
+      this.buttonState = data
     }
   }
 }
