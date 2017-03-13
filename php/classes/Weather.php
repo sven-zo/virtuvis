@@ -44,6 +44,7 @@ class Weather extends Api
 
 
     /**
+     * Get the temperature in degrees celsius
      * @return float
      */
     public function getTemperatureC()
@@ -60,7 +61,8 @@ class Weather extends Api
     }
 
     /**
-     * @return mixed
+     * Get the temperature in degrees fahrenheit
+     * @return float
      */
     public function getTemperatureF()
     {
