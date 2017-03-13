@@ -9,8 +9,10 @@ class Weather extends Api
 {
     private $key;
     private $location;
-    private $conditions;
-    private $temprature;
+    private $condition;
+    private $temperatureC;
+    private $temperatureF;
+
 
     /**
      * Weather constructor.
@@ -27,21 +29,51 @@ class Weather extends Api
     }
 
     /**
-     * @return array
+     * @return string
      */
     public function getMainCondition()
     {
         $endpoint = 'api.openweathermap.org/data/2.5/weather?q='.$this->location.'&APPID='.$this->key.'&mode=json';
         $weatherData = $this->curlRequest($endpoint);
 
-        $conditions = [];
+        $condition = $weatherData->weather[0]->main;
+        $this->condition = $condition;
 
-        $conditions[] = $weatherData->weather[0]->main;
-
-        return $this->conditions = $conditions;
+        return $this->condition;
     }
 
 
+    /**
+     * @return float
+     */
+    public function getTemperatureC()
+    {
+        $endpoint = 'api.openweathermap.org/data/2.5/weather?q='.$this->location.'&APPID='.$this->key.'&mode=json';
+        $temperatureData = $this->curlRequest($endpoint);
+
+        $temperatureK = $temperatureData->main->temp;
+        $temperatureC = $temperatureK - 272.15;
+
+        $this->temperatureC = $temperatureC;
+
+        return $this->temperatureC;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTemperatureF()
+    {
+        $endpoint = 'api.openweathermap.org/data/2.5/weather?q='.$this->location.'&APPID='.$this->key.'&mode=json';
+        $temperatureData = $this->curlRequest($endpoint);
+
+        $temperatureK = $temperatureData->main->temp;
+        $temperatureF = ($temperatureK * ( 9 / 5 )) - 459.67;
+
+        $this->temperatureF = $temperatureF;
+
+        return $this->temperatureF;
+    }
 
 
 }
