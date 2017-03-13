@@ -56,7 +56,7 @@ class Wiki extends Api
             $filename = $wiki->images[0]->title;
         }
 
-        $filename = str_replace(' ', '%20', $filename);
+        $filename = str_replace(' ', '_', $filename);
         $endpointImageUrl = 'https://en.wikipedia.org/w/api.php?action=query&titles='.$filename.'&prop=imageinfo&iiprop=url&format=json';
 
 
