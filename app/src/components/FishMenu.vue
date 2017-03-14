@@ -20,7 +20,7 @@
     #cog.button(@click='cogClick')
       div
         img(:class='cogClass', src='../assets/settings.png')
-      div Instellingen {{ state }}
+      div Instellingen
 </template>
 
 <script>
@@ -83,20 +83,6 @@ export default {
       }
     }
   },
-  // },
-  // computed: {
-  //   state: function () {
-  //     console.log(this.state)
-  //   }
-  // }
-  // ,
-  // computed: {
-  //   state: function () {
-  //     if (this.state === 'up') {
-  //       this.middleButtonClass = 'middleButtonUp'
-  //     }
-  //   }
-  // }
   watch: {
     'state': function (val, oldVal) {
       // console.log(oldVal + 'has been changed to ' + val + ' from outside.')
