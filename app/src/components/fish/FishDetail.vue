@@ -17,13 +17,13 @@
       .fishText {{ fish.species }}
       .fishDate Caught at: {{ date }}
     .fishInfo(v-if='userLanguage == "nl"')
-      p Length: {{ fish.length }} centimeter
-      p Weight: {{ fish.weight }} kilo
+      p Lengte: {{ fish.length }} centimeter
+      p Gewicht: {{ fish.weight }} kilo
       p {{ fish.description }}
     .fishInfo(v-if='userLanguage == "en"')
       p Length: {{ inches }} inches
       p Weight: {{ pounds }} pounds
-      p {{ fish.description }}
+      p (Er zijn nog geen descriptions in het Engels) {{ fish.description }}
 </template>
 
 <script>
@@ -141,6 +141,15 @@ export default {
   font-size: 24px
   padding-top: 15px
 
+.fishDate
+  font-family: 'Roboto', sans-serif
+  color: gray
+
+.fishInfo
+  font-family: 'Roboto', sans-serif
+  color: black
+  padding-left: 10px
+  padding-right: 10px
 
 .loading-enter-active
   transition: opacity 1s

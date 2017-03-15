@@ -66,6 +66,7 @@ export default {
 .card
   // TODO: Add more media queries for smaller/bigger screen sizes
   margin: 10px
+  font-family: 'Roboto', sans-serif
 
 //*
 // Animaties voor wanneer het component wordt gecreërd.
