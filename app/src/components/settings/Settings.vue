@@ -1,40 +1,23 @@
-<template>
-    <div class="settingsWrapper">
-      <transition appear name="page">
-      <div class="settings" v-if="userLanguage === 'nl'">
-          <div class="upperBar">
-            <p>
-              Instellingen:
-            </p>
-          </div>
-          <p>
-            Hier komen de instellingen.
-          </p>
-          <p>
-            Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
-          </p>
-          <p>
-            Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
-          </p>
-      </div>
-      <div class="settings" v-if="userLanguage === 'en'">
-          <div class="upperBar">
-            <p>
-              Settings:
-            </p>
-          </div>
-          <p>
-            Here's where the settings are.
-          </p>
-          <p>
-            Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
-          </p>
-          <p>
-            Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
-          </p>
-      </div>
-    </transition>
-    </div>
+<template lang="pug">
+.wrapper
+  transition(appear, name='loading')
+    .loading(v-if='loading')
+      p#loadingMSG Loading settings...
+      #loader Loading...
+  transition(appear, name='page')
+    .loaded(v-if='loaded')
+      .settings(v-if="userLanguage === 'nl'")
+        .upperBar
+          p  Instellingen:
+        p  Hier komen de instellingen.
+        p  Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
+        p  Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
+      .settings(v-if="userLanguage === 'en'")
+        .upperBar
+          p  Settings:
+        p  Here's where the settings are.
+        p  Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
+        p  Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
 </template>
 
 <script>
@@ -109,4 +92,16 @@ h1
 p
   color: black
   font-family: 'Roboto', sans-serif
+
+.page-enter-active
+  transition: opacity .2s
+
+.page-enter
+  opacity: 0
+
+.loading-enter-active
+  transition: opacity 1s
+
+.loading-enter
+  opacity: 0
 </style>

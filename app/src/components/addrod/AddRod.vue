@@ -66,9 +66,10 @@ export default {
 
 <style lang="sass" scoped>
 //*
-// Dit importeert de palette file.
+// Dit importeert de palette file en het loading animatietje.
 // De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
 @import '../../style/palette.sass'
+@import '../../style/loading.css'
 
 .bottomBar
   background-color: red
