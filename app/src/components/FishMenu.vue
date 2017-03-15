@@ -11,19 +11,21 @@
       div
         //- De class van de images worden dynamisch aangepast zodat deze kunnen worden geanimeerd.
         img(:class='rodClass', src='../assets/rod.png')
-      div Voeg hengel toe
+      div {{ rodText }}
   transition(appear, name='fade')
     //- De class van #middleButton wordt dynamisch bepaald zodat de hoogte kan worden aangepast.
     #middleButton(@click='middleButtonClick', :class='middleButtonClass')
-      p.homeText  Home
+      p.homeText  {{ homeText }}
   transition(appear, name='fade')
     #cog.button(@click='cogClick')
       div
         img(:class='cogClass', src='../assets/settings.png')
-      div Instellingen
+      div {{ settingsText }}
 </template>
 
 <script>
+//  import {getUserSettings} from '../script/userSettings.js'
+
 /*
 / Parent: 'App.vue'
 */
@@ -37,10 +39,17 @@ export default {
     return {
       cogClass: 'cog',
       rodClass: 'rod',
-      middleButtonClass: 'middleButtonDown'
+      middleButtonClass: 'middleButtonDown',
+      loading: false,
+      error: null,
+      loaded: false,
+      userLanguage: null
     }
   },
   props: ['state'],
+  created () {
+    // this.getUserSettings()
+  },
   methods: {
     /*
     / cogClick en cogReset worden gebruikt om te animeren.
@@ -81,7 +90,24 @@ export default {
         this.$router.push('/')
         this.middleButtonClass = 'middleButtonDown'
       }
-    }
+    }// ,
+    // getUserSettings () {
+    //   var self = this
+    //   this.loading = true
+    //   getUserSettings().then(function (response) {
+    //     console.log('Succes! (FishMenu)', response.language)
+    //     self.loading = false
+    //     self.loaded = true
+    //     self.userLanguage = response.language
+    //     console.log('Language data attached')
+    //     console.log('Language: ', self.userLanguage)
+    //   }, function (error) {
+    //     self.errorMessage = '[promise_failed_getUserSettings@getUserSettings@FishMenu] (' + error + ')'
+    //     console.log('Failed! (FishMenu)', error)
+    //     self.loading = false
+    //     self.error = true
+    //   })
+    // }
   },
   watch: {
     'state': function (val, oldVal) {
@@ -90,6 +116,47 @@ export default {
         this.middleButtonClass = 'middleButtonUp'
         console.log('(FishMenu) Emitting back to App, to reset the watcher.')
         this.$emit('buttonReset', 'true')
+      }
+    }
+  },
+  computed: {
+    rodText () {
+      if (this.loading) {
+        return '...'
+      } else if (this.error) {
+        return 'Hengel / Fishing rod'
+      } else if (this.loaded) {
+        if (this.userLanguage === 'nl') {
+          return 'Vishengel toevoegen'
+        } else if (this.userLanguage === 'en') {
+          return 'Add rod'
+        }
+      }
+    },
+    homeText () {
+      if (this.loading) {
+        return '...'
+      } else if (this.error) {
+        return 'Home'
+      } else if (this.loaded) {
+        if (this.userLanguage === 'nl') {
+          return 'Terug'
+        } else if (this.userLanguage === 'en') {
+          return 'Home'
+        }
+      }
+    },
+    settingsText () {
+      if (this.loading) {
+        return '...'
+      } else if (this.error) {
+        return 'Settings / Instellingen'
+      } else if (this.loaded) {
+        if (this.userLanguage === 'nl') {
+          return 'Instellingen'
+        } else if (this.userLanguage === 'en') {
+          return 'Settings'
+        }
       }
     }
   }
