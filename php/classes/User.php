@@ -11,7 +11,7 @@ class User
     private $metric;
     private $language;
     private $fingerprint;
-    private $fish;
+    private $fishList;
     private $db;
 
     /**
@@ -31,14 +31,13 @@ class User
     /**
      * @return array
      */
-    public function getAll()
+    public function getAllUsers()
     {
         $db = $this->db;
 
         $result = $db->selectAll('users');
 
         return $result;
-
     }
 
     /**
@@ -67,4 +66,88 @@ class User
         return $this->name;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMetric()
+    {
+        $db = $this->db;
+
+        $result = $db->selectInnerjoin('metrics.name AS name','users','metrics','metric_id','id','fingerprint',$this->fingerprint);
+        $this->metric = $result['name'];
+
+        return $this->metric;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        $db = $this->db;
+
+        $result = $db->selectInnerjoin('languages.shortcode AS shortcode','users','languages','language_id','id','fingerprint',$this->fingerprint);
+        $this->language = $result['shortcode'];
+
+        return $this->language;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getfingerprint()
+    {
+        return $this->fingerprint;
+    }
+
+    public function listFish(){
+        $db = $this->db;
+
+        $fishList = $db->selectAllWhere('caught_by_user', 'user_id', $this->getId());
+
+        return $fishList;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $db = $this->db;
+        $db->update('users', 'name', $name, 'id', $this->getId());
+
+        $this->name = $name;
+    }
+
+
+    /**
+     * @param mixed $metricId
+     */
+    public function setMetric($metricId)
+    {
+        $db = $this->db;
+        $db->update('users', 'metric_id', $metricId, 'id', $this->getId());
+
+        $this->metric = $metricId;
+    }
+
+
+    /**
+     * @param mixed $languageId
+     */
+    public function setLanguage($languageId)
+    {
+        $db = $this->db;
+        $db->update('users', 'language_id', $languageId, 'id', $this->getId());
+
+        $this->language = $languageId;
+    }
+
+    /**
+     *
+     */
+    private function addUser()
+    {
+        //Save as later functionality but is a pretty smart posibility
+    }
 }

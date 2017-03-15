@@ -34,6 +34,19 @@ class Database
         return $this;
     }
 
+    private function stringifyValue($value)
+    {
+        $valueChecked = '';
+
+        if(is_string($value)){
+            $valueChecked .= '\''.$value.'\'';
+        } else {
+            $valueChecked = $value;
+        }
+
+        return $valueChecked;
+    }
+
     /**
      * @return \mysqli
      */
@@ -55,6 +68,23 @@ class Database
     }
 
     /**
+     * @param $table
+     * @param $whereColumn
+     * @param $value
+     * @return array0
+     *
+     */
+    public function selectAllWhere($table, $whereColumn, $value)
+    {
+        $value = $this->stringifyValue($value);
+
+        $selectAllWhereQuery = 'SELECT * FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$value.' ;';
+        $data = $this->connection->query($selectAllWhereQuery);
+
+        return $data->fetch_assoc();
+    }
+
+    /**
      * @param $column
      * @param $table
      * @param $whereColumn
@@ -63,17 +93,23 @@ class Database
      */
     public function select($column, $table, $whereColumn, $value)
     {
-        $valueChecked = '';
-
-        //Stringify the value if it's a string
-        if(is_string($value)){
-            $valueChecked .= '\''.$value.'\'';
-        } else {
-            $valueChecked = $value;
-        }
+        $valueChecked = $this->stringifyValue($value);
 
         $selectQuery = 'SELECT `'.$column.'`'.' FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$valueChecked.';';
         $data = $this->connection->query($selectQuery);
+
+        return $data->fetch_assoc();
+    }
+
+    public function selectInnerjoin($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $whereColumn, $whereValue)
+    {
+        $whereValue = $this->stringifyValue($whereValue);
+
+        $selectInnerQuery = 'SELECT '.$column.' FROM `'.$table.'` INNER JOIN `'.$joiningTable.'` ON '.
+            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn.' WHERE `'.
+            $whereColumn.'` = '.$whereValue.';';
+
+        $data = $this->connection->query($selectInnerQuery);
 
         return $data->fetch_assoc();
     }
@@ -88,14 +124,7 @@ class Database
      */
     public function update($table, $column, $value, $whereColumn, $whereValue)
     {
-        $valueChecked = '';
-
-        //Stringify the value if it's a string
-        if(is_string($value)){
-            $valueChecked .= '\''.$value.'\'';
-        } else {
-            $valueChecked = $value;
-        }
+        $valueChecked = $this->stringifyValue($value);
 
         $updateQuery = 'UPDATE `'.$table.'`'.' SET `'.$column.'` = '.$valueChecked.' WHERE `'.$whereColumn.'` = '.$whereValue.';';
         $this->connection->query($updateQuery);
