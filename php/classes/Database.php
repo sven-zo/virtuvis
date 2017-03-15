@@ -63,7 +63,16 @@ class Database
      */
     public function select($column, $table, $whereColumn, $value)
     {
-        $selectQuery = 'SELECT `'.$column.'`'.' FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$value.';';
+        $valueChecked = '';
+
+        //Stringify the value if it's a string
+        if(is_string($value)){
+            $valueChecked .= '\''.$value.'\'';
+        } else {
+            $valueChecked = $value;
+        }
+
+        $selectQuery = 'SELECT `'.$column.'`'.' FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$valueChecked.';';
         $data = $this->connection->query($selectQuery);
 
         return $data->fetch_assoc();
