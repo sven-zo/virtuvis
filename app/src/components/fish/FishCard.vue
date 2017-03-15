@@ -27,6 +27,14 @@ export default {
     }
   },
   methods: {
+    /*
+    / Deze method wordt gecalled als iemand in op een fishCard klikt.
+    / Het stuurt de gebruiker door naar de juiste pagina,
+    / en emit een bericht naar het component hierboven
+    / (om te zorgen dat het fishMenu knopje omhoog beweegt)
+    / De data neemt deze weg:
+    / FishCard -> HomeCenter -> Home -> App -> FishMenu
+    */
     navigate () {
       if (event) {
         console.log('(FishCard) Emitting buttonState to: HomeCenter')

@@ -85,7 +85,7 @@ export default {
       })
     },
     /*
-    /
+    / Deze method wordt gebruikt om de buttonState door te sturen naar het component hierboven.
     */
     buttonStateManager (data) {
       console.log('(Home) Got data from homeCenter: buttonState')

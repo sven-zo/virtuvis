@@ -1,3 +1,4 @@
+
 <!-- Dit is het component voor het scherm wat je ziet als je op een vis klikt. -->
 <template lang="pug">
 .wrapper
@@ -19,7 +20,7 @@
       p Length: {{ fish.length }} centimeter
       p Weight: {{ fish.weight }} kilo
       p {{ fish.description }}
-    .fishIngo(v-if='userLanguage == "en"')
+    .fishInfo(v-if='userLanguage == "en"')
       p Length: {{ inches }} inches
       p Weight: {{ pounds }} pounds
       p {{ fish.description }}
@@ -43,8 +44,6 @@ export default {
     console.log('Fish opened, bound to id: ', this.$route.params.id)
     this.loading = true
     this.fetchDetailPage()
-    // console.log('(FishDetail Emitting buttonState to: App')
-    // this.$emit('buttonState', 'up')
   },
   methods: {
     fetchDetailPage () {
@@ -82,6 +81,10 @@ export default {
     }
   },
   computed: {
+    /*
+    / Deze computed zorgt er voor dat de meegestuurde timestamp wordt
+    / omgezet naar leesbare tijd.
+    */
     date () {
       var date = new Date(this.fish.date * 1000)
       var hours = date.getHours()
@@ -89,9 +92,17 @@ export default {
       var seconds = '0' + date.getSeconds()
       return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
     },
+    /*
+    / Deze computed zet centimeters om naar inches
+    / als gebruikers inches als lengte-unit gebruiken
+    */
     inches () {
       return (this.fish.length * 0.393700787).toFixed(2)
     },
+    /*
+    / Deze computed zet kilogram om naar pounds
+    / als gebruikers pounda als gewicht-unit gebruiken
+    */
     pounds () {
       return (this.fish.weight * 2.2046).toFixed(2)
     }
