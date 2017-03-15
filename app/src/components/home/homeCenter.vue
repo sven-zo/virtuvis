@@ -83,8 +83,8 @@ export default {
     / Deze method wordt gebruikt om de buttonState door te sturen naar het component hierboven.
     */
     buttonStateManager (data) {
-      console.log('(HomeCenter) Got data from userFish: buttonState')
-      console.log('(HomeCenter) Emitting buttonState to: Home')
+      console.log('[HomeCenter] Got data from {userFish}: buttonState')
+      console.log('[HomeCenter] Emitting buttonState to [Home]')
       this.$emit('buttonState', data)
     }
   },

@@ -71,17 +71,21 @@ export default {
       var self = this
       this.loading = true
       getUserSettings().then(function (response) {
-        console.log('Succes! (Settings)', response.language)
+        console.log('[Home] Succes! (Settings)', response.language)
         self.loading = false
         self.loaded = true
         self.userLanguage = response.language
-        console.log('Language data attached')
-        console.log('Language: ', self.userLanguage)
+        console.log('[Home] Language data attached')
+        console.log('[Home] Language: ', self.userLanguage)
+        console.log('[Home] Emitting language to: App')
+        self.$emit('userLanguage', self.userLanguage)
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserSettings@getUserSettings@Home] (' + error + ')'
         console.log('Failed! (Settings)', error)
         self.loading = false
         self.error = true
+        console.log('[Home] Emitting language ERROR to: App')
+        self.$emit('userLanguage', false)
       })
     },
     /*

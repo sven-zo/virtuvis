@@ -40,13 +40,16 @@ export default {
       cogClass: 'cog',
       rodClass: 'rod',
       middleButtonClass: 'middleButtonDown',
-      loading: false,
+      loading: true,
       error: null,
       loaded: false,
       userLanguage: null
     }
   },
-  props: ['state'],
+  props: [
+    'state',
+    'lang'
+  ],
   created () {
     // this.getUserSettings()
   },
@@ -114,8 +117,20 @@ export default {
       // console.log(oldVal + 'has been changed to ' + val + ' from outside.')
       if (val === 'up') {
         this.middleButtonClass = 'middleButtonUp'
-        console.log('(FishMenu) Emitting back to App, to reset the watcher.')
+        console.log('[FishMenu] Emitting back to App, to reset the watcher.')
         this.$emit('buttonReset', 'true')
+      }
+    },
+    'lang': function (val, oldVal) {
+      if (!val) {
+        console.log('[FishMenu] Got language error from [App]')
+        this.error = true
+        this.loaded = true
+      } else {
+        console.log('[FishMenu] Setting userLanguage')
+        this.userLanguage = val
+        this.loading = false
+        this.loaded = true
       }
     }
   },

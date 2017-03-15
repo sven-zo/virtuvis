@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="eventHandler"></div>
-    <router-view @buttonState='buttonStateManager($event)'></router-view>
-    <fish-menu :state="buttonState" @buttonReset="buttonReset()"></fish-menu>
+    <router-view @userLanguage='languageManager($event)' @buttonState='buttonStateManager($event)'></router-view>
+    <fish-menu :lang="userLanguage" :state="buttonState" @buttonReset="buttonReset()"></fish-menu>
   </div>
 </template>
 
@@ -16,18 +16,24 @@ export default {
   },
   data: function () {
     return {
-      buttonState: null
+      buttonState: null,
+      userLanguage: null
     }
   },
   methods: {
     buttonStateManager (data) {
-      console.log('(App) Got data from Home: buttonState')
-      console.log('(App) Setting prop in: FishMenu')
+      console.log('[App] Got data from [Home]: buttonState')
+      console.log('[App] Setting buttonState prop in: [FishMenu]')
       this.buttonState = data
     },
     buttonReset () {
-      console.log('(App) Resetting button state')
+      console.log('[App] Resetting button state')
       this.buttonState = 'null'
+    },
+    languageManager (data) {
+      console.log('[App] Got data from [Home]: userLanguage')
+      console.log('[App] Setting lang prop in: [FishMenu]')
+      this.userLanguage = data
     }
   }
 }
