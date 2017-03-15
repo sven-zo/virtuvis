@@ -6,6 +6,18 @@
             Instellingen:
           </p>
         </div>
+        <p>
+          Hier komen de instellingen.
+        </p>
+        <p>
+          Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
+        </p>
+        <p>
+          Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
+        </p>
+        <p>
+          Fun fact: Dit is de enige pagina zonder Engelse vertaling.
+        </p>
     </div>
   </transition>
 </template>
