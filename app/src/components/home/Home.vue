@@ -21,7 +21,7 @@
     .home(v-if='loaded')
       .upperBar
         p
-          | Net gevangen:
+          | {{ caughtText }}
       .recent
       .sortbar
       //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
@@ -52,7 +52,8 @@ export default {
       loaded: false,
       loading: false,
       error: null,
-      errorMessage: 'Failed to get error message'
+      errorMessage: 'Failed to get error message',
+      caughtText: '...'
     }
   },
   /*
@@ -79,6 +80,13 @@ export default {
         console.log('[Home] Language: ', self.userLanguage)
         console.log('[Home] Emitting language to: App')
         self.$emit('userLanguage', self.userLanguage)
+        if (self.userLanguage === 'nl') {
+          self.caughtText = 'Net gevangen:'
+        } else if (self.userLanguage === 'en') {
+          self.caughtText = 'Just caught:'
+        } else {
+          self.caughtText = ''
+        }
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserSettings@getUserSettings@Home] (' + error + ')'
         console.log('Failed! (Settings)', error)
