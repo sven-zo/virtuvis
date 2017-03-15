@@ -1,20 +1,25 @@
 <!-- Dit is het component voor de pagina waar je je vishengel kan toevoegen. -->
 <template lang="pug">
-//-
-  'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
-  'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
-  'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
-transition(appear, name='page')
-  .settings(v-if='userLanguage == "nl"')
-    .upperBar
-      p  Vishengel toevoegen:
-    .bottomBar
-      p  Leg je dobber op het scherm, met de sensor naar beneden.
-  .settings(v-if='userLanguage == "en"')
-    .upperBar
-      p  Add a fishing rod:
-    .bottomBar
-      p To begin, place your bobber on the screen, facing down.
+.wrapper
+  transition(appear, name='loading')
+    .loading(v-if='loading')
+      p#loadingMSG Loading...
+      #loader Loading...
+  //-
+    'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+    'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+    'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
+  transition(appear, name='page')
+    .settings(v-if='userLanguage == "nl"')
+      .upperBar
+        p  Vishengel toevoegen:
+      .bottomBar
+        p  Leg je dobber op het scherm, met de sensor naar beneden.
+    .settings(v-if='userLanguage == "en"')
+      .upperBar
+        p  Add a fishing rod:
+      .bottomBar
+        p To begin, place your bobber on the screen, facing down.
 </template>
 
 <script>
@@ -103,4 +108,16 @@ h1
 p
   color: black
   font-family: 'Roboto', sans-serif
+
+.page-enter-active
+  transition: opacity .2s
+
+.page-enter
+  opacity: 0
+
+.loading-enter-active
+  transition: opacity 1s
+
+.loading-enter
+  opacity: 0
 </style>
