@@ -6,7 +6,6 @@
 //load configuration
 require_once 'config.php';
 
-$user = new User('loool', $db);
 
 //Close the database after everything is done
 $db->close();
