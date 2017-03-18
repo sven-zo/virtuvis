@@ -227,15 +227,14 @@ class Fish
 
     private function renderHabitat($weatherCondition)
     {
-        //$db = $this->db;
-//
-        //$allPossibilities = $db->selectAllWhere('habitats','condition',$weatherCondition);
-//
-        //shuffle($allPossibilities);
-//
-        //$habitat = $allPossibilities[0];
-//
-        //return $habitat;
+
+        $db = $this->db;
+
+        $allPossibilities = $db->selectAllWhere('habitats','weather',$weatherCondition);
+        shuffle($allPossibilities);
+        $habitat = $allPossibilities[0];
+
+        return $habitat;
     }
 
     private function renderSpecies($habitat)

@@ -81,7 +81,13 @@ class Database
         $selectAllWhereQuery = 'SELECT * FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$value.' ;';
         $data = $this->connection->query($selectAllWhereQuery);
 
-        return $data->fetch_assoc();
+        $result = [];
+
+        while ($row = $data->fetch_assoc()){
+            $result[] = $row;
+        }
+
+        return $result;
     }
 
     /**
