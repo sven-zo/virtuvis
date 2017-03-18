@@ -25,7 +25,18 @@ class User
        $this->fingerprint = $fingerprint;
        $this->db = $db;
 
-        return $this;
+       $userExists = $db->selectAllWhere('users', 'fingerprint', $fingerprint);
+
+       if($userExists){
+
+           return $this;
+
+       } else {
+
+           $this->addUser($this->fingerprint);
+           return $this;
+       }
+
     }
 
     /**
@@ -146,8 +157,15 @@ class User
     /**
      *
      */
-    private function addUser()
+    private function addUser($fingerprint)
     {
-        //Save as later functionality but is a pretty smart posibility
+        //Save as later functionality but is a pretty smart possibility
+        $db = $this->db;
+
+        $registration = ['name','metric_id','language_id','fingerprint'];
+        $values = ['newFisher', 1, 1, $fingerprint];
+
+        $db->insert('users',$registration,$values);
+
     }
 }

@@ -71,7 +71,7 @@ class Database
      * @param $table
      * @param $whereColumn
      * @param $value
-     * @return array0
+     * @return array
      *
      */
     public function selectAllWhere($table, $whereColumn, $value)

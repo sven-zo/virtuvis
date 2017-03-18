@@ -6,13 +6,7 @@
 //load configuration
 require_once 'config.php';
 
-$user = new User('abctest', $db);
-var_dump($user->getId());
-var_dump($user->getName());
-var_dump($user->getMetric());
-var_dump($user->getLanguage());
-var_dump($user->listFish());
-
+$user = new User('loool', $db);
 
 //Close the database after everything is done
 $db->close();
