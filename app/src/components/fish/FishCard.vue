@@ -17,11 +17,11 @@ transition(appear, name='card')
 export default {
   props: ['id', 'name', 'image'],
   computed: {
-      /*
-      / Dit zet het ID van de card op een unieke waarde bij het creëren.
-      / Een card met id 1 zou als DOM-id card_id_1 krijgen.
-      / Dit is handig om de cards later te kunnen selecteren via de DOM API vanuit andere componenten.
-      */
+    /*
+    / Dit zet het ID van de card op een unieke waarde bij het creëren.
+    / Een card met id 1 zou als DOM-id card_id_1 krijgen.
+    / Dit is handig om de cards later te kunnen selecteren via de DOM API vanuit andere componenten.
+    */
     cardId () {
       return 'card_id_' + this.id + ' card'
     }

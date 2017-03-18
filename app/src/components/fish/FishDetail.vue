@@ -2,11 +2,18 @@
 <!-- Dit is het component voor het scherm wat je ziet als je op een vis klikt. -->
 <template lang="pug">
 .wrapper
+  //-
+    'transition' zorgt ervoor dat de het compontent kan worden geanimeerd.
+    'appear' wordt gebruikt om deze animatie uit te voeren bij het ontstaan van het element.
+    'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
   transition(appear, name='loading')
+    //- Dit wordt getoond als deze pagina laadt
     .loading(v-if='loading')
       p#loadingMSG Loading fish...
       #loader Loading...
+  //- Dit wordt getoond als er errors zijn
   .error(v-if='error')
+  //- Dit wordt getoond als de pagina geladen is
   .fishDetail(v-if='loaded')
     .fishPicture(:style="{ backgroundImage: 'url(' + fish.image + ')' }")
     .fishName(v-if='userLanguage == "nl"')
@@ -46,6 +53,9 @@ export default {
     this.fetchDetailPage()
   },
   methods: {
+    /*
+    / Deze functie haalt alle benodigde gegevens voor de detailpagina op.
+    */
     fetchDetailPage () {
       var self = this
       this.loading = true
@@ -81,9 +91,10 @@ export default {
     }
   },
   computed: {
-    /*
-    / Deze computed zorgt er voor dat de meegestuurde timestamp wordt
-    / omgezet naar leesbare tijd.
+   /**
+    * Deze computed zorgt er voor dat de meegestuurde timestamp wordt
+    * omgezet naar leesbare tijd.
+    * @return {String} Tijd als string
     */
     date () {
       var date = new Date(this.fish.date * 1000)
@@ -92,16 +103,18 @@ export default {
       var seconds = '0' + date.getSeconds()
       return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
     },
-    /*
-    / Deze computed zet centimeters om naar inches
-    / als gebruikers inches als lengte-unit gebruiken
+   /**
+    * Deze computed zet centimeter om naar inches
+    * als de gebruiker inches als lengte-unit gebruikt
+    * @return {number} Lengte in inches
     */
     inches () {
       return (this.fish.length * 0.393700787).toFixed(2)
     },
-    /*
-    / Deze computed zet kilogram om naar pounds
-    / als gebruikers pounda als gewicht-unit gebruiken
+   /**
+    * Deze computed zet kilogram om naar pounds
+    * als de gebruiker pounds als gewicht-unit gebruikt
+    * @return {number} Gewicht in pounds
     */
     pounds () {
       return (this.fish.weight * 2.2046).toFixed(2)
@@ -131,7 +144,7 @@ export default {
   width: 100%
   height: 60px
   background-color: #F2F2F2
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
   transition: all 0.3s cubic-bezier(.25,.8,.25,1)
   display: flex
   justify-content: center

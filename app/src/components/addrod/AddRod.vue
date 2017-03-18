@@ -1,4 +1,5 @@
 <!-- Dit is het component voor de pagina waar je je vishengel kan toevoegen. -->
+<!-- Deze pagina is subject to change, als we VirtuVision gaan gebruiken, misschien telefoon onder camera houden, en dobber er dan op leggen?-->
 <template lang="pug">
 .wrapper
   transition(appear, name='loading')

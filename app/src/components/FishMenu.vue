@@ -93,34 +93,25 @@ export default {
         this.$router.push('/')
         this.middleButtonClass = 'middleButtonDown'
       }
-    }// ,
-    // getUserSettings () {
-    //   var self = this
-    //   this.loading = true
-    //   getUserSettings().then(function (response) {
-    //     console.log('Succes! (FishMenu)', response.language)
-    //     self.loading = false
-    //     self.loaded = true
-    //     self.userLanguage = response.language
-    //     console.log('Language data attached')
-    //     console.log('Language: ', self.userLanguage)
-    //   }, function (error) {
-    //     self.errorMessage = '[promise_failed_getUserSettings@getUserSettings@FishMenu] (' + error + ')'
-    //     console.log('Failed! (FishMenu)', error)
-    //     self.loading = false
-    //     self.error = true
-    //   })
-    // }
+    }
   },
   watch: {
+    /*
+     * Deze watcher kijkt of de 'state' prop is aangepast
+     * Zodat de middleButtonClass zonodig kan worden aangepast
+     * Er wordt daarna een reset ge-emit zodat er weer wordt gewatcht
+     */
     'state': function (val, oldVal) {
-      // console.log(oldVal + 'has been changed to ' + val + ' from outside.')
       if (val === 'up') {
         this.middleButtonClass = 'middleButtonUp'
         console.log('[FishMenu] Emitting back to App, to reset the watcher.')
         this.$emit('buttonReset', 'true')
       }
     },
+    /*
+     * Deze watcher kijkt of de 'lang' prop ins aangepast
+     * Als dit zo is wordt de taal ingesteld.
+     */
     'lang': function (val, oldVal) {
       if (!val) {
         console.log('[FishMenu] Got language error from [App]')
@@ -135,6 +126,9 @@ export default {
     }
   },
   computed: {
+    /*
+     * Deze computed past de tekst bij de vishengel aan op basis van de taal.
+     */
     rodText () {
       if (this.loading) {
         return '...'
@@ -148,6 +142,9 @@ export default {
         }
       }
     },
+    /*
+     * Deze computed past de tekst van de thuisknop aan op basis van de taal.
+     */
     homeText () {
       if (this.loading) {
         return '...'
@@ -161,6 +158,9 @@ export default {
         }
       }
     },
+    /*
+     * Deze computed past de tekst van de settings aan op basis van de taal.
+     */
     settingsText () {
       if (this.loading) {
         return '...'
