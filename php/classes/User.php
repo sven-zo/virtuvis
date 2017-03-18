@@ -16,6 +16,7 @@ class User
 
     /**
      * User constructor.
+     * Checks if user exists and adds to database if necessary
      * @param $fingerprint
      * @param $db
      * @return User
@@ -155,7 +156,9 @@ class User
     }
 
     /**
-     *
+     * addUser method
+     * Adds user to the database
+     * @param $fingerprint
      */
     private function addUser($fingerprint)
     {
