@@ -204,7 +204,7 @@ $middle-button-offset: 10px
   flex-direction: row
   justify-content: space-around
   position: fixed
-  width: 100%
+  width: 100vw
   bottom: 0
 
 //*
