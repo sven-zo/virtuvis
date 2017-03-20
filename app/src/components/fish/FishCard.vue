@@ -11,11 +11,15 @@ transition(appear, name='card')
 </template>
 
 <script>
+import * as smartcrop from 'smartcrop'
 /*
 / Parent: 'HomeCenter.vue'
 */
 export default {
   props: ['id', 'name', 'image'],
+  created () {
+    this.cropImage()
+  },
   computed: {
     /*
     / Dit zet het ID van de card op een unieke waarde bij het creëren.
@@ -41,6 +45,26 @@ export default {
         this.$emit('buttonState', 'up')
         this.$router.push('/fish/' + (this.id - 1))
       }
+    },
+    /**
+     *
+     */
+    cropImage () {
+      var imageObj = new Image()
+      // imageObj.src = this.image
+      imageObj.src = this.image + '?' + new Date().getTime()
+      imageObj.setAttribute('crossOrigin', '')
+      imageObj.addEventListener('load', function () {
+        console.log('Image loaded.')
+        smartcrop.crop(imageObj, {
+          minScale: 1.0,
+          width: 150,
+          height: 150,
+          ruleOfThirds: true
+        }).then(function (result) {
+          console.log(result)
+        })
+      })
     }
   }
 }

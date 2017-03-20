@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "node-vibrant": "^3.0.0-alpha.2",
+    "smartcrop": "^1.1.1",
     "vue": "^2.2.1",
     "vue-router": "^2.2.0"
   },
