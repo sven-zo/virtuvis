@@ -12,15 +12,11 @@ transition(appear, name='card')
 </template>
 
 <script>
-import * as smartcrop from 'smartcrop'
 /*
 / Parent: 'HomeCenter.vue'
 */
 export default {
   props: ['id', 'name', 'image'],
-  created () {
-    this.cropImage()
-  },
   computed: {
     /*
     / Dit zet het ID van de card op een unieke waarde bij het creëren.
