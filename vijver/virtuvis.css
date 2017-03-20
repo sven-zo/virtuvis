@@ -1,0 +1,43 @@
+body {
+    background-color: #00BCD4;
+    margin: 0;
+}
+
+.fish {
+    position: absolute;
+    width: 200;
+    height: 206;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+#steen {
+    z-index: -1;
+}
+
+#steen1 {
+    z-index: -1;
+}
+
+#steen2 {
+    z-index: -1;
+}
+
+#steen3 {
+    z-index: -1;
+}
+
+#fish {
+    z-index: 1;
+}
+
+#fish2 {
+    z-index: 1;
+}
+
+#fish3 {
+    z-index: 1;
+}
+
