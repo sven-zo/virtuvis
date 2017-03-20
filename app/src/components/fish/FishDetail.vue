@@ -36,6 +36,7 @@
 <script>
 import {getUserFish} from '../../script/userFish.js'
 import {getUserSettings} from '../../script/userSettings.js'
+import * as Vibrant from 'node-vibrant'
 
 export default {
   data: function () {
@@ -82,6 +83,10 @@ export default {
         console.log('Detail data attached')
         self.loading = false
         self.loaded = true
+
+        let v = new Vibrant('../../../../static/appel.jpg')
+        v.getPalette().then((palette) => console.log(palette.Vibrant.getHex()))
+        //
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserFish@fetchDetailPage@FishDetail] (Error: ' + error + ')'
         console.log('Failed! (Detail)', error)
