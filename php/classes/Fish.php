@@ -227,7 +227,6 @@ class Fish
 
     private function renderHabitat($weatherCondition)
     {
-
         $db = $this->db;
 
         $allPossibilities = $db->selectAllWhere('habitats','weather',$weatherCondition);
@@ -239,7 +238,11 @@ class Fish
 
     private function renderSpecies($habitat)
     {
+        $db = $this->db;
 
+        //A lot has to happen here
+
+       // return $species;
     }
 
     private function randomWeight($species)

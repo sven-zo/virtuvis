@@ -117,7 +117,9 @@ class User
 
         $fishList = $db->selectAllWhere('caught_by_user', 'user_id', $this->getId());
 
-        return $fishList;
+        $this->fishList = $fishList;
+
+        return $this->fishList;
     }
 
     /**
