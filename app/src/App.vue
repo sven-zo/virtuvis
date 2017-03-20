@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="eventHandler"></div>
-    <router-view @userLanguage='languageManager($event)' @buttonState='buttonStateManager($event)'></router-view>
-    <fish-menu :lang="userLanguage" :state="buttonState" @buttonReset="buttonReset()"></fish-menu>
+    <router-view @buttonColor='buttonColorManager($event)' @userLanguage='languageManager($event)' @buttonState='buttonStateManager($event)'></router-view>
+    <fish-menu :color='buttonColor' :lang="userLanguage" :state="buttonState" @buttonReset="buttonReset()"></fish-menu>
   </div>
 </template>
 
@@ -16,6 +16,7 @@ export default {
   },
   data: function () {
     return {
+      buttonColor: '#673AB7',
       buttonState: null,
       userLanguage: null
     }
@@ -34,6 +35,11 @@ export default {
       console.log('[App] Got data from [Home]: userLanguage')
       console.log('[App] Setting lang prop in: [FishMenu]')
       this.userLanguage = data
+    },
+    buttonColorManager (data) {
+      console.log('[App] Got data from [FishDetail]: buttonColor')
+      console.log('[App] Setting color prop in: [FishMenu]')
+      this.buttonColor = data
     }
   }
 }

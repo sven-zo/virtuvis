@@ -48,7 +48,8 @@ export default {
   },
   props: [
     'state',
-    'lang'
+    'lang',
+    'color'
   ],
   created () {
     // this.getUserSettings()
@@ -123,6 +124,10 @@ export default {
         this.loading = false
         this.loaded = true
       }
+    },
+    'color': function (val, oldVal) {
+      console.log('[FishMenu] Setting color')
+      document.getElementById('middleButton').style.backgroundColor = val
     }
   },
   computed: {

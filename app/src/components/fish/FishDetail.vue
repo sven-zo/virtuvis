@@ -49,7 +49,7 @@ export default {
     }
   },
   created () {
-    console.log('Fish opened, bound to id: ', this.$route.params.id)
+    console.log('[FishDetail] Fish opened, bound to id: ', this.$route.params.id)
     this.loading = true
     this.fetchDetailPage()
   },
@@ -61,10 +61,10 @@ export default {
       var self = this
       this.loading = true
       getUserSettings().then(function (response) {
-        console.log('Succes! (Settings)', response)
+        console.log(' [FishDetail]Succes! (Settings)', response)
         self.userLanguage = response.language
-        console.log('Language data attached')
-        console.log('Language: ', self.userLanguage)
+        console.log('[FishDetail] Language data attached')
+        console.log('[FishDetail] Language: ', self.userLanguage)
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserSettings@fetchDetailPage@FishDetail] (' + error + ')'
         console.log('Failed! (Settings)', error)
@@ -78,13 +78,13 @@ export default {
           self.loading = false
         }
         var fishResponse = response.fish[self.$route.params.id]
-        console.log('Succes! (Detail)', fishResponse)
+        console.log('[FishDetail] Succes! (Detail)', fishResponse)
         self.fish = response.fish[self.$route.params.id]
-        console.log('Detail data attached')
+        console.log('[FishDetail] Detail data attached')
         self.loading = false
         self.loaded = true
 
-        console.log('Getting palette for image:', self.fish.image)
+        console.log('[FishDetail] Getting palette for image:', self.fish.image)
         let v = new Vibrant(self.fish.image)
         // v.getPalette().then((palette) => console.log(palette.Vibrant.getHex()))
         // v.getPalette().then((palette) => document.getElementsByClassName('fishPicture')[0].style.backgroundColor = palette.Vibrant.getHex())
@@ -94,6 +94,8 @@ export default {
           document.getElementsByClassName('fishName')[0].style.backgroundColor = palette.DarkVibrant.getHex()
           document.getElementsByClassName('fishText')[0].style.color = palette.DarkVibrant.getTitleTextColor()
           document.getElementsByClassName('fishDate')[0].style.color = palette.DarkVibrant.getBodyTextColor()
+          console.log('[FishDetail] Emitting buttonColor to [App]')
+          self.$emit('buttonColor', palette.Vibrant.getHex())
         })
         // -
       }, function (error) {
