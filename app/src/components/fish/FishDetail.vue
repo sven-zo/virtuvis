@@ -89,11 +89,11 @@ export default {
         // v.getPalette().then((palette) => console.log(palette.Vibrant.getHex()))
         // v.getPalette().then((palette) => document.getElementsByClassName('fishPicture')[0].style.backgroundColor = palette.Vibrant.getHex())
         v.getPalette().then(function (palette) {
-          console.log('Kleur:', palette.Vibrant.getHex())
+          console.log('[FishDetail] Palette kleuren worden gezet.')
           document.getElementsByClassName('fishPicture')[0].style.backgroundColor = palette.Vibrant.getHex()
           document.getElementsByClassName('fishName')[0].style.backgroundColor = palette.DarkVibrant.getHex()
-          document.getElementsByClassName('fishText')[0].style.color = palette.LightVibrant.getHex()
-          document.getElementsByClassName('fishDate')[0].style.color = palette.Muted.getHex()
+          document.getElementsByClassName('fishText')[0].style.color = palette.DarkVibrant.getTitleTextColor()
+          document.getElementsByClassName('fishDate')[0].style.color = palette.DarkVibrant.getBodyTextColor()
         })
         // -
       }, function (error) {
@@ -150,7 +150,8 @@ export default {
   height: 300px
   background-color: $accent-color
   background-repeat: no-repeat
-  background-size: contain
+  // background-size: contain
+  background-size: cover
   background-position: center
 
 .fishName
