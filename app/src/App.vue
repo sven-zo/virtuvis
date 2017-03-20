@@ -37,7 +37,7 @@ export default {
       this.userLanguage = data
     },
     buttonColorManager (data) {
-      console.log('[App] Got data from [FishDetail]: buttonColor')
+      console.log('[App] Got data from [anonymous]: buttonColor')
       console.log('[App] Setting color prop in: [FishMenu]')
       this.buttonColor = data
     }

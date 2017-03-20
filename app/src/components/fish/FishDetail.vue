@@ -90,12 +90,12 @@ export default {
         // v.getPalette().then((palette) => document.getElementsByClassName('fishPicture')[0].style.backgroundColor = palette.Vibrant.getHex())
         v.getPalette().then(function (palette) {
           console.log('[FishDetail] Palette kleuren worden gezet.')
-          document.getElementsByClassName('fishPicture')[0].style.backgroundColor = palette.Vibrant.getHex()
-          document.getElementsByClassName('fishName')[0].style.backgroundColor = palette.DarkVibrant.getHex()
-          document.getElementsByClassName('fishText')[0].style.color = palette.DarkVibrant.getTitleTextColor()
-          document.getElementsByClassName('fishDate')[0].style.color = palette.DarkVibrant.getBodyTextColor()
+          document.getElementsByClassName('fishPicture')[0].style.backgroundColor = palette.Muted.getHex()
+          document.getElementsByClassName('fishName')[0].style.backgroundColor = palette.Vibrant.getHex()
+          document.getElementsByClassName('fishText')[0].style.color = palette.Vibrant.getTitleTextColor()
+          document.getElementsByClassName('fishDate')[0].style.color = palette.Vibrant.getBodyTextColor()
           console.log('[FishDetail] Emitting buttonColor to [App]')
-          self.$emit('buttonColor', palette.Vibrant.getHex())
+          self.$emit('buttonColor', palette.DarkVibrant.getHex())
         })
         // -
       }, function (error) {

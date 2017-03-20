@@ -43,6 +43,7 @@ export default {
   */
   created () {
     this.getUserSettings()
+    this.$emit('buttonColor', '#673AB7')
   },
   methods: {
     /*
