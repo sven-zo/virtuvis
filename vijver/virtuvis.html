@@ -8,17 +8,17 @@
 </head>
 <body>
 <div id="fish">
-    <img src="images/vis.png" name="fish" id="fishimg" alt="fish" />
+    <img src="images/visgeel1.png" name="fish" id="fishimg" alt="fish" />
 </div>
 <div id="fish2">
-    <img src="images/vis1.png" name="fish" id="fish2img" alt="fish" />
+    <img src="images/visroze2.png" name="fish" id="fish2img" alt="fish" />
 </div>
 <div id="fish3">
-    <img src="images/vis2.png" name="fish" id="fish3img" alt="fish" />
+    <img src="images/visblauw3.png" name="fish" id="fish3img" alt="fish" />
 </div>
-<div id="fish4">
-    <img src="images/vis3.png" name="fish" id="fish4img" alt="fish" />
-</div>
+<!--<div id="fish4">-->
+    <!--<img src="images/vispaars.png" name="fish" id="fish4img" alt="fish" />-->
+<!--</div>-->
 <div id="steen">
     <img src="images/steen.png" name="steen" alt="fish" />
 </div>
@@ -57,8 +57,8 @@ var fish2 = document.getElementById("fish2");
 var fish2img = document.getElementById("fish2img");
 var fish3 =  document.getElementById("fish3");
 var fish3img = document.getElementById("fish3img");
-var fish4 =  document.getElementById("fish4");
-var fish4img = document.getElementById("fish4img");
+//var fish4 =  document.getElementById("fish4");
+//var fish4img = document.getElementById("fish4img");
 
 var width = window.innerWidth;
 var height = window.innerHeight;
@@ -66,20 +66,20 @@ var height = window.innerHeight;
 var a = 0;
 var b = 0;
 var c = 0;
-var d = 0;
+// var d = 0;
 var rotation = 0;
 var rotation2 = 30;
 var rotation3 = 65;
-var rotation4 = 90;
+// var rotation4 = 90;
 
 setInterval(function() {
     moveFish1();
     moveFish2();
     moveFish3();
-    moveFish4();
+//    moveFish4();
 }, 1000/60);
 
-function moveFish1 () { // GREEN
+function moveFish1 () { // GEEL
     var cx = 120; // x positie
     var cy = 170; // y positie
     var r = 150; // Radius van de circel
@@ -91,7 +91,7 @@ function moveFish1 () { // GREEN
     fishimg.style.transform="rotate("+rotation+"deg)";
 }
 
-function moveFish2 () { // RED
+function moveFish2 () { // MAGENTA
     var cx = 750;
     var cy = 280;
     var r = 50;
@@ -103,7 +103,7 @@ function moveFish2 () { // RED
     fish2img.style.transform="rotate("+rotation2+"deg)";
 }
 
-function moveFish3 () { //ORANGE
+function moveFish3 () { // CYAAN
     var cx = 400;
     var cy = 100;
     var r = 200;
@@ -115,16 +115,16 @@ function moveFish3 () { //ORANGE
     fish3img.style.transform="rotate("+rotation3+"deg)";
 }
 
-function moveFish4 () { //PAARS
-    var cx = 200;
-    var cy = 0;
-    var r = 150;
-    d += 0.02;
-    var x = cx + r * Math.cos(d);
-    var y = cy + r * Math.sin(d);
-    fish4.style.transform="translate("+x+"px, "+y+"px)";
-    rotation4 += 0.5;
-    fish4img.style.transform="rotate("+rotation4+"deg)";
-}
+//function moveFish4 () { //PAARS
+//    var cx = 200;
+//    var cy = 0;
+//    var r = 150;
+//    d += 0.02;
+//    var x = cx + r * Math.cos(d);
+//    var y = cy + r * Math.sin(d);
+//    fish4.style.transform="translate("+x+"px, "+y+"px)";
+//    rotation4 += 0.5;
+//    fish4img.style.transform="rotate("+rotation4+"deg)";
+//}
 
 </script>
