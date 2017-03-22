@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Weather Class
+ * Wiki Class
  * This class is written to speed up the fetching data from the wikipedia API
  */
 
@@ -24,6 +24,8 @@ class Wiki extends Api
     public function getDescription($species)
     {
         // https://en.wikipedia.org/w/api.php?action=parse&page=cheese&prop=sections&format=json
+
+        $species = str_replace(' ', '_', $species);
 
         $language = $this->language;
         $endpoint = 'https://'.$language.'.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles='.$species;
@@ -48,13 +50,14 @@ class Wiki extends Api
      */
     public function getImage($species)
     {
+        $species = str_replace(' ', '_', $species);
         $endpointFileNames = 'https://en.wikipedia.org/w/api.php?format=json&action=query&prop=images&titles='.$species;
 
         $filenameData =  $this->curlRequest($endpointFileNames);
         $filename = '';
 
         foreach($filenameData->query->pages as $key => $wiki){
-            $filename = $wiki->images[0]->title;
+            $filename = $wiki->images[1]->title;
         }
 
         $filename = str_replace(' ', '_', $filename);

@@ -6,8 +6,6 @@
 //load configuration
 require_once 'config.php';
 
-var_dump($db->selectAll('users'));
-
 //Close the database after everything is done
 $db->close();
 

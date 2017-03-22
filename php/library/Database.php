@@ -85,7 +85,7 @@ class Database
     {
         $value = $this->stringifyValue($value);
 
-        $selectAllWhereQuery = 'SELECT * FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$value.' ;';
+        $selectAllWhereQuery = 'SELECT * FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$value;
         $data = $this->connection->query($selectAllWhereQuery);
 
         $result = [];
@@ -108,7 +108,7 @@ class Database
     {
         $valueChecked = $this->stringifyValue($value);
 
-        $selectQuery = 'SELECT `'.$column.'`'.' FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$valueChecked.';';
+        $selectQuery = 'SELECT '.$column.' FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$valueChecked.';';
         $data = $this->connection->query($selectQuery);
 
         $result = [];
@@ -120,7 +120,24 @@ class Database
         return $result;
     }
 
-    public function selectInnerjoin($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $whereColumn, $whereValue)
+    public function selectInnerjoin($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn)
+    {
+
+        $selectInnerQuery = 'SELECT '.$column.' FROM `'.$table.'` INNER JOIN `'.$joiningTable.'` ON '.
+            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn;
+
+        $data = $this->connection->query($selectInnerQuery);
+
+        $result = [];
+
+        while ($row = $data->fetch_assoc()){
+            $result[] = $row;
+        }
+
+        return $result;
+    }
+
+    public function selectInnerjoinWhere($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $whereColumn, $whereValue)
     {
         $whereValue = $this->stringifyValue($whereValue);
 
@@ -150,6 +167,7 @@ class Database
     public function update($table, $column, $value, $whereColumn, $whereValue)
     {
         $valueChecked = $this->stringifyValue($value);
+        mysqli_real_escape_string($this->getConnection(), $valueChecked);
 
         $updateQuery = 'UPDATE `'.$table.'`'.' SET `'.$column.'` = '.$valueChecked.' WHERE `'.$whereColumn.'` = '.$whereValue.';';
         $this->connection->query($updateQuery);
@@ -189,6 +207,11 @@ class Database
                 $valueString .= ', ';
             }
         }
+
+        //Make a real escape string as security measure
+        mysqli_real_escape_string($this->getConnection(), $columnString);
+        mysqli_real_escape_string($this->getConnection(), $valueString);
+
 
         $insertQuery = 'INSERT INTO `'.$table.'` ('.$columnString.') VALUES ('.$valueString.');';
         $this->connection->query($insertQuery);
