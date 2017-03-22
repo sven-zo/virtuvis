@@ -7,6 +7,12 @@
 
 <script>
 import FishMenu from '@/components/FishMenu.vue'
+import Fingerprint2 from 'fingerprintjs2'
+
+new Fingerprint2().get(function (result, components) {
+  console.log(result) //  a hash, representing your device fingerprint
+  console.log(components) // an array of FP components
+})
 
 export default {
   name: 'app',
