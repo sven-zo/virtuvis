@@ -21,11 +21,16 @@
         .fishText {{ fish.speciesNl }}
         .fishDate Gevangen op: {{ date }}
     .fishName(v-if='userLanguage == "en"')
-      .fishText {{ fish.species }}
-      .fishDate Caught at: {{ date }}
+      .fishWrapper
+        .fishText {{ fish.species }}
+        .fishDate Caught at: {{ date }}
     .fishInfo(v-if='userLanguage == "nl"')
-      p Lengte: {{ fish.length }} centimeter
-      p Gewicht: {{ fish.weight }} kilo
+      .fishLine
+        p Lengte: {{ fish.length }} centimeter
+        Indicator(number='3')
+      .fishLine
+        p Gewicht: {{ fish.weight }} kilo
+        Indicator(number='1')
       p {{ fish.description }}
     .fishInfo(v-if='userLanguage == "en"')
       p Length: {{ inches }} inches
@@ -34,6 +39,8 @@
 </template>
 
 <script>
+import Indicator from '@/components/fish/Indicator.vue'
+
 import {getUserFish} from '../../script/userFish.js'
 import {getUserSettings} from '../../script/userSettings.js'
 import * as Vibrant from 'node-vibrant'
@@ -47,6 +54,9 @@ export default {
       userLanguage: null,
       image: null
     }
+  },
+  components: {
+    Indicator
   },
   created () {
     console.log('[FishDetail] Fish opened, bound to id: ', this.$route.params.id)
@@ -179,6 +189,9 @@ export default {
   color: black
   padding-left: 10px
   padding-right: 10px
+
+.fishLine
+  display: flex
 
 .loading-enter-active
   transition: opacity 1s
