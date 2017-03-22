@@ -6,8 +6,7 @@
   'name' duidt op de naam van de animatie, die onder is beschreven in de SASS
 transition(appear, name='card')
   .card(:id='cardId')
-    .material(@click='navigate')
-      canvas(:id='canvasId')
+    .material(@click='navigate', :style="{ backgroundImage: 'url(' + image + ')' }")
     p  {{ name }}
 </template>
 
@@ -25,10 +24,10 @@ export default {
     */
     cardId () {
       return 'card_id_' + this.id + ' card'
-    },
-    canvasId () {
-      return 'canvas_id_' + this.id
     }
+  },
+  created () {
+    this.cropImage()
   },
   methods: {
     /*
@@ -50,39 +49,14 @@ export default {
      *
      */
     cropImage () {
-      window.addEventListener('load', function () {
-
-      })
-      // var canvas = document.getElementById('canvas_id_' + this.id)
-      // var ctx = canvas.getContext('2D')
-      var ctx = document.getElementById('canvas_id_' + this.id).getContext('2D')
       var imageObj = new Image()
-      // imageObj.src = this.image
       imageObj.src = this.image + '?' + new Date().getTime()
       imageObj.setAttribute('crossOrigin', '')
       imageObj.addEventListener('load', function () {
-        // var self = this
-        console.log('Image loaded.')
-        var options = {
-          minScale: 1.0,
-          width: window.width / 40,
-          height: window.height / 40,
-          ruleOfThirds: true
-        }
-        smartcrop.crop(imageObj, options).then(function (result) {
-          console.log(result.topCrop.x + 'px ' + result.topCrop.y + 'px')
-          var crop = result.topCrop
-          // var canvas = document.getElementById('canvas_id_' + self.id)
-          // console.log('canvas_id_' + self.id)
-          // canvas.width = options.width
-          // canvas.height = options.height
-          ctx.height = options.height
-          ctx.width = options.width
-          // console.log(imageObj, crop.x, crop.y, crop.width, crop.height, 0, 0, canvas.width, canvas.height)
-          // ctx.drawImage(imageObj, crop.x, crop.y, crop.width, crop.height, 0, 0, canvas.width, canvas.height)
-          ctx.drawImage(imageObj, crop.x, crop.y, crop.width, crop.height, 0, 0)
-          console.log('Image cropped.')
-        })
+        console.log('Image ' + this.id + ' loaded.')
+        var card = document.getElementById('card_id_' + this.id)
+        // var material = card.children[0]
+        card.style.backgroundImage = imageObj
       })
     }
   }
