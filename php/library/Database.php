@@ -4,6 +4,7 @@
  * Database Class
  * This class is written to speed up the process of doing simple database queries.
  */
+
 class Database
 {
     private $host;
@@ -64,7 +65,13 @@ class Database
         $selectAllQuery = 'SELECT * FROM `'.$table.'` ;';
         $data = $this->connection->query($selectAllQuery);
 
-        return $data->fetch_assoc();
+        $result = [];
+
+        while ($row = $data->fetch_assoc()){
+            $result[] = $row;
+        }
+
+        return $result;
     }
 
     /**
@@ -104,7 +111,13 @@ class Database
         $selectQuery = 'SELECT `'.$column.'`'.' FROM `'.$table.'` WHERE `'.$whereColumn.'` = '.$valueChecked.';';
         $data = $this->connection->query($selectQuery);
 
-        return $data->fetch_assoc();
+        $result = [];
+
+        while ($row = $data->fetch_assoc()){
+            $result[] = $row;
+        }
+
+        return $result;
     }
 
     public function selectInnerjoin($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $whereColumn, $whereValue)
@@ -117,7 +130,13 @@ class Database
 
         $data = $this->connection->query($selectInnerQuery);
 
-        return $data->fetch_assoc();
+        $result = [];
+
+        while ($row = $data->fetch_assoc()){
+            $result[] = $row;
+        }
+
+        return $result;
     }
 
     /**

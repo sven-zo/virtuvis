@@ -5,6 +5,7 @@
  * This class is written to speed up the fetching data from the weather API
  */
 
+
 class Weather extends Api
 {
     private $key;

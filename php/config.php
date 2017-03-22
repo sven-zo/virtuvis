@@ -4,15 +4,17 @@
 require_once 'settings.php';
 
 //Load database class
-require_once 'classes/Database.php';
+require_once 'library/Database.php';
 
 //Sign in database
 $db = new Database(HOST, USERNAME, PASSWORD, DATABASE);
 
-//Load all the other classes
-require_once 'classes/Api.php';
-require_once 'classes/Weather.php';
-require_once 'classes/Wiki.php';
-require_once 'classes/User.php';
+//Load all the other library
+require_once 'library/Api.php';
+require_once 'library/Weather.php';
+require_once 'library/Wiki.php';
+require_once 'library/User.php';
+require_once 'library/Lake.php';
+require_once 'library/Fish.php';
 
 

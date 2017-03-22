@@ -5,6 +5,7 @@
  * This class is written to speed up the process of retrieving fish related information from the database,
  * redering new fish information and combining fish information.
  */
+
 class Fish
 {
     private $id;

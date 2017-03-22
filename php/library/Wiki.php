@@ -4,6 +4,7 @@
  * Weather Class
  * This class is written to speed up the fetching data from the wikipedia API
  */
+
 class Wiki extends Api
 {
     private $language;
