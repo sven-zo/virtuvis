@@ -34,8 +34,13 @@
           Indicator(number='4')
       p {{ fish.description }}
     .fishInfo(v-if='userLanguage == "en"')
-      p Length: {{ inches }} inches
-      p Weight: {{ pounds }} pounds
+      .fishLine
+        .fishInfoLeft
+          p Length: {{ fish.length }} inches
+          p Weight: {{ fish.weight }} pounds
+        .fishInfoRight
+          Indicator(number='3')
+          Indicator(number='5')
       p (Er zijn nog geen descriptions in het Engels) {{ fish.description }}
 </template>
 
