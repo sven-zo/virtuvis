@@ -7,6 +7,11 @@
 
 require_once 'config.php';
 
+header('Access-Control-Allow-Origin: *');
+
+//allow access for everyone
+
+
 $json = '';
 
 /**
@@ -26,11 +31,11 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
     //get the user and required information
     $user = $db->select('id, language_id', 'users', 'fingerprint', $fingerprint);
     $language = $db->selectInnerjoinWhere('languages.shortcode', 'users', 'languages',
-        'language_id', 'id', 'users.fingerprint', $fingerprint);
+        'language_id', 'id', 'fingerprint', $fingerprint);
+
+    // , 'users.fingerprint', $fingerprint
     $userId = $user[0]['id'];
     $userLanguage = $language[0]['shortcode'];
-
-
 
     //Get the fish & species info based on user and sort if specified
 
@@ -50,7 +55,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
             for($i = 0; $i < count($sortEntry); $i++){
                 if($sort === $sortEntry[$i]){
                     $sortCheck = true;
-                    $sortValue = $i;
+                    $sortValue = $sortColumn[$i];
                     break;
                 }
             }
@@ -67,15 +72,16 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
             caught_by_user.weight, caught_by_user.length, caught_by_user.date, caught_by_user.favorite,
             species.name AS species_en, species.name_nl AS species_nl, species.name_scientific 
             AS species_scientific, special',
-                'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId, $sortColumn[$sortValue]);
+                'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId, $sortValue);
 
         } else {
 
-            $fishList = $db->selectInnerjoinWhere('caught_by_user.id, caught_by_user.user_id AS owner, caught_by_user.name, 
+
+            $fishList = $db->selectInnerjoinWhere('caught_by_user.id, caught_by_user.user_id AS owner, caught_by_user.name,
             caught_by_user.weight, caught_by_user.length, caught_by_user.date, caught_by_user.favorite,
-            species.name AS species_en, species.name_nl AS species_nl, species.name_scientific 
+            species.name AS species_en, species.name_nl AS species_nl, species.name_scientific
             AS species_scientific, special',
-            'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId);
+            'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId, 'date DESC');
         }
 
     //Get the image form the wiki api
@@ -99,9 +105,10 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
 
     $json = $data;
 
+    header('Access-Control-Allow-Origin: *');
     header('HTTP/1.1 200 OK');
     header('Content-Type: application/json');
-    header('Access-Control-Allow-Origin: *');
+
 
     echo json_encode($json);
 

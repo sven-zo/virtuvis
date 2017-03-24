@@ -137,13 +137,13 @@ class Database
         return $result;
     }
 
-    public function selectInnerjoinWhere($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $whereColumn, $whereValue, $sortValue = NULL)
+    public function selectInnerjoinWhere($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $whereColumn, $whereValue, $sortValue = false)
     {
-        $whereValue = $this->stringifyValue($whereValue);
+       $whereValue = $this->stringifyValue($whereValue);
 
         $selectInnerQuery = 'SELECT '.$column.' FROM `'.$table.'` INNER JOIN `'.$joiningTable.'` ON '.
-            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn.' WHERE `'.
-            $whereColumn.'` = '.$whereValue;
+            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn.' WHERE '.
+            $whereColumn.' = '.$whereValue;
 
         if($sortValue){
             $selectInnerQuery .= ' ORDER BY '.$sortValue;

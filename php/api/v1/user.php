@@ -21,10 +21,10 @@ if(isset($_GET['action']) && $_GET['action'] === 'GET' && isset($_GET['user']) &
 
     $user = $db->selectAllWhere('users', 'fingerprint', $fingerprint);
     $language = $db->selectInnerjoinWhere('languages.shortcode', 'users', 'languages',
-        'language_id', 'id', 'users.fingerprint', $fingerprint);
+        'language_id', 'id', 'fingerprint', $fingerprint);
     $userLanguage = $language[0]['shortcode'];
     $metric = $db->selectInnerjoinWhere('metrics.name', 'users', 'metrics',
-        'metric_id', 'id', 'users.fingerprint', $fingerprint);
+        'metric_id', 'id', 'fingerprint', $fingerprint);
     $userMetric = $metric[0]['name'];
 
     $json = [
