@@ -32,7 +32,7 @@
         .fishInfoRight
           Indicator(number='1')
           Indicator(number='4')
-      p {{ fish.description }}
+      p.fishDescription {{ fish.description }}
     .fishInfo(v-if='userLanguage == "en"')
       .fishLine
         .fishInfoLeft
@@ -41,7 +41,7 @@
         .fishInfoRight
           Indicator(number='3')
           Indicator(number='5')
-      p (Er zijn nog geen descriptions in het Engels) {{ fish.description }}
+      p.fishDescription (Er zijn nog geen descriptions in het Engels) {{ fish.description }}
 </template>
 
 <script>
@@ -205,6 +205,9 @@ export default {
 
 .fishInfoRight
   padding-top: 1em
+
+.fishDescription
+  padding-bottom: 100px
 
 .fishInfoLeft
   padding-right: 1em
