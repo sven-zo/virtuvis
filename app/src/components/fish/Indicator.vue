@@ -44,5 +44,6 @@
 .indicator img
   height: 17.666667px
   width: 50px
+  padding-right: 5px
 
 </style>

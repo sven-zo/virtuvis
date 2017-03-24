@@ -18,8 +18,8 @@
       Deze instellingen worden meegegeven als prop vanuit het 'Home' component.
       Via 'v-for' laden we alle vissen vanuit een json bestand.
     .cardContainer(v-if='loaded')
-      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.speciesNl', :image='fish.image')
-      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.species', :image='fish.image')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image')
 </template>
 
 <script>

@@ -18,19 +18,20 @@
     .fishPicture(:style="{ backgroundImage: 'url(' + fish.image + ')' }")
     .fishName(v-if='userLanguage == "nl"')
       .fishWrapper
-        .fishText {{ fish.speciesNl }}
+        .fishText {{ fish.species_nl }}
         .fishDate Gevangen op: {{ date }}
     .fishName(v-if='userLanguage == "en"')
       .fishWrapper
-        .fishText {{ fish.species }}
+        .fishText {{ fish.species_en }}
         .fishDate Caught at: {{ date }}
     .fishInfo(v-if='userLanguage == "nl"')
       .fishLine
-        p Lengte: {{ fish.length }} centimeter
-        Indicator(number='3')
-      .fishLine
-        p Gewicht: {{ fish.weight }} kilo
-        Indicator(number='1')
+        .fishInfoLeft
+          p Lengte: {{ fish.length }} centimeter
+          p Gewicht: {{ fish.weight }} kilo
+        .fishInfoRight
+          Indicator(number='1')
+          Indicator(number='4')
       p {{ fish.description }}
     .fishInfo(v-if='userLanguage == "en"')
       p Length: {{ inches }} inches
@@ -192,6 +193,19 @@ export default {
 
 .fishLine
   display: flex
+
+.fishText
+  padding-top: 10px
+  text-align: center
+
+.fishInfoRight
+  padding-top: 1em
+
+.fishInfoLeft
+  padding-right: 1em
+
+.fishInfoLeft p:last-child
+  padding-top: 1em
 
 .loading-enter-active
   transition: opacity 1s
