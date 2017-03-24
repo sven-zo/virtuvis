@@ -22,8 +22,8 @@
       .upperBar
         p
           | {{ caughtText }}
-      .recent
-      .sortbar
+      home-recent
+      home-sortbar
       //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
       home-center(@buttonState='buttonStateManager($event)', :language="userLanguage")
 </template>
@@ -35,6 +35,8 @@
 / {getUserSettings} is een script die de instellingen van de gebruiker ophaalt, dit is nodig om de taal van de gebruiker te bepalen.
 */
 import HomeCenter from '@/components/home/HomeCenter.vue'
+import HomeRecent from '@/components/home/HomeRecent.vue'
+import HomeSortbar from '@/components/home/HomeSortbar.vue'
 import {getUserSettings} from '../../script/userSettings.js'
 /*
 / Parent: 'App.vue'
@@ -110,7 +112,9 @@ export default {
   / Dit zijn de componenten die home gebruikt.
   */
   components: {
-    HomeCenter
+    HomeCenter,
+    HomeRecent,
+    HomeSortbar
   }
 }
 </script>
@@ -139,11 +143,6 @@ export default {
 .recent
   background-color: $primary-color
   height: 200px
-  width: 100%
-
-.sortbar
-  background-color: $divider-color
-  height: 50px
   width: 100%
 
 h1
