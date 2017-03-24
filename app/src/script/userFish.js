@@ -1,3 +1,5 @@
+import {getVirtuVisAPIUrl} from '../../secret/API-url.js'
+
 var request = new XMLHttpRequest()
 var response
 
@@ -6,9 +8,9 @@ var response
  * @param  {variabel}  value Variabele om te controleren.
  * @return {Boolean}       Waar als de variabele undefined is.
  */
-function isUndefined (value) {
-  return typeof value === 'undefined'
-}
+// function isUndefined (value) {
+//   return typeof value === 'undefined'
+// }
 
 /**
  * Haalt de vissen van de ingevulde gebruiker op.
@@ -16,16 +18,18 @@ function isUndefined (value) {
  */
 export function getUserFish () {
   return new Promise(function (resolve, reject) {
-    request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
+    // request.open('GET', 'http://localhost/dummy-server/dummy_userfish.php')
+    request.open('GET', getVirtuVisAPIUrl())
 
     request.onload = function () {
       if (request.status === 200) {
         response = request.responseText
         // console.log('Raw response:', request.responseText)
         response = JSON.parse(response)
-        if (isUndefined(response)) {
-          resolve(false)
-        }
+        console.log(response)
+        // if (isUndefined(response)) {
+        //   resolve(false)
+        // }
         resolve(response)
       } else {
         reject(Error(request.statusText))
