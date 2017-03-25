@@ -7,10 +7,9 @@
 
 require_once 'config.php';
 
-header('Access-Control-Allow-Origin: *');
 
 //allow access for everyone
-
+header('Access-Control-Allow-Origin: *');
 
 $json = '';
 
@@ -42,11 +41,11 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
         if(isset($_GET['sortby']) && !empty($_GET['sortby'])){
 
             //Array with all possible sort entries
-            $sortEntry = ['recent','recentD','recentA','species', 'speciesD', 'speciesA', 'name', 'nameD', 'nameA'];
+            $sortEntry = ['recent','recentD','recentA','species', 'speciesD', 'speciesA', 'name', 'nameD', 'nameA', 'favorite'];
 
             //Array with all right sort values
             $sortColumn = ['date DESC', 'date DESC', 'date ASC', 'species_'.$userLanguage.' DESC', 'species_'.$userLanguage.' DESC',
-                'species_'.$userLanguage.' ASC', 'caught_by_user.name DESC', 'caught_by_user.name DESC', 'caught_by_user.name ASC'];
+                'species_'.$userLanguage.' ASC', 'caught_by_user.name DESC', 'caught_by_user.name DESC', 'caught_by_user.name ASC', 'caught_by_user.favorite'];
 
             //check if the correct value isset
             $sortCheck = false;
@@ -81,7 +80,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
             caught_by_user.weight, caught_by_user.length, caught_by_user.date, caught_by_user.favorite,
             species.name AS species_en, species.name_nl AS species_nl, species.name_scientific
             AS species_scientific, special',
-            'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId, 'date DESC');
+            'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId);
         }
 
     //Get the image form the wiki api
@@ -118,4 +117,57 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
     header('HTTP/1.1 400 Missing Required Parameters');
 
 }
+
+/**
+ * UPDATE fish name
+ *
+ * update the name of an specific fish
+ * @required action & fishId & new name
+ *
+ * @since v1
+ */
+
+if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']) && !empty($_GET['fish']) && isset($_GET['name'])
+&& !empty($_GET['name'])) {
+
+    $fishId = mysqli_real_escape_string($db->getConnection(), $_GET['fish']);
+    $name = mysqli_real_escape_string($db->getConnection(), $_GET['name']);
+    $fish = new Fish(false,$fishId,$db->getConnection());
+
+    $fish->setName($name);
+
+    header('HTTP/1.1 204 OK empty return');
+
+} else {
+
+    echo 'Error: make sure you entered all required parameters';
+    header('HTTP/1.1 400 Missing required parameters');
+}
+
+
+/**
+ * UPDATE fish favorite
+ *
+ * update toggle favorite status of an specific fish
+ * @required action & fishId & favorite keyword
+ *
+ * @since v1
+ */
+
+if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']) && !empty($_GET['fish']) && isset($_GET['favorite'])) {
+
+    $fishId= mysqli_real_escape_string($db->getConnection(), $_GET['fish']);
+    $fish = new Fish(false,$fishId,$db->getConnection());
+
+    $currentStatus = $fish->getFavorite();
+    $fish->setFavorite(!$currentStatus);
+
+    header('HTTP/1.1 204 OK empty return');
+
+} else {
+
+    echo 'Error: make sure you entered all required parameters';
+    header('HTTP/1.1 400 Missing required parameters');
+}
+
 

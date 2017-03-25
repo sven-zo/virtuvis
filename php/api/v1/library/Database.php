@@ -35,18 +35,6 @@ class Database
         return $this;
     }
 
-    private function stringifyValue($value)
-    {
-        $valueChecked = '';
-
-        if(is_string($value)){
-            $valueChecked .= '\''.$value.'\'';
-        } else {
-            $valueChecked = $value;
-        }
-
-        return $valueChecked;
-    }
 
     /**
      * @return \mysqli
@@ -223,8 +211,31 @@ class Database
         return $this;
     }
 
+    /**
+     * Close the database connection
+     */
     public function close()
     {
         $this->connection->close();
+    }
+
+
+    /**
+     * Make an input of type string a string in database queries
+     *
+     * @param $value
+     * @return string
+     */
+    private function stringifyValue($value)
+    {
+        $valueChecked = '';
+
+        if(is_string($value)){
+            $valueChecked .= '\''.$value.'\'';
+        } else {
+            $valueChecked = $value;
+        }
+
+        return $valueChecked;
     }
 }

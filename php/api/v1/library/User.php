@@ -112,16 +112,6 @@ class User
         return $this->fingerprint;
     }
 
-    public function listFish(){
-        $db = $this->db;
-
-        $fishList = $db->selectAllWhere('caught_by_user', 'user_id', $this->getId());
-
-        $this->fishList = $fishList;
-
-        return $this->fishList;
-    }
-
     /**
      * @param mixed $name
      */
