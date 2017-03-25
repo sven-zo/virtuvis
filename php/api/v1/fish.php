@@ -41,11 +41,11 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
         if(isset($_GET['sortby']) && !empty($_GET['sortby'])){
 
             //Array with all possible sort entries
-            $sortEntry = ['recent','recentD','recentA','species', 'speciesD', 'speciesA', 'name', 'nameD', 'nameA', 'favorite'];
+            $sortEntry = ['recent', 'recentA','species', 'speciesA', 'name', 'nameA', 'favorite'];
 
             //Array with all right sort values
-            $sortColumn = ['date DESC', 'date DESC', 'date ASC', 'species_'.$userLanguage.' DESC', 'species_'.$userLanguage.' DESC',
-                'species_'.$userLanguage.' ASC', 'caught_by_user.name DESC', 'caught_by_user.name DESC', 'caught_by_user.name ASC', 'caught_by_user.favorite'];
+            $sortColumn = ['date DESC', 'date ASC', 'species_'.$userLanguage.' DESC', 'species_'.$userLanguage.' ASC',
+                'caught_by_user.name DESC', 'caught_by_user.name ASC', 'caught_by_user.favorite'];
 
             //check if the correct value isset
             $sortCheck = false;
