@@ -10,6 +10,7 @@ require_once 'config.php';
 
 //allow access for everyone
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 $json = '';
 
@@ -104,19 +105,20 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
 
     $json = $data;
 
-    header('Access-Control-Allow-Origin: *');
     header('HTTP/1.1 200 OK');
-    header('Content-Type: application/json');
+
 
 
     echo json_encode($json);
 
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing Required Parameters');
-
 }
+
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing Required Parameters');
+//
+//}
 
 /**
  * UPDATE fish name
@@ -138,12 +140,14 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 
     header('HTTP/1.1 204 OK empty return');
 
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing required parameters');
 }
 
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing required parameters');
+//}
+//
 
 /**
  * UPDATE fish favorite
@@ -164,10 +168,12 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 
     header('HTTP/1.1 204 OK empty return');
 
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing required parameters');
 }
+
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing required parameters');
+//}
 
 

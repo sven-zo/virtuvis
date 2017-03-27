@@ -5,10 +5,13 @@
  * Performs all user related requests
  */
 
+//Load the config
 require_once 'config.php';
+
 
 //allow access for everyone
 header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
 
 /**
  * GET user
@@ -23,28 +26,28 @@ header('Access-Control-Allow-Origin: *');
 if(isset($_GET['action']) && $_GET['action'] === 'GET' && isset($_GET['user']) && !empty($_GET['user'])) {
     $fingerprint = mysqli_real_escape_string($db->getConnection(), $_GET['user']);
 
-    $user = new User($fingerprint, $db->getConnection());
+    $user = new User($fingerprint, $db);
+    $user->initUser();
 
 
-    $json = [
+   $json = [
         'id' => $user->getId(),
         'name' => $user->getName(),
         'language' => $user->getLanguage(),
-        'metric' => $user->getMetric(),
-    ];
+        'metric' => $user->getMetric()
+   ];
 
 
     header('HTTP/1.1 200 OK');
-    header('Content-Type: application/json');
-    header('Access-Control-Allow-Origin: *');
 
     echo json_encode($json);
-
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing required parameters');
 }
+
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing required parameters');
+//}
 
 /**
  * UPDATE username
@@ -66,11 +69,13 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     header('HTTP/1.1 204 OK empty return');
 
 
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing required parameters');
 }
+
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing required parameters');
+//}
 
 /**
  * UPDATE user language
@@ -104,16 +109,18 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
         exit;
     }
 
-    $user = new User($fingerprint, $db->getConnection());
+    $user = new User($fingerprint, $db);
     $user->setLanguage($languageId);
 
     header('HTTP/1.1 204 OK empty return');
 
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing required parameters');
 }
+
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing required parameters');
+//}
 
 
 /**
@@ -149,13 +156,15 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
         exit;
     }
 
-    $user = new User($fingerprint, $db->getConnection());
+    $user = new User($fingerprint, $db);
     $user->setMetric($metricId);
 
     header('HTTP/1.1 204 OK empty return');
 
-} else {
-
-    echo 'Error: make sure you entered all required parameters';
-    header('HTTP/1.1 400 Missing required parameters');
 }
+
+//else {
+//
+//    echo 'Error: make sure you entered all required parameters';
+//    header('HTTP/1.1 400 Missing required parameters');
+//}

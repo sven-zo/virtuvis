@@ -1,5 +1,6 @@
 <?php
 
+
 //Database Credentials
 define('HOST', 'localhost');
 define('USERNAME', 'imani_nl_virtuvi');

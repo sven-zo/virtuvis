@@ -11,7 +11,6 @@ class User
     private $metric;
     private $language;
     private $fingerprint;
-    private $fishList;
     private $db;
 
     /**
@@ -23,21 +22,24 @@ class User
      */
     public function __construct($fingerprint, $db)
     {
-       $this->fingerprint = $fingerprint;
-       $this->db = $db;
 
-       $userExists = $db->selectAllWhere('users', 'fingerprint', $fingerprint);
+        $this->fingerprint = $fingerprint;
+        $this->db = $db;
 
-       if($userExists){
+        return $this;
+    }
 
-           return $this;
+    public function initUser()
+    {
 
-       } else {
+        $exist = $this->db->selectAllWhere('users', 'fingerprint', $this->fingerprint);
+        if($exist){
 
-           $this->addUser($this->fingerprint);
-           return $this;
-       }
+        } else {
+            $this->addUser($this->fingerprint);
+        }
 
+        return $this;
     }
 
     /**
@@ -60,7 +62,7 @@ class User
         $db = $this->db;
 
         $result = $db->select('id', 'users', 'fingerprint', $this->fingerprint);
-        $this->id = $result['id'];
+        $this->id = $result[0]['id'];
 
         return $this->id;
     }
@@ -73,7 +75,7 @@ class User
         $db = $this->db;
 
         $result = $db->select('name', 'users', 'fingerprint', $this->fingerprint);
-        $this->name = $result['name'];
+        $this->name = $result[0]['name'];
 
         return $this->name;
     }
@@ -86,7 +88,7 @@ class User
         $db = $this->db;
 
         $result = $db->selectInnerjoin('metrics.name AS name','users','metrics','metric_id','id','fingerprint',$this->fingerprint);
-        $this->metric = $result['name'];
+        $this->metric = $result[0]['name'];
 
         return $this->metric;
     }
@@ -99,7 +101,7 @@ class User
         $db = $this->db;
 
         $result = $db->selectInnerjoin('languages.shortcode AS shortcode','users','languages','language_id','id','fingerprint',$this->fingerprint);
-        $this->language = $result['shortcode'];
+        $this->language = $result[0]['shortcode'];
 
         return $this->language;
     }
