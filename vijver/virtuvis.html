@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VIRTUVIS</title>
+    <link rel="stylesheet" type="text/css" href="virtuvis.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div id="fish">
+    <img src="images/vis.png" name="fish" id="fishimg" alt="fish" />
+</div>
+<div id="fish2">
+    <img src="images/vis1.png" name="fish" id="fish2img" alt="fish" />
+</div>
+<div id="fish3">
+    <img src="images/vis2.png" name="fish" id="fish3img" alt="fish" />
+</div>
+<div id="fish4">
+    <img src="images/vis3.png" name="fish" id="fish4img" alt="fish" />
+</div>
+<div id="steen">
+    <img src="images/steen.png" name="steen" alt="fish" />
+</div>
+<div id="steen1">
+    <img src="images/steen1.png" name="steen" alt="fish" />
+</div>
+<div id="steen2">
+    <img src="images/steen2.png" name="steen" alt="fish" />
+</div>
+<div id="steen3">
+    <img src="images/steen3.png" name="steen" alt="fish" />
+</div>
+</body>
+</html>
+
+<script>
+var rotated = false;
+
+var steen = document.getElementById("steen");
+steen.style.transform="translate(230px, 370px)";
+
+var steen1 = document.getElementById("steen1");
+steen1.style.transform="translate(60px, 230px)";
+steen1.style.zIndex = "-1";
+
+var steen2 = document.getElementById("steen2");
+steen2.style.transform="translate(820px, 200px)";
+
+var steen3 = document.getElementById("steen3");
+steen3.style.transform="translate(900px, 120px)";
+
+
+var fish = document.getElementById("fish");
+var fishimg = document.getElementById("fishimg");
+var fish2 = document.getElementById("fish2");
+var fish2img = document.getElementById("fish2img");
+var fish3 =  document.getElementById("fish3");
+var fish3img = document.getElementById("fish3img");
+var fish4 =  document.getElementById("fish4");
+var fish4img = document.getElementById("fish4img");
+
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+var a = 0;
+var b = 0;
+var c = 0;
+var d = 0;
+var rotation = 0;
+var rotation2 = 30;
+var rotation3 = 65;
+var rotation4 = 90;
+
+setInterval(function() {
+    moveFish1();
+    moveFish2();
+    moveFish3();
+    moveFish4();
+}, 1000/60);
+
+function moveFish1 () { // GREEN
+    var cx = 120; // x positie
+    var cy = 170; // y positie
+    var r = 150; // Radius van de circel
+    a += 0.004;
+    var x = cx + r * Math.cos(a);
+    var y = cy + r * Math.sin(a);
+    fish.style.transform="translate("+x+"px, "+y+"px)";
+    rotation += 0.5;
+    fishimg.style.transform="rotate("+rotation+"deg)";
+}
+
+function moveFish2 () { // RED
+    var cx = 750;
+    var cy = 280;
+    var r = 50;
+    b += 0.04;
+    var x = cx + r * Math.cos(b);
+    var y = cy + r * Math.sin(b);
+    fish2.style.transform="translate("+x+"px, "+y+"px)";
+    rotation2 += 0.5;
+    fish2img.style.transform="rotate("+rotation2+"deg)";
+}
+
+function moveFish3 () { //ORANGE
+    var cx = 400;
+    var cy = 100;
+    var r = 200;
+    c += 0.01;
+    var x = cx + r * Math.cos(c);
+    var y = cy + r * Math.sin(c);
+    fish3.style.transform="translate("+x+"px, "+y+"px)";
+    rotation3 += 0.5;
+    fish3img.style.transform="rotate("+rotation3+"deg)";
+}
+
+function moveFish4 () { //PAARS
+    var cx = 200;
+    var cy = 0;
+    var r = 150;
+    d += 0.02;
+    var x = cx + r * Math.cos(d);
+    var y = cy + r * Math.sin(d);
+    fish4.style.transform="translate("+x+"px, "+y+"px)";
+    rotation4 += 0.5;
+    fish4img.style.transform="rotate("+rotation4+"deg)";
+}
+
+</script>
