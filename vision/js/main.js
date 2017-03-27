@@ -7,7 +7,7 @@ var context;
 var tracker;
 var greenX;
 var greenY;
-
+var greenXtrue;
 /**
  * main function:
  * Send http request if the color green is detected inside the color box of yellow, cyan and magenta
@@ -108,11 +108,14 @@ function trackColor(){
 
             //if coordinates of green are inside coordinates of rect
                 //send ping
-            var greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
+            greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
             var greenYtrue = greenY > rect.y && greenY < (rect.y +rect.height);
 
+            //TODO
+            //less pings
             if (greenXtrue && greenYtrue){
                 sendPing();
+                console.log('send ping');
                 greenY = '';
                 greenX = '';
             }
@@ -125,26 +128,11 @@ function trackColor(){
  */
 function sendPing(){
     console.log('send ping');
-    reqwest({
-        url: 'url' ,
-        contentType: 'application/json' ,
-        success: sendPingSuccessHandler(),
-        error: sendPingErrorHandler()
-    });
-}
-
-/**
- * Callback after success send ping
- * @param data
- */
-function sendPingSuccessHandler(data){
-
-}
-
-/**
- * Callback after error send ping
- * @param data
- */
-function sendPingErrorHandler(data){
-
+    greenXtrue = '';
+    // reqwest({
+    //     url: 'url' ,
+    //     contentType: 'application/json' ,
+    //     // data: {time-stamp: ''}
+    //     error: sendPingErrorHandler()
+    // });
 }
