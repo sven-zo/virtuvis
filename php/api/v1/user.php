@@ -170,3 +170,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
 //    echo 'Error: make sure you entered all required parameters';
 //    header('HTTP/1.1 400 Missing required parameters');
 //}
+
+//close database connection
+$db->close();

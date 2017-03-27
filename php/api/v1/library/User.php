@@ -88,7 +88,7 @@ class User
     {
         $db = $this->db;
 
-        $result = $db->selectInnerjoin('metrics.name AS name','users','metrics','metric_id','id','fingerprint',$this->fingerprint);
+        $result = $db->selectInnerjoinWhere('metrics.name AS name','users','metrics','metric_id','id','fingerprint',$this->fingerprint);
         $this->metric = $result[0]['name'];
 
         return $this->metric;
@@ -101,7 +101,7 @@ class User
     {
         $db = $this->db;
 
-        $result = $db->selectInnerjoin('languages.shortcode AS shortcode','users','languages','language_id','id','fingerprint',$this->fingerprint);
+        $result = $db->selectInnerjoinWhere('languages.shortcode AS shortcode','users','languages','language_id','id','fingerprint',$this->fingerprint);
         $this->language = $result[0]['shortcode'];
 
         return $this->language;
@@ -110,7 +110,7 @@ class User
     /**
      * @return mixed
      */
-    public function getfingerprint()
+    public function getFingerprint()
     {
         return $this->fingerprint;
     }

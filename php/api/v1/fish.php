@@ -104,8 +104,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
 
     header('HTTP/1.1 200 OK');
 
-
-
     echo json_encode($json);
 
 }

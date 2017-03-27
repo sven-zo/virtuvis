@@ -28,16 +28,16 @@ class Fish
             //make fish
 
             return $this;
-        }
-
-        if($id){
-            //get fish from database
+            
+        } else if($id){
             $this->id = $id;
 
             return $this;
-        }
 
-        return false;
+        } else {
+
+            return false;
+        }
     }
 
     /**
