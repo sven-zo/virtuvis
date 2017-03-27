@@ -125,4 +125,26 @@ function trackColor(){
  */
 function sendPing(){
     console.log('send ping');
+    reqwest({
+        url: 'url' ,
+        contentType: 'application/json' ,
+        success: sendPingSuccessHandler(),
+        error: sendPingErrorHandler()
+    });
+}
+
+/**
+ * Callback after success send ping
+ * @param data
+ */
+function sendPingSuccessHandler(data){
+
+}
+
+/**
+ * Callback after error send ping
+ * @param data
+ */
+function sendPingErrorHandler(data){
+
 }
