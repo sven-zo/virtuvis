@@ -28,9 +28,10 @@ class Fish
             //make fish
 
             return $this;
-            
+
         } else if($id){
             $this->id = $id;
+            $this->db = $db;
 
             return $this;
 

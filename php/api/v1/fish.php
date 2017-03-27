@@ -129,11 +129,11 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 
     $fishId = mysqli_real_escape_string($db->getConnection(), $_GET['fish']);
     $name = mysqli_real_escape_string($db->getConnection(), $_GET['name']);
-    $fish = new Fish(false,$fishId,$db->getConnection());
+    $fish = new Fish(false,$fishId,$db);
 
     $fish->setName($name);
 
-    header('HTTP/1.1 204 OK empty return');
+    header('HTTP/1.1 200 OK empty return');
 
 }
 
@@ -156,12 +156,12 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']) && !empty($_GET['fish']) && isset($_GET['favorite'])) {
 
     $fishId= mysqli_real_escape_string($db->getConnection(), $_GET['fish']);
-    $fish = new Fish(false,$fishId,$db->getConnection());
+    $fish = new Fish(false,$fishId,$db);
 
     $currentStatus = $fish->getFavorite();
     $fish->setFavorite(!$currentStatus);
 
-    header('HTTP/1.1 204 OK empty return');
+    header('HTTP/1.1 200 OK empty return');
 
 }
 
@@ -172,3 +172,5 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 //}
 
 
+//Close database connection
+$db->close();
