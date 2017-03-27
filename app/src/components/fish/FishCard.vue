@@ -27,7 +27,7 @@ export default {
     }
   },
   created () {
-    this.cropImage()
+    // this.cropImage()
   },
   methods: {
     /*
@@ -44,21 +44,21 @@ export default {
         this.$emit('buttonState', 'up')
         this.$router.push('/fish/' + (this.id - 1))
       }
-    },
+    } // },
     /**
      *
      */
-    cropImage () {
-      var imageObj = new Image()
-      imageObj.src = this.image + '?' + new Date().getTime()
-      imageObj.setAttribute('crossOrigin', '')
-      imageObj.addEventListener('load', function () {
-        console.log('Image ' + this.id + ' loaded.')
-        var card = document.getElementById('card_id_' + this.id)
-        // var material = card.children[0]
-        card.style.backgroundImage = imageObj
-      })
-    }
+    // cropImage () {
+    //   var imageObj = new Image()
+    //   imageObj.src = this.image + '?' + new Date().getTime()
+    //   imageObj.setAttribute('crossOrigin', '')
+    //   imageObj.addEventListener('load', function () {
+    //     console.log('Image ' + this.id + ' loaded.')
+    //     var card = document.getElementById('card_id_' + this.id)
+    //     // var material = card.children[0]
+    //     card.style.backgroundImage = imageObj
+    //   })
+    // }
   }
 }
 </script>
