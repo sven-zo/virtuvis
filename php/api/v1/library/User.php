@@ -11,6 +11,7 @@ class User
     private $metric;
     private $language;
     private $fingerprint;
+    private $rod;
     private $db;
 
     /**
@@ -112,6 +113,23 @@ class User
     public function getfingerprint()
     {
         return $this->fingerprint;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRod()
+    {
+        $data = $this->db->selectInnerjoin('rods.fingerprint AS rod','users','rods','rod_id','id','fingerprint',$this->fingerprint);
+
+        if($data){
+            $rod = $data[0]['rod'];
+            $this->rod = $rod;
+        } else {
+            $this->rod = false;
+        }
+
+        return $this->rod;
     }
 
     /**

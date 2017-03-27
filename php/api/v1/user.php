@@ -31,12 +31,12 @@ if(isset($_GET['action']) && $_GET['action'] === 'GET' && isset($_GET['user']) &
     $user = new User($fingerprint, $db);
     $user->initUser();
 
-
    $json = [
         'id' => $user->getId(),
         'name' => $user->getName(),
         'language' => $user->getLanguage(),
-        'metric' => $user->getMetric()
+        'metric' => $user->getMetric(),
+        'rod' => $user->getRod()
    ];
 
 

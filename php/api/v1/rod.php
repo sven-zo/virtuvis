@@ -30,8 +30,11 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST'){
 
     $data = $db->selectAll('rods');
 
+    $user = new User('08eb404fe97f2a2bc6c52c9975ebb6d1', $db);
+    $user->initUser();
+
     $json = [
-        'rods' => $data
+        'rods' => $data,
     ];
 
     echo json_encode($json);
