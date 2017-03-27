@@ -37,7 +37,7 @@
 import HomeCenter from '@/components/home/HomeCenter.vue'
 import HomeRecent from '@/components/home/HomeRecent.vue'
 import HomeSortbar from '@/components/home/HomeSortbar.vue'
-import {getUserSettings} from '../../script/userSettings.js'
+// import {getUserSettings} from '../../script/userSettings.js'
 import {getData} from '../../script/getData.js'
 /*
 / Parent: 'App.vue'
@@ -73,13 +73,9 @@ export default {
     / Dit wordt gedaan via een apart script met een functie met dezelfde naam.
     */
     getUserSettings () {
-      getData('fingerprint').then(function (response) {
-        console.log('DIT IS DE FINGERPRINT', response)
-      })
-
       var self = this
       this.loading = true
-      getUserSettings().then(function (response) {
+      getData('user').then(function (response) {
         console.log('[Home] Succes! (Settings)', response.language)
         self.loading = false
         self.loaded = true

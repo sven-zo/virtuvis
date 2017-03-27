@@ -47,8 +47,10 @@
 <script>
 import Indicator from '@/components/fish/Indicator.vue'
 
-import {getUserFish} from '../../script/userFish.js'
-import {getUserSettings} from '../../script/userSettings.js'
+// import {getUserFish} from '../../script/userFish.js'
+// import {getUserSettings} from '../../script/userSettings.js'
+import {getData} from '../../script/getData.js'
+
 import * as Vibrant from 'node-vibrant'
 
 export default {
@@ -76,7 +78,7 @@ export default {
     fetchDetailPage () {
       var self = this
       this.loading = true
-      getUserSettings().then(function (response) {
+      getData('user').then(function (response) {
         console.log(' [FishDetail]Succes! (Settings)', response)
         self.userLanguage = response.language
         console.log('[FishDetail] Language data attached')
@@ -87,7 +89,7 @@ export default {
         self.loading = false
         self.error = true
       })
-      getUserFish().then(function (response) {
+      getData('recent').then(function (response) {
         if (response === false) {
           self.errorMessage = '[self.fish_undefined@fetchDetailPage@fishDetail]'
           self.error = true

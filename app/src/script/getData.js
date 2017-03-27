@@ -13,10 +13,37 @@ export function getData (source) {
           fingerprint = response
         }).then(function () {
           reqwest({
-            url: getVirtuVisAPIUrl(),
+            url: getVirtuVisAPIUrl('fish'),
             contentType: 'application/json',
             crossOrigin: true,
             data: {action: 'LIST', user: fingerprint}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
+    case 'user': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('user'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'GET', user: fingerprint}
           })
             .then(function (resp) {
               // Do something with the reponse

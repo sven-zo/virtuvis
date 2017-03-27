@@ -9,9 +9,9 @@
       br
       p Er ging iets fout :( Probeer het later opnieuw! Kijk ook even of je internet hebt
       p Foutmelding: {{ errorMessage }}
-  transition(appear, name='page')
-    .recent(v-if='loaded')
-      p HIER KOMEN KAARTJES YAY
+  .recent(v-if='loaded')
+    br
+    p The cards are loaded sucessfully. This is a placeholder text. We don't have the cards yet.
 </template>
 
 <script>
@@ -74,7 +74,7 @@ export default {
   height: 200px
   width: 100%
 
-.error p
+p
   font-family: 'Roboto', sans-serif
   color: white
 </style>

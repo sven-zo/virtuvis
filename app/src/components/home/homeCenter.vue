@@ -29,7 +29,9 @@
 / {getUserFish} is een script die de vissen van de gebruiker ophaalt.
 */
 import FishCard from '@/components/fish/FishCard.vue'
-import {getUserFish} from '../../script/userFish.js'
+// import {getUserFish} from '../../script/userFish.js'
+import {getData} from '../../script/getData.js'
+
 /*
 / Parent: 'Home.vue'
 */
@@ -66,7 +68,7 @@ export default {
     fetchFish () {
       var self = this
       this.loading = true
-      getUserFish().then(function (response) {
+      getData('recent').then(function (response) {
         console.log('Succes! (Cards)', response.fish)
         self.cards = response.fish
         self.loading = false
