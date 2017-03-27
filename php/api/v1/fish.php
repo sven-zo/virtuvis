@@ -7,10 +7,12 @@
 
 require_once 'config.php';
 
-
 //allow access for everyone
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET');
+header('Access-Control-Allow-Headers: Content-Type');
 header('Content-Type: application/json');
+
 
 $json = '';
 
@@ -26,26 +28,20 @@ $json = '';
 
 if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) && !empty($_GET['user'])){
     $fingerprint = mysqli_real_escape_string($db->getConnection(), $_GET['user']);
-    $sort = mysqli_real_escape_string($db->getConnection(), $_GET['sortby']);
 
-    //get the user and required information
-    $user = $db->select('id, language_id', 'users', 'fingerprint', $fingerprint);
-    $language = $db->selectInnerjoinWhere('languages.shortcode', 'users', 'languages',
-        'language_id', 'id', 'fingerprint', $fingerprint);
-
-    // , 'users.fingerprint', $fingerprint
-    $userId = $user[0]['id'];
-    $userLanguage = $language[0]['shortcode'];
+   $user = new User($fingerprint, $db);
+   $user->initUser();
 
     //Get the fish & species info based on user and sort if specified
 
         if(isset($_GET['sortby']) && !empty($_GET['sortby'])){
+            $sort = mysqli_real_escape_string($db->getConnection(), $_GET['sortby']);
 
-            //Array with all possible sort entries
-            $sortEntry = ['recent', 'recentA','species', 'speciesA', 'name', 'nameA', 'favorite'];
+           //Array with all possible sort entries
+           $sortEntry = ['recent', 'recentA','species', 'speciesA', 'name', 'nameA', 'favorite'];
 
             //Array with all right sort values
-            $sortColumn = ['date DESC', 'date ASC', 'species_'.$userLanguage.' DESC', 'species_'.$userLanguage.' ASC',
+            $sortColumn = ['date DESC', 'date ASC', 'species_'.$user->getLanguage().' DESC', 'species_'.$user->getLanguage().' ASC',
                 'caught_by_user.name DESC', 'caught_by_user.name ASC', 'caught_by_user.favorite'];
 
             //check if the correct value isset
@@ -56,8 +52,8 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
                 if($sort === $sortEntry[$i]){
                     $sortCheck = true;
                     $sortValue = $sortColumn[$i];
-                    break;
-                }
+                  break;
+               }
             }
 
             if(!$sortCheck){
@@ -68,21 +64,23 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
             }
 
 
-            $fishList = $db->selectInnerjoinWhere('caught_by_user.id, caught_by_user.user_id AS owner, caught_by_user.name, 
-            caught_by_user.weight, caught_by_user.length, caught_by_user.date, caught_by_user.favorite,
-            species.name AS species_en, species.name_nl AS species_nl, species.name_scientific 
-            AS species_scientific, special',
-                'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId, $sortValue);
-
-        } else {
-
-
             $fishList = $db->selectInnerjoinWhere('caught_by_user.id, caught_by_user.user_id AS owner, caught_by_user.name,
             caught_by_user.weight, caught_by_user.length, caught_by_user.date, caught_by_user.favorite,
             species.name AS species_en, species.name_nl AS species_nl, species.name_scientific
             AS species_scientific, special',
-            'caught_by_user', 'species', 'species_id', 'id', 'user_id', $userId);
-        }
+                'caught_by_user', 'species', 'species_id', 'id', 'user_id', $user->getId(), $sortValue);
+
+       } else {
+
+
+           $fishList = $db->selectInnerjoinWhere('caught_by_user.id, caught_by_user.user_id AS owner, caught_by_user.name,
+           caught_by_user.weight, caught_by_user.length, caught_by_user.date, caught_by_user.favorite,
+           species.name AS species_en, species.name_nl AS species_nl, species.name_scientific
+           AS species_scientific, special',
+           'caught_by_user', 'species', 'species_id', 'id', 'user_id', $user->getId());
+       }
+
+        //var_dump($fishList);
 
     //Get the image form the wiki api
     for ($i = 0; $i < count($fishList); $i++){
@@ -93,17 +91,16 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
 
     //Get description from wiki api
     for ($i = 0; $i < count($fishList); $i++){
-        $wiki = new Wiki($userLanguage);
-        $text = $wiki->getDescription($fishList[$i]['species_'.$userLanguage]);
+        $wiki = new Wiki($user->getLanguage());
+        $text = $wiki->getDescription($fishList[$i]['species_'.$user->getLanguage()]);
         $fishList[$i]['description'] = $text;
     }
-
 
     $data = [
         'fish' => $fishList
     ];
 
-    $json = $data;
+   $json = $data;
 
     header('HTTP/1.1 200 OK');
 
