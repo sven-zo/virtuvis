@@ -68,7 +68,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     $user = new User($fingerprint, $db->getConnection());
     $user->setName($username);
 
-    header('HTTP/1.1 204 OK empty return');
+    header('HTTP/1.1 200 OK empty return');
 
 
 }
@@ -114,7 +114,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     $user = new User($fingerprint, $db);
     $user->setLanguage($languageId);
 
-    header('HTTP/1.1 204 OK empty return');
+    header('HTTP/1.1 200 OK empty return');
 
 }
 
@@ -161,7 +161,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     $user = new User($fingerprint, $db);
     $user->setMetric($metricId);
 
-    header('HTTP/1.1 204 OK empty return');
+    header('HTTP/1.1 200 OK empty return');
 
 }
 
