@@ -5,6 +5,8 @@ import FishDetail from '@/components/fish/FishDetail'
 import Settings from '@/components/settings/Settings'
 import AddRod from '@/components/addrod/AddRod'
 
+import FishButton from '@/components/FishButton'
+
 Vue.use(Router)
 
 export default new Router({
@@ -12,6 +14,7 @@ export default new Router({
       { path: '/', component: Home },
       { path: '/fish/:id', component: FishDetail },
       { path: '/settings', component: Settings },
-      { path: '/addrod', component: AddRod }
+      { path: '/addrod', component: AddRod },
+      { path: '/debugButton', component: FishButton }
   ]
 })
