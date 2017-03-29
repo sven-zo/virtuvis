@@ -9,4 +9,5 @@ define('DATABASE', 'imanidap_nl_virtuvi');
 
 //Weather API Key
 define('WEATHER_KEY', '4e56ac2d06cb8c8a9538b44566b076ae');
+define('WEATHER_LOCATION', 'rotterdam');
 

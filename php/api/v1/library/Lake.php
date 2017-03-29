@@ -27,9 +27,9 @@ class Lake
         $lakeExists = $db->selectAllWhere('lakes', 'fingerprint', $fingerprint);
 
         if ($lakeExists){
-            return $this;
+
         } else {
-            return false;
+
         }
     }
 

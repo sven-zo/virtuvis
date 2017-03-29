@@ -27,20 +27,18 @@ class User
         $this->fingerprint = $fingerprint;
         $this->db = $db;
 
-        return $this;
+        $this->initUser();
     }
 
     public function initUser()
     {
-
         $exist = $this->db->selectAllWhere('users', 'fingerprint', $this->fingerprint);
-        if($exist){
 
-        } else {
+        if(!$exist){
             $this->addUser($this->fingerprint);
         }
 
-        return $this;
+        //return $this;
     }
 
     /**

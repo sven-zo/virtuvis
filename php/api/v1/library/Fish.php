@@ -22,22 +22,16 @@ class Fish
     private $special;
     private $db;
 
-    public function __construct($weather = false, $id = false, $db)
+    public function __construct( $id = false, $db)
     {
-        if($weather){
+        $this->db = $db;
+
+        if(!$id){
             //make fish
-
-            return $this;
-
-        } else if($id){
-            $this->id = $id;
-            $this->db = $db;
-
-            return $this;
+            $this->renderSpecies();
 
         } else {
-
-            return false;
+            $this->id = $id;
         }
     }
 
@@ -238,23 +232,69 @@ class Fish
         return $habitat;
     }
 
-    private function renderSpecies($habitat)
+    private function renderSpecies()
     {
         $db = $this->db;
+        $species = '';
+        $randomFactor = random_int(0,1);
 
-        //A lot has to happen here
+        $weather = new Weather(WEATHER_KEY, WEATHER_LOCATION);
 
-       // return $species;
+        $condition = $weather->getMainCondition();
+        $temperature = intval($weather->getTemperatureC());
+
+
+        if($randomFactor){
+
+            $result = $db->selectInnerjoin('species_id', 'species_habitats', 'habitats', 'habitat_id', 'id', 'WHERE min_temp < '.$temperature);
+            $randomSpecies = random_int(0,count($result) - 1);
+            $species = $result[$randomSpecies]['species_id'];
+
+        } else {
+
+            $result = $db->selectInnerjoinWhere('species_id', 'species_habitats', 'habitats', 'habitat_id', 'id', 'weather', $condition);
+            $randomSpecies = random_int(0,count($result) - 1);
+            $species = $result[$randomSpecies]['species_id'];
+
+        }
+
+        $weight = $this->randomWeight($species);
+        $length = $this->randomLength($species);
+        $id = md5(time());
+        //TODO: put in database
+        //TODO: species as standerd name
+        $columns = ['id', 'user_id', 'species_id', 'name', 'weight', 'length', 'date', 'favorite'];
+        $values = [$id, 3, $species, 'newFish', $weight, $length, time(), 0];
+
+
+        $db->insert('caught_by_user', $columns, $values);
+
+        //$db->insert('lakes', 'fingerprint', 'test');
     }
 
+    /**
+     * @param $species
+     * @return int
+     */
     private function randomWeight($species)
     {
 
+        $values = $this->db->selectInnerjoinWhere('max_weight, min_weight', 'species_habitats', 'species', 'species_id',
+            'id', 'species_id', $species);
+
+        $weight = random_int($values[0]['min_weight'],$values[0]['max_weight']);
+
+        return $weight;
     }
 
     private function randomLength($species)
     {
+        $values = $this->db->selectInnerjoinWhere('max_length, min_length', 'species_habitats',
+            'species', 'species_id', 'id', 'species_id', $species);
 
+        $length = random_int($values[0]['min_length'],$values[0]['max_length']);
+
+        return $length;
     }
 
 }

@@ -31,8 +31,6 @@ class Database
         $db = new \mysqli($host, $user, $password, $database);
 
         $this->connection = $db;
-
-        return $this;
     }
 
 
@@ -108,11 +106,11 @@ class Database
         return $result;
     }
 
-    public function selectInnerjoin($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn)
+    public function selectInnerjoin($column, $table, $joiningTable, $firstTableColumn, $joiningTableColumn, $freeWriting = false)
     {
 
         $selectInnerQuery = 'SELECT '.$column.' FROM `'.$table.'` INNER JOIN `'.$joiningTable.'` ON '.
-            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn;
+            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn.' '.$freeWriting;
 
         $data = $this->connection->query($selectInnerQuery);
 
@@ -159,6 +157,7 @@ class Database
     public function update($table, $column, $value, $whereColumn, $whereValue)
     {
         $valueChecked = $this->stringifyValue($value);
+        $whereValue = $this->stringifyValue($whereValue);
         mysqli_real_escape_string($this->getConnection(), $valueChecked);
 
         $updateQuery = 'UPDATE `'.$table.'`'.' SET `'.$column.'` = '.$valueChecked.' WHERE `'.$whereColumn.'` = '.$whereValue.';';
@@ -201,14 +200,12 @@ class Database
         }
 
         //Make a real escape string as security measure
-        mysqli_real_escape_string($this->getConnection(), $columnString);
-        mysqli_real_escape_string($this->getConnection(), $valueString);
-
+        $columnString = mysqli_real_escape_string($this->getConnection(), $columnString);
+        //$valueString = mysqli_real_escape_string($this->getConnection(), $valueString);
 
         $insertQuery = 'INSERT INTO `'.$table.'` ('.$columnString.') VALUES ('.$valueString.');';
         $this->connection->query($insertQuery);
 
-        return $this;
     }
 
     /**

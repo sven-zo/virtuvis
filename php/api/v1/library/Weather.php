@@ -25,8 +25,6 @@ class Weather extends Api
     {
         $this->key = $key;
         $this->location = $location;
-
-        return $this;
     }
 
     /**
