@@ -18,20 +18,27 @@
     .fishPicture(:style="{ backgroundImage: 'url(' + fish.image + ')' }")
     .fishName(v-if='userLanguage == "nl"')
       .fishWrapper
-        .fishText {{ fish.species_nl }}
+        .fishText
+          .name {{processedName}}
+          fish-button(type='edit', @click='editFishName')
+          //-a.edit(href='#', @click='editFishName') BWRK
+          .species ({{ fish.species_nl }})
         .fishDate Gevangen op: {{ date }}
     .fishName(v-if='userLanguage == "en"')
       .fishWrapper
-        .fishText {{ fish.species_en }}
-        .fishDate Caught at: {{ date }}
+        .name {{processedName}}
+        //- fish-button(type='edit')
+        //-a.edit(href='#', @click='editFishName') EDIT
+        .species ({{ fish.species_en }})
+        .fishDate Caught on: {{ date }}
     .fishInfo(v-if='userLanguage == "nl"')
       .fishLine
         .fishInfoLeft
           p Lengte: {{ fish.length }} centimeter
           p Gewicht: {{ fish.weight }} kilo
         .fishInfoRight
-          Indicator(number='1')
-          Indicator(number='4')
+          indicator(number='1')
+          indicator(number='4')
       p.fishDescription {{ fish.description }}
     .fishInfo(v-if='userLanguage == "en"')
       .fishLine
@@ -39,18 +46,21 @@
           p Length: {{ fish.length }} inches
           p Weight: {{ fish.weight }} pounds
         .fishInfoRight
-          Indicator(number='3')
-          Indicator(number='5')
+          indicator(number='3')
+          indicator(number='5')
       p.fishDescription (Er zijn nog geen descriptions in het Engels) {{ fish.description }}
 </template>
 
 <script>
-import Indicator from '@/components/fish/Indicator.vue'
+import FishButton from '@/components/FishButton'
+import Indicator from '@/components/fish/Indicator'
 
 // import {getUserFish} from '../../script/userFish.js'
 // import {getUserSettings} from '../../script/userSettings.js'
 import {getData} from '../../script/getData.js'
+import {getVirtuVisAPIUrl} from '../../../secret/API-url.js'
 
+import * as reqwest from 'Reqwest'
 import * as Vibrant from 'node-vibrant'
 
 export default {
@@ -64,7 +74,8 @@ export default {
     }
   },
   components: {
-    Indicator
+    Indicator,
+    FishButton
   },
   created () {
     console.log('[FishDetail] Fish opened, bound to id: ', this.$route.params.id)
@@ -122,6 +133,47 @@ export default {
         self.loading = false
         self.error = true
       })
+    },
+    editFishName () {
+      var newName = window.prompt(this.getLocalString('namePrompt'), this.fish.name)
+      console.log(newName)
+      if (newName != null) {
+        if (newName.length > 15) {
+          alert(this.getLocalString('namePromptLong'))
+          this.editFishName(true)
+        } else {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {
+              action: 'UPDATE',
+              fish: this.fish.id,
+              name: newName
+            }
+          })
+          this.fish.name = newName
+        }
+      }
+    },
+    getLocalString (string) {
+      // TODO elegantere oplossing
+      switch (string) {
+        case 'namePromptLong':
+          if (this.lang === 'nl') {
+            return 'Geef je vis alsjeblieft een kortere naam dan 15 letters.'
+          } else {
+            return 'Please give your fish a name with less than 15 letters.'
+          }
+        case 'namePrompt':
+          if (this.lang === 'nl') {
+            return 'Hoe wil je je vis noemen?'
+          } else {
+            return 'What do you want to call your fish?'
+          }
+        default:
+          return 'Error!'
+      }
     }
   },
   computed: {
@@ -152,6 +204,14 @@ export default {
     */
     pounds () {
       return (this.fish.weight * 2.2046).toFixed(2)
+    },
+    processedName () {
+      console.log(this.fish.name.length)
+      if (this.fish.name.length > 10) {
+        return this.fish.name.substr(0, 10) + '...'
+      } else {
+        return this.fish.name
+      }
     }
   }
 }
@@ -187,10 +247,18 @@ export default {
   font-family: 'Roboto', sans-serif
   font-size: 24px
   padding-top: 15px
+  display: flex
+
+.fishText .species
+  margin-left: 10px
+
+.fishText .edit
+  margin-left: 10px
 
 .fishDate
   font-family: 'Roboto', sans-serif
   color: gray
+  padding-left: 22vw
 
 .fishInfo
   font-family: 'Roboto', sans-serif

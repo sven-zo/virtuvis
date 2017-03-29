@@ -7,7 +7,7 @@
 transition(appear, name='card')
   .card(:id='cardId')
     .material(@click='navigate', :style="{ backgroundImage: 'url(' + image + ')' }")
-    p  {{ name }}
+    p  {{ processedName }}
 </template>
 
 <script>
@@ -24,6 +24,13 @@ export default {
     */
     cardId () {
       return 'card_id_' + this.id + ' card'
+    },
+    processedName () {
+      if (this.name.length > 15) {
+        return this.name.substr(0, 15) + '...'
+      } else {
+        return this.name
+      }
     }
   },
   created () {
