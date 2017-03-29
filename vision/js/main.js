@@ -7,7 +7,7 @@ var context;
 var tracker;
 var greenX;
 var greenY;
-var greenXtrue;
+
 /**
  * main function:
  * Send http request if the color green is detected inside the color box of yellow, cyan and magenta
@@ -20,7 +20,7 @@ function init(){
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
 
-    //register Color
+    //register additional colors
     registerColors();
 
     //create colortracker, tracks Yellow, cyan, magneta (tracking.js) and green
@@ -108,14 +108,13 @@ function trackColor(){
 
             //if coordinates of green are inside coordinates of rect
                 //send ping
-            greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
+            var greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
             var greenYtrue = greenY > rect.y && greenY < (rect.y +rect.height);
 
             //TODO
             //less pings
             if (greenXtrue && greenYtrue){
                 sendPing();
-                console.log('send ping');
                 greenY = '';
                 greenX = '';
             }
@@ -128,11 +127,42 @@ function trackColor(){
  */
 function sendPing(){
     console.log('send ping');
-    greenXtrue = '';
-    // reqwest({
-    //     url: 'url' ,
-    //     contentType: 'application/json' ,
-    //     // data: {time-stamp: ''}
-    //     error: sendPingErrorHandler()
-    // });
+    reqwest ({
+        url: 'http://imanidap.nl/virtuvis/api/v1/fish.php',
+        contentType: 'application/json',
+        crossOrigin: true,
+        data: {action: 'CREATE', rod: 'green'},
+        success: sendPingSuccessHandler,
+        error: sendPingErrorHandler
+    });
+    //sleep for 3 seconds
+    sleep(3000);
+}
+
+/**
+ *
+ * @param data
+ */
+function sendPingSuccessHandler(data) {
+    console.log('send ping');
+    console.log(data);
+}
+
+/**
+ *
+ * @param data
+ */
+function sendPingErrorHandler(data) {
+    console.log('error trying to send ping, check server');
+}
+
+/**
+ * Give the server some time to process the ping
+ * @param miliseconds
+ */
+function sleep(miliseconds) {
+    var currentTime = new Date().getTime();
+
+    while (currentTime + miliseconds >= new Date().getTime()) {
+    }
 }
