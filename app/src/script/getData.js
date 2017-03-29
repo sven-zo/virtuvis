@@ -8,6 +8,36 @@ var debugMode = true
 
 export function getData (source) {
   switch (source) {
+    case 'recentA': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'LIST', user: fingerprint, sortby: 'recentA'}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
     case 'recent': {
       return new Promise(function (resolve, reject) {
         getData('fingerprint').then(function (response) {
@@ -20,7 +50,127 @@ export function getData (source) {
             url: getVirtuVisAPIUrl('fish'),
             contentType: 'application/json',
             crossOrigin: true,
-            data: {action: 'LIST', user: fingerprint}
+            data: {action: 'LIST', user: fingerprint, sortby: 'recent'}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
+    case 'species': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'LIST', user: fingerprint, sortby: 'species'}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
+    case 'name': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'LIST', user: fingerprint, sortby: 'name'}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
+    case 'nameA': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'LIST', user: fingerprint, sortby: 'nameA'}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
+    case 'favorite': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'LIST', user: fingerprint, sortby: 'favorite'}
           })
             .then(function (resp) {
               // Do something with the reponse

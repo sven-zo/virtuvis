@@ -18,8 +18,8 @@
       Deze instellingen worden meegegeven als prop vanuit het 'Home' component.
       Via 'v-for' laden we alle vissen vanuit een json bestand.
     .cardContainer(v-if='loaded')
-      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image')
-      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image', style='center')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image', style='center')
 </template>
 
 <script>
@@ -50,7 +50,8 @@ export default {
       cards: null,
       error: null,
       loaded: false,
-      errorMessage: 'Failed to get error message'
+      errorMessage: 'Failed to get error message',
+      sortOption: 'nameA'
     }
   },
   /*
@@ -68,7 +69,7 @@ export default {
     fetchFish () {
       var self = this
       this.loading = true
-      getData('recent').then(function (response) {
+      getData(this.sortOption).then(function (response) {
         console.log('Succes! (Cards)', response.fish)
         self.cards = response.fish
         self.loading = false

@@ -52,9 +52,9 @@ export default {
     */
     navigate () {
       if (event) {
-        console.log('[FishCard] Emitting buttonState to [HomeCenter]')
+        console.log('[FishCardRecent] Emitting buttonState to [HomeCenter]')
         this.$emit('buttonState', 'up')
-        console.log('[FishCard] Routing to ', this.id)
+        console.log('[FishCardRecent] Routing to ', this.id)
         this.$router.push('/fish/' + (this.id))
       }
     } // },
@@ -76,7 +76,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
 //*
 // Dit importeert de palette file.
 // De underscore duidt aan dat het bestand niet geëxporteert hoeft te worden.
@@ -88,8 +88,8 @@ export default {
   background-color: $accent-color
   background-repeat: no-repeat
   background-size: cover
-  width: 40vw
-  height: 40vw
+  width: 34vw
+  height: 34vw
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)
   transition: all 0.3s cubic-bezier(.25,.8,.25,1)
 
@@ -99,6 +99,8 @@ export default {
   // TODO: Add more media queries for smaller/bigger screen sizes
   margin: 10px
   font-family: 'Roboto', sans-serif
+  color: white
+  text-align: center
 
 //*
 // Animaties voor wanneer het component wordt gecreërd.

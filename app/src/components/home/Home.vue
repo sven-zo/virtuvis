@@ -22,7 +22,7 @@
       .upperBar
         p
           | {{ caughtText }}
-      home-recent
+      home-recent(@buttonState='buttonStateManager($event)', :language="userLanguage")
       home-sortbar
       //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
       home-center(@buttonState='buttonStateManager($event)', :language="userLanguage")
@@ -85,9 +85,9 @@ export default {
         console.log('[Home] Emitting language to: App')
         self.$emit('userLanguage', self.userLanguage)
         if (self.userLanguage === 'nl') {
-          self.caughtText = 'Net gevangen:'
+          self.caughtText = 'Recent gevangen:'
         } else if (self.userLanguage === 'en') {
-          self.caughtText = 'Just caught:'
+          self.caughtText = 'Recently caught:'
         } else {
           self.caughtText = ''
         }
