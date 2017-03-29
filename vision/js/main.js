@@ -7,6 +7,7 @@ var context;
 var tracker;
 var greenX;
 var greenY;
+var recent = false;
 
 /**
  * main function:
@@ -111,8 +112,7 @@ function trackColor(){
             var greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
             var greenYtrue = greenY > rect.y && greenY < (rect.y +rect.height);
 
-            //TODO
-            //less pings
+            //TODO less pings
             if (greenXtrue && greenYtrue){
                 sendPing();
                 greenY = '';
@@ -126,17 +126,23 @@ function trackColor(){
  * Send HTTP request
  */
 function sendPing(){
-    console.log('send ping');
-    reqwest ({
-        url: 'http://imanidap.nl/virtuvis/api/v1/fish.php',
-        contentType: 'application/json',
-        crossOrigin: true,
-        data: {action: 'CREATE', rod: 'green'},
-        success: sendPingSuccessHandler,
-        error: sendPingErrorHandler
-    });
-    //sleep for 3 seconds
-    sleep(3000);
+    if (recent){
+        setTimeout( function() {
+            recent = false;
+        }, 3000);
+    }
+    else {
+        reqwest ({
+            url: 'http://imanidap.nl/virtuvis/api/v1/fish.php',
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'CREATE', rod: 'green'},
+            success: sendPingSuccessHandler,
+            error: sendPingErrorHandler
+        });
+        recent = true;
+    }
+    //recent true als net een ping is verstuurd, false wanneer nie
 }
 
 /**
@@ -154,15 +160,4 @@ function sendPingSuccessHandler(data) {
  */
 function sendPingErrorHandler(data) {
     console.log('error trying to send ping, check server');
-}
-
-/**
- * Give the server some time to process the ping
- * @param miliseconds
- */
-function sleep(miliseconds) {
-    var currentTime = new Date().getTime();
-
-    while (currentTime + miliseconds >= new Date().getTime()) {
-    }
 }
