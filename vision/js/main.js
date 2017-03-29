@@ -33,7 +33,7 @@ function init(){
 }
 
 /**
- * Search and get camera
+ * Search and get camera in different browsers
  */
 function getCamConnection(){
     video = document.querySelector("#cam");
@@ -56,11 +56,12 @@ function handleVideo(stream){
 }
 
 /**
- * handle video erro if getCamConnection() fails
+ * handle video error if getCamConnection() fails
  * @param e
  */
 function videoError(e) {
-    // do something
+    console.log("could not find camera, check cam source ");
+    console.log(e);
 }
 
 /**
@@ -112,7 +113,6 @@ function trackColor(){
             var greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
             var greenYtrue = greenY > rect.y && greenY < (rect.y +rect.height);
 
-            //TODO less pings
             if (greenXtrue && greenYtrue){
                 sendPing();
                 greenY = '';
@@ -127,6 +127,8 @@ function trackColor(){
  */
 function sendPing(){
     if (recent){
+
+        //prevents sendPing function to send more than 1 ping
         setTimeout( function() {
             recent = false;
         }, 3000);
@@ -142,11 +144,10 @@ function sendPing(){
         });
         recent = true;
     }
-    //recent true als net een ping is verstuurd, false wanneer nie
 }
 
 /**
- *
+ * Callback after success sendPing
  * @param data
  */
 function sendPingSuccessHandler(data) {
@@ -155,7 +156,7 @@ function sendPingSuccessHandler(data) {
 }
 
 /**
- *
+ * Callback after error sendPing
  * @param data
  */
 function sendPingErrorHandler(data) {
