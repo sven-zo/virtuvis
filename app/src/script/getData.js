@@ -4,6 +4,7 @@ import Fingerprint2 from 'fingerprintjs2'
 import {getVirtuVisAPIUrl} from '../../secret/API-url.js'
 
 var fingerprint
+var debugMode = true
 
 export function getData (source) {
   switch (source) {
@@ -11,6 +12,9 @@ export function getData (source) {
       return new Promise(function (resolve, reject) {
         getData('fingerprint').then(function (response) {
           fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
         }).then(function () {
           reqwest({
             url: getVirtuVisAPIUrl('fish'),
