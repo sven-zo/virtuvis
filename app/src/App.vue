@@ -8,12 +8,19 @@
 
 <script>
 import FishMenu from '@/components/FishMenu.vue'
+// import Fingerprint2 from 'fingerprintjs2'
 
 export default {
   name: 'app',
   components: {
     FishMenu
   },
+  // created () {
+  //   new Fingerprint2().get(function (result, components) {
+  //     console.log(result) // a hash, representing your device fingerprint
+  //     console.log(components) // an array of FP components
+  //   })
+  // },
   data: function () {
     return {
       buttonColor: '#673AB7',
