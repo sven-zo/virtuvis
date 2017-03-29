@@ -26,7 +26,7 @@
       for (var i = 0; i < this.number; i++) {
         list[i] = 'fillbar'
       }
-      console.log(list)
+      // console.log(list)
       for (var j = 0; j < 5; j++) {
         this.out[j] = list[j]
       }

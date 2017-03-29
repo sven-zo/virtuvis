@@ -1,6 +1,7 @@
 <template lang="pug">
 .button
-  //-img(src='../assets/edit.svg', onerror="this.src='./assets/edit.png'")
+  a(href='#')
+    img(src='../assets/edit.svg', onerror="this.src='./assets/edit.png'")
 </template>
 
 <!-- <script>

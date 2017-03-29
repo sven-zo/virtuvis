@@ -213,8 +213,8 @@ export default {
     },
     processedName () {
       console.log(this.fish.name.length)
-      if (this.fish.name.length > 10) {
-        return this.fish.name.substr(0, 10) + '...'
+      if (this.fish.name.length > 15) {
+        return this.fish.name.substr(0, 15) + '...'
       } else {
         return this.fish.name
       }
@@ -296,4 +296,9 @@ export default {
 
 .loading-enter
   opacity: 0
+
+.button img
+  max-height: 20px
+  padding-left: 2px
+  transform: translate(0px, 2px)
 </style>
