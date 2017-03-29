@@ -1,5 +1,5 @@
 body {
-    background-color: #00BCD4;
+    background-color: #d3eff1;
     margin: 0;
 }
 
@@ -12,32 +12,3 @@ body {
     -o-transition: all 0.5s ease-in-out;
     transition: all 0.5s ease-in-out;
 }
-
-#steen {
-    z-index: -1;
-}
-
-#steen1 {
-    z-index: -1;
-}
-
-#steen2 {
-    z-index: -1;
-}
-
-#steen3 {
-    z-index: -1;
-}
-
-#fish {
-    z-index: 1;
-}
-
-#fish2 {
-    z-index: 1;
-}
-
-#fish3 {
-    z-index: 1;
-}
-
