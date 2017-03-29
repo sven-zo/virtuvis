@@ -49,7 +49,8 @@ export default {
       if (event) {
         console.log('[FishCard] Emitting buttonState to [HomeCenter]')
         this.$emit('buttonState', 'up')
-        this.$router.push('/fish/' + (this.id - 1))
+        console.log('[FishCard] Routing to ', this.id)
+        this.$router.push('/fish/' + (this.id))
       }
     } // },
     /**

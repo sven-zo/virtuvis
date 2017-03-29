@@ -20,7 +20,10 @@
       .fishWrapper
         .fishText
           .name {{processedName}}
-          fish-button(type='edit', @click='editFishName')
+          .button
+            a(href='#', @click='editFishNameClickHandler')
+              img(src='../../assets/edit.svg', onerror="this.src='./assets/edit.png'")
+          //-fish-button(@click='editFishNameClickHandler')
           //-a.edit(href='#', @click='editFishName') BWRK
           .species ({{ fish.species_nl }})
         .fishDate Gevangen op: {{ date }}
@@ -48,20 +51,18 @@
         .fishInfoRight
           indicator(number='3')
           indicator(number='5')
-      p.fishDescription (Er zijn nog geen descriptions in het Engels) {{ fish.description }}
+      p.fishDescription (Er zijn nog geen descriptions in het Engels) { fish.description }
 </template>
 
 <script>
 import FishButton from '@/components/FishButton'
 import Indicator from '@/components/fish/Indicator'
 
-// import {getUserFish} from '../../script/userFish.js'
-// import {getUserSettings} from '../../script/userSettings.js'
 import {getData} from '../../script/getData.js'
 import {getVirtuVisAPIUrl} from '../../../secret/API-url.js'
 
-import * as reqwest from 'Reqwest'
 import * as Vibrant from 'node-vibrant'
+import * as reqwest from 'Reqwest'
 
 export default {
   data: function () {
@@ -106,9 +107,11 @@ export default {
           self.error = true
           self.loading = false
         }
-        var fishResponse = response.fish[self.$route.params.id]
+
+        var fishResponse = response.fish.find(x => x.id === self.$route.params.id)
         console.log('[FishDetail] Succes! (Detail)', fishResponse)
-        self.fish = response.fish[self.$route.params.id]
+        self.fish = fishResponse
+
         console.log('[FishDetail] Detail data attached')
         self.loading = false
         self.loaded = true
@@ -126,13 +129,16 @@ export default {
           console.log('[FishDetail] Emitting buttonColor to [App]')
           self.$emit('buttonColor', palette.DarkVibrant.getHex())
         })
-        // -
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserFish@fetchDetailPage@FishDetail] (Error: ' + error + ')'
         console.log('Failed! (Detail)', error)
         self.loading = false
         self.error = true
       })
+    },
+    editFishNameClickHandler (event) {
+      event.preventDefault()
+      this.editFishName()
     },
     editFishName () {
       var newName = window.prompt(this.getLocalString('namePrompt'), this.fish.name)
@@ -152,7 +158,7 @@ export default {
               name: newName
             }
           })
-          this.fish.name = newName
+          this.$router.push('/')
         }
       }
     },
@@ -160,13 +166,13 @@ export default {
       // TODO elegantere oplossing
       switch (string) {
         case 'namePromptLong':
-          if (this.lang === 'nl') {
+          if (this.userLanguage === 'nl') {
             return 'Geef je vis alsjeblieft een kortere naam dan 15 letters.'
           } else {
             return 'Please give your fish a name with less than 15 letters.'
           }
         case 'namePrompt':
-          if (this.lang === 'nl') {
+          if (this.userLanguage === 'nl') {
             return 'Hoe wil je je vis noemen?'
           } else {
             return 'What do you want to call your fish?'
@@ -177,7 +183,7 @@ export default {
     }
   },
   computed: {
-   /**
+  /**
     * Deze computed zorgt er voor dat de meegestuurde timestamp wordt
     * omgezet naar leesbare tijd.
     * @return {String} Tijd als string
@@ -189,7 +195,7 @@ export default {
       var seconds = '0' + date.getSeconds()
       return hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2)
     },
-   /**
+  /**
     * Deze computed zet centimeter om naar inches
     * als de gebruiker inches als lengte-unit gebruikt
     * @return {number} Lengte in inches
@@ -197,7 +203,7 @@ export default {
     inches () {
       return (this.fish.length * 0.393700787).toFixed(2)
     },
-   /**
+  /**
     * Deze computed zet kilogram om naar pounds
     * als de gebruiker pounds als gewicht-unit gebruikt
     * @return {number} Gewicht in pounds
