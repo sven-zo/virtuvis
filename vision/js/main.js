@@ -25,7 +25,7 @@ function init(){
     registerColors();
 
     //create colortracker, tracks Yellow, cyan, magneta (tracking.js) and green
-    tracker = new tracking.ColorTracker(['yellow', 'cyan', 'magenta', 'green']);
+    tracker = new tracking.ColorTracker(['yellow', 'magenta']);
 
     //track color
     trackColor();
@@ -91,7 +91,7 @@ function trackColor(){
         event.data.forEach(function (rect) {
 
             //if green detected, save the coordinates
-            if (rect.color === "green"){
+            if (rect.color === "yellow"){
                 greenX = rect.x;
                 greenY = rect.y;
             }
