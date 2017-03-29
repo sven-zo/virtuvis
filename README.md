@@ -32,7 +32,7 @@ Je hoeft `npm install`/`yarn` te gebruiken als de `package.json` file is verande
 De webapp opent na het typen van `npm run dev`/`yarn dev` op adres `localhost:8080`
 
 **Note:** Alleen de developmentomgeving draait op Node.js, de uiteindelijke app kan geserved worden en worden gedraaid op elke ECMA5 compactibele browser.
-Om de bestanden om te zetten naar build-ready, gebruik het volgende commando in de `../app` folder: `npm run build --report`. **Doe dit altijd in een aparte map om de git bestanden intact te laten!**
+Om de bestanden om te zetten naar build-ready, gebruik het volgende commando in de `../app` folder: `npm run build --report`/`yarn build --report`. **Doe dit altijd in een aparte map om de git bestanden intact te laten!**
 
 --------
 ## VirtuVis API
