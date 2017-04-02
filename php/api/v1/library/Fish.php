@@ -248,18 +248,17 @@ class Fish
 
         }
 
+        $result = $db->select('name_nl', 'species', 'id', $species);
+
+        $name = $result[0]['name_nl'];
         $weight = $this->randomWeight($species);
         $length = $this->randomLength($species);
         $id = md5(time());
-        //TODO: put in database
-        //TODO: species as standard name
         $columns = ['id', 'user_id', 'species_id', 'name', 'weight', 'length', 'date', 'favorite'];
-        $values = [$id, 3, $species, 'newFish', $weight, $length, time(), 0];
-
+        $values = [$id, 3, $species, $name, $weight, $length, time(), 0];
 
         $db->insert('caught_by_user', $columns, $values);
 
-        //$db->insert('lakes', 'fingerprint', 'test');
     }
 
     /**
