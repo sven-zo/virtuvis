@@ -45,12 +45,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'GET' && isset($_GET['user']) &
     echo json_encode($json);
 }
 
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing required parameters');
-//}
-
 /**
  * UPDATE username
  *
@@ -69,15 +63,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     $user->setName($username);
 
     header('HTTP/1.1 200 OK empty return');
-
-
 }
-
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing required parameters');
-//}
 
 /**
  * UPDATE user language
@@ -164,12 +150,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     header('HTTP/1.1 200 OK empty return');
 
 }
-
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing required parameters');
-//}
 
 //close database connection
 $db->close();

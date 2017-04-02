@@ -118,13 +118,18 @@ class User
      */
     public function getRod()
     {
-        $data = $this->db->selectInnerjoin('rods.fingerprint AS rod','users','rods','rod_id','id','fingerprint',$this->fingerprint);
+
+        $data = $this->db->selectInnerjoinWhere('rods.fingerprint AS rod','users','rods','rod_id','id','users.fingerprint',$this->fingerprint);
 
         if($data){
+
             $rod = $data[0]['rod'];
             $this->rod = $rod;
+
         } else {
+
             $this->rod = false;
+
         }
 
         return $this->rod;

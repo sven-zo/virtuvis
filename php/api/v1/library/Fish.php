@@ -31,6 +31,7 @@ class Fish
             $this->renderSpecies();
 
         } else {
+
             $this->id = $id;
         }
     }
@@ -221,17 +222,6 @@ class Fish
         $this->favorite = $favorite;
     }
 
-    private function renderHabitat($weatherCondition)
-    {
-        $db = $this->db;
-
-        $allPossibilities = $db->selectAllWhere('habitats','weather',$weatherCondition);
-        shuffle($allPossibilities);
-        $habitat = $allPossibilities[0];
-
-        return $habitat;
-    }
-
     private function renderSpecies()
     {
         $db = $this->db;
@@ -262,7 +252,7 @@ class Fish
         $length = $this->randomLength($species);
         $id = md5(time());
         //TODO: put in database
-        //TODO: species as standerd name
+        //TODO: species as standard name
         $columns = ['id', 'user_id', 'species_id', 'name', 'weight', 'length', 'date', 'favorite'];
         $values = [$id, 3, $species, 'newFish', $weight, $length, time(), 0];
 

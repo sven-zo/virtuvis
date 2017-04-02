@@ -23,7 +23,6 @@ class Wiki extends Api
      */
     public function getDescription($species)
     {
-        // https://en.wikipedia.org/w/api.php?action=parse&page=cheese&prop=sections&format=json
 
         $species = str_replace(' ', '_', $species);
 

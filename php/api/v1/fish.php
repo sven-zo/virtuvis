@@ -32,9 +32,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'CREATE' && isset($_GET['rod'])
     $fish = new Fish( false, $db);
     header('HTTP/1.1 200 OK');
 
-
     //var_dump();
-
 }
 
 /**
@@ -125,13 +123,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
 
 }
 
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing Required Parameters');
-//
-//}
-
 /**
  * UPDATE fish name
  *
@@ -154,12 +145,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 
 }
 
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing required parameters');
-//}
-//
 
 /**
  * UPDATE fish favorite
@@ -182,13 +167,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['fish']
 
 }
 
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing required parameters');
-//}
-
 
 //Close database connection
 $db->close();
-?>

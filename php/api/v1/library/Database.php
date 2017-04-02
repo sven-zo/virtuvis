@@ -110,7 +110,11 @@ class Database
     {
 
         $selectInnerQuery = 'SELECT '.$column.' FROM `'.$table.'` INNER JOIN `'.$joiningTable.'` ON '.
-            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn.' '.$freeWriting;
+            $table.'.'.$firstTableColumn.' = '.$joiningTable.'.'.$joiningTableColumn;
+
+            if($freeWriting){
+                $selectInnerQuery .= ' '.$freeWriting;
+            }
 
         $data = $this->connection->query($selectInnerQuery);
 
@@ -170,7 +174,6 @@ class Database
      * @param $table
      * @param array $columns
      * @param array $values
-     * @return Database
      */
     public function insert($table, $columns = [], $values = [])
     {
@@ -201,9 +204,9 @@ class Database
 
         //Make a real escape string as security measure
         $columnString = mysqli_real_escape_string($this->getConnection(), $columnString);
-        //$valueString = mysqli_real_escape_string($this->getConnection(), $valueString);
+        //$valueString = mysqli_real_escape_string($this->getConnection(), $valueString); //adds unnecessary slashes
 
-        $insertQuery = 'INSERT INTO `'.$table.'` ('.$columnString.') VALUES ('.$valueString.');';
+        $insertQuery = 'INSERT INTO `'.$table.'` ('.$columnString.') VALUES ('.$valueString.')';
         $this->connection->query($insertQuery);
 
     }
