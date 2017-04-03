@@ -11,11 +11,14 @@
     .loading(v-if='loading')
       p#loadingMSG Loading fish...
       #loader Loading...
+      p#loadingMSG.slowLoad Communicating with server...
   //- Dit wordt getoond als er errors zijn
   .error(v-if='error')
   //- Dit wordt getoond als de pagina geladen is
   .fishDetail(v-if='loaded')
     .fishPicture(:style="{ backgroundImage: 'url(' + fish.image + ')' }")
+      img#star(src='../../assets/star.png', v-if="fish.favorite === '1'", @click='toggleFavorite')
+      img#star(src='../../assets/star_outline.png', v-else, @click='toggleFavorite')
     .fishName(v-if='userLanguage == "nl"')
       .fishWrapper
         .fishText
@@ -162,6 +165,21 @@ export default {
         }
       }
     },
+    toggleFavorite (event) {
+      if (event) {
+        reqwest({
+          url: getVirtuVisAPIUrl('fish'),
+          contentType: 'application/json',
+          crossOrigin: true,
+          data: [
+              {name: 'action', value: 'UPDATE'},
+              {name: 'fish', value: this.fish.id},
+              {name: 'favorite'}
+          ]
+        })
+        this.$router.push('/')
+      }
+    },
     getLocalString (string) {
       // TODO elegantere oplossing
       switch (string) {
@@ -301,4 +319,19 @@ export default {
   max-height: 20px
   padding-left: 2px
   transform: translate(0px, 2px)
+
+.slowLoad
+  animation-name: slowFade
+  animation-delay: 5s
+  animation-duration: 2s
+
+#star
+  height: 40px
+  width: 40px
+
+@keyframes slowFade
+    0%
+        opacity: 0%
+    100%
+        opacity: 100%
 </style>
