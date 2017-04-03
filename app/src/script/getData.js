@@ -188,6 +188,36 @@ export function getData (source) {
         })
       })
     }
+    case 'speciesA': {
+      return new Promise(function (resolve, reject) {
+        getData('fingerprint').then(function (response) {
+          fingerprint = response
+          if (debugMode) {
+            fingerprint = getVirtuVisAPIUrl('debugFingerprint')
+          }
+        }).then(function () {
+          reqwest({
+            url: getVirtuVisAPIUrl('fish'),
+            contentType: 'application/json',
+            crossOrigin: true,
+            data: {action: 'LIST', user: fingerprint, sortby: 'speciesA'}
+          })
+            .then(function (resp) {
+              // Do something with the reponse
+              resolve(resp)
+            })
+            .fail(function (err, msg) {
+              // Do something with the error message
+              reject(Error(err + ' Message: ' + msg))
+            })
+            .always(function (resp) {
+              // Always do this.
+              // I'm not sure what this is for yet.
+              // Time for research!
+            })
+        })
+      })
+    }
     case 'user': {
       return new Promise(function (resolve, reject) {
         getData('fingerprint').then(function (response) {
@@ -213,6 +243,29 @@ export function getData (source) {
               // Time for research!
             })
         })
+      })
+    }
+    case 'rod': {
+      return new Promise(function (resolve, reject) {
+        reqwest({
+          url: getVirtuVisAPIUrl('rod'),
+          contentType: 'application/json',
+          crossOrigin: true,
+          data: {action: 'LIST'}
+        })
+          .then(function (resp) {
+            // Do something with the reponse
+            resolve(resp)
+          })
+          .fail(function (err, msg) {
+            // Do something with the error message
+            reject(Error(err + ' Message: ' + msg))
+          })
+          .always(function (resp) {
+            // Always do this.
+            // I'm not sure what this is for yet.
+            // Time for research!
+          })
       })
     }
     case 'fingerprint': {
