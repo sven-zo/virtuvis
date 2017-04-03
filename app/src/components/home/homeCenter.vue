@@ -11,6 +11,9 @@
       p Probeer het later opnieuw!
       p Kijk ook even of je internet hebt
       p Foutmelding: {{ errorMessage }}
+    //- Extra bericht voor als wikipedia dood is
+    .wikiError(v-if='wikiError')
+      p Sorry, de plaatjes kunnen niet worden geladen!
     //-
       Als de vissen geladen zijn verschijnen de FishCards.
       Er zijn twee soorten FishCards, een voor Nederlands en een voor Engels.
@@ -18,8 +21,8 @@
       Deze instellingen worden meegegeven als prop vanuit het 'Home' component.
       Via 'v-for' laden we alle vissen vanuit een json bestand.
     .cardContainer(v-if='loaded')
-      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image', style='center')
-      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image', style='center')
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image', style='center', :favorite="fish.favorite", :special="fish.special")
+      fish-card(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image', style='center', :favorite="fish.favorite", :special="fish.special")
 </template>
 
 <script>
@@ -43,7 +46,7 @@ export default {
   / 'cards' is null zodat er geen cards gerenderd worden als er geen zijn binnengekomen.
   / 'loaded' is false zodat het component pas verschijnt als de benodigde data is binnengekomen.
   */
-  props: ['language'],
+  props: ['language', 'sortOption'],
   data: function () {
     return {
       loading: false,
@@ -51,7 +54,8 @@ export default {
       error: null,
       loaded: false,
       errorMessage: 'Failed to get error message',
-      sortOption: 'nameA'
+      sort: 'nameA',
+      wikiError: false
     }
   },
   /*
@@ -68,10 +72,14 @@ export default {
     */
     fetchFish () {
       var self = this
+      this.loaded = false
       this.loading = true
       getData(this.sortOption).then(function (response) {
         console.log('Succes! (Cards)', response.fish)
         self.cards = response.fish
+        if (response.fish[0].image === '') {
+          self.wikiError = true
+        }
         self.loading = false
         self.loaded = true
         console.log('Card data attached')
@@ -89,6 +97,13 @@ export default {
       console.log('[HomeCenter] Got data from {userFish}: buttonState')
       console.log('[HomeCenter] Emitting buttonState to [Home]')
       this.$emit('buttonState', data)
+    }
+  },
+  watch: {
+    sortOption () {
+      console.log('[HomeCenter] Setting sort...')
+      this.sort = this.sortOption
+      this.fetchFish()
     }
   },
   /*
@@ -133,4 +148,8 @@ export default {
   flex-wrap: wrap
   padding-left: 6.2vw
   // TODO: Better padding.
+
+.wikiError
+  font-family: 'Roboto', sans-serif
+  color: $primary-color
 </style>

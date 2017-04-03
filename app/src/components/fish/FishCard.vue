@@ -7,6 +7,10 @@
 transition(appear, name='card')
   .card(:id='cardId')
     .material(@click='navigate', :style="{ backgroundImage: 'url(' + image + ')' }")
+        .favorite(v-if="favorite === '1'")
+            p Favorite
+        .special(v-if="special === '1'")
+            p Special
     p  {{ processedName }}
 </template>
 
@@ -15,7 +19,7 @@ transition(appear, name='card')
 / Parent: 'HomeCenter.vue'
 */
 export default {
-  props: ['id', 'name', 'image'],
+  props: ['id', 'name', 'image', 'favorite', 'special'],
   computed: {
     /*
     / Dit zet het ID van de card op een unieke waarde bij het creëren.
