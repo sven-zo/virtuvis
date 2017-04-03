@@ -13,18 +13,21 @@
   transition(appear, name='page')
     .settings(v-if='userLanguage == "nl"')
       .upperBar
-        p  Vishengel toevoegen:
+        p  Vishengel kiezen:
       .bottomBar
-        p  Leg je dobber op het scherm, met de sensor naar beneden.
+        p  Kies je vishengel:
+      .debug
+        p {{rods}}
     .settings(v-if='userLanguage == "en"')
       .upperBar
-        p  Add a fishing rod:
+        p  Choose a fishing rod:
       .bottomBar
-        p To begin, place your bobber on the screen, facing down.
+        p Choose your fishing rod:
 </template>
 
 <script>
-import {getUserSettings} from '../../script/userSettings.js'
+// import {getUserSettings} from '../../script/userSettings.js'
+import {getData} from '../../script/getData.js'
 
 export default {
   data: function () {
@@ -34,7 +37,8 @@ export default {
       loading: false,
       error: null,
       errorMessage: 'Failed to get error message',
-      caughtText: '...'
+      caughtText: '...',
+      rods: null
     }
   },
   /*
@@ -42,7 +46,7 @@ export default {
   / Als het component wordt geschapen, wordt de taal van de gebruiker opgezocht.
   */
   created () {
-    this.getUserSettings()
+    this.getFishingRodPage()
     this.$emit('buttonColor', '#673AB7')
   },
   methods: {
@@ -50,19 +54,27 @@ export default {
     / Deze methode haalt de taal van de gebruiker op.
     / Dit wordt gedaan via een apart script met een functie met dezelfde naam.
     */
-    getUserSettings () {
+    getFishingRodPage () {
       var self = this
-      this.loading = true
-      getUserSettings().then(function (response) {
+      getData('user').then(function (response) {
         console.log('[AddRod] Succes! (Settings)', response.language)
-        self.loading = false
-        self.loaded = true
         self.userLanguage = response.language
         console.log('[AddRod] Language data attached')
         console.log('[AddRod] Language: ', self.userLanguage)
       }, function (error) {
         self.errorMessage = '[promise_failed_getUserSettings@getUserSettings@AddRod] (' + error + ')'
-        console.log('Failed! (Settings)', error)
+        console.log('[AddRod] Failed! (Settings)', error)
+        self.error = true
+      })
+      getData('rod').then(function (response) {
+        console.log('[AddRod] Retrieved list of rods', response.rods)
+        self.rods = response.rods
+        self.loading = false
+        self.loaded = true
+        console.log('[AddRod] Rod data attached')
+      }, function (error) {
+        self.errorMessage = '[promise_failed_getData@getFishingRod@AddRod] (Error: ' + error + ')'
+        console.log('[AddRod] Failed! (Rodlist)', error)
         self.loading = false
         self.error = true
       })
@@ -79,12 +91,11 @@ export default {
 @import '../../style/loading.css'
 
 .bottomBar
-  background-color: red
+  background-color: white
   width: 100%
-  height: 90vh
 
 .bottomBar p
-  color: white
+  color: $primary-text-color
   font-size: 24px
   font-family: 'Roboto', sans-serif
   text-align: center
@@ -107,7 +118,8 @@ export default {
 h1
   color: $primary-color
   font-family: 'Roboto', sans-serif
-p
+
+.debug p
   color: black
   font-family: 'Roboto', sans-serif
 
