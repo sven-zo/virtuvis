@@ -141,9 +141,9 @@ export default {
         return 'Hengel / Fishing rod'
       } else if (this.loaded) {
         if (this.userLanguage === 'nl') {
-          return 'Vishengel toevoegen'
+          return 'Vishengel kiezen'
         } else if (this.userLanguage === 'en') {
-          return 'Add rod'
+          return 'Choose rod'
         }
       }
     },
