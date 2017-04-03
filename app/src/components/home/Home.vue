@@ -22,10 +22,10 @@
       .upperBar
         p
           | {{ caughtText }}
-      home-recent
-      home-sortbar
+      home-recent(@buttonState='buttonStateManager($event)', :language="userLanguage")
+      home-sortbar(@setSort='setSort($event)')
       //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
-      home-center(@buttonState='buttonStateManager($event)', :language="userLanguage")
+      home-center(@buttonState='buttonStateManager($event)', :language="userLanguage", :sortOption="userSort")
 </template>
 
 <script>
@@ -39,6 +39,7 @@ import HomeRecent from '@/components/home/HomeRecent.vue'
 import HomeSortbar from '@/components/home/HomeSortbar.vue'
 // import {getUserSettings} from '../../script/userSettings.js'
 import {getData} from '../../script/getData.js'
+
 /*
 / Parent: 'App.vue'
 */
@@ -56,7 +57,8 @@ export default {
       loading: false,
       error: null,
       errorMessage: 'Failed to get error message',
-      caughtText: '...'
+      caughtText: '...',
+      userSort: 'nameA'
     }
   },
   /*
@@ -85,9 +87,9 @@ export default {
         console.log('[Home] Emitting language to: App')
         self.$emit('userLanguage', self.userLanguage)
         if (self.userLanguage === 'nl') {
-          self.caughtText = 'Net gevangen:'
+          self.caughtText = 'Recent gevangen:'
         } else if (self.userLanguage === 'en') {
-          self.caughtText = 'Just caught:'
+          self.caughtText = 'Recently caught:'
         } else {
           self.caughtText = ''
         }
@@ -107,6 +109,11 @@ export default {
       console.log('(Home) Got data from homeCenter: buttonState')
       console.log('(Home) Emitting buttonState to: App')
       this.$emit('buttonState', data)
+    },
+    setSort (data) {
+      console.log('[Home] Got data from [HomeSortbar]: setSort')
+      console.log('[Home] Setting sort in [HomeCenter]')
+      this.userSort = data
     }
   },
   /*

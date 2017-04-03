@@ -10,12 +10,14 @@
       p Er ging iets fout :( Probeer het later opnieuw! Kijk ook even of je internet hebt
       p Foutmelding: {{ errorMessage }}
   .recent(v-if='loaded')
-    br
-    p The cards are loaded sucessfully. This is a placeholder text. We don't have the cards yet.
+    fish-card-recent(@buttonState='buttonStateManager($event)', v-if="language == 'nl'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image')
+    fish-card-recent(@buttonState='buttonStateManager($event)', v-if="language == 'en'", v-for='fish in cards', :key="fish.id", :id='fish.id', :name='fish.name', :image='fish.image')
 </template>
 
 <script>
 import {getData} from '../../script/getData.js'
+
+import FishCardRecent from '@/components/fish/FishCardRecent.vue'
 
 export default {
   data: function () {
@@ -24,6 +26,12 @@ export default {
       error: null,
       loaded: false
     }
+  },
+  props: [
+    'language'
+  ],
+  components: {
+    FishCardRecent
   },
   created () {
     this.getRecentFish()
@@ -44,6 +52,11 @@ export default {
         self.loading = false
         self.error = true
       })
+    },
+    buttonStateManager (data) {
+      console.log('[HomeRecent] Got data from {userFish}: buttonState')
+      console.log('[HomeRecent] Emitting buttonState to [Home]')
+      this.$emit('buttonState', data)
     }
   }
 }
@@ -68,6 +81,10 @@ export default {
   background-color: $primary-color
   height: 200px
   width: 100%
+  display: flex
+  overflow-x: scroll
+  overflow-y: hidden
+  white-space: nowrap
 
 .error
   background-color: $primary-color
