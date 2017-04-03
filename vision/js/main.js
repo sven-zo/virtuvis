@@ -5,9 +5,9 @@ var video;
 var canvas;
 var context;
 var tracker;
-var greenX;
-var greenY;
-var recent = false;
+var cXtemp;
+var cYtemp;
+var setTimeOut = false;
 
 /**
  * main function:
@@ -84,16 +84,16 @@ function trackColor(){
     tracking.track('#cam', tracker, {camera: true});
 
     tracker.on('track', function(event) {
-        //reset
+        //reset rect
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         //for each color draw rectangle
         event.data.forEach(function (rect) {
 
-            //if green detected, save the coordinates
+            //if yellow detected, save the coordinates
             if (rect.color === "yellow"){
-                greenX = rect.x;
-                greenY = rect.y;
+                cXtemp = rect.x;
+                cYtemp = rect.y;
             }
 
             //get color
@@ -102,21 +102,22 @@ function trackColor(){
             //draw rectangle
             context.strokeRect(rect.x, rect.y, rect.width, rect.height);
 
-            //data of rect
+            //data of rect: font, color, position
             context.font = '11px Helvetica';
             context.fillStyle = "#fff";
             context.fillText('x: ' + rect.x + 'px', rect.x + rect.width + 5, rect.y + 11);
             context.fillText('y: ' + rect.y + 'px', rect.x + rect.width + 5, rect.y + 22);
 
-            //if coordinates of green are inside coordinates of rect
-                //send ping
-            var greenXtrue = greenX > rect.x && greenX < (rect.x +rect.width);
-            var greenYtrue = greenY > rect.y && greenY < (rect.y +rect.height);
+            //if coordinates of green are inside coordinates of rect, send ping
+            var cXcondition = cXtemp > rect.x && cXtemp < (rect.x +rect.width);
+            var cYcondition = cYtemp > rect.y && cYtemp < (rect.y +rect.height);
 
-            if (greenXtrue && greenYtrue){
+            if (cXcondition && cYcondition){
                 sendPing();
-                greenY = '';
-                greenX = '';
+
+                //reset coordinates
+                cYtemp = '';
+                cXtemp = '';
             }
         });
     });
@@ -126,14 +127,16 @@ function trackColor(){
  * Send HTTP request
  */
 function sendPing(){
-    if (recent){
+    if (setTimeOut){
 
         //prevents sendPing function to send more than 1 ping
         setTimeout( function() {
-            recent = false;
+            setTimeOut = false;
         }, 3000);
     }
     else {
+
+        //reqwest: library for handling async http requests (https://github.com/ded/reqwest)
         reqwest ({
             url: 'http://imanidap.nl/virtuvis/api/v1/fish.php',
             contentType: 'application/json',
@@ -142,7 +145,7 @@ function sendPing(){
             success: sendPingSuccessHandler,
             error: sendPingErrorHandler
         });
-        recent = true;
+        setTimeOut = true;
     }
 }
 
