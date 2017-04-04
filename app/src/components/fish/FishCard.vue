@@ -7,10 +7,11 @@
 transition(appear, name='card')
   .card(:id='cardId')
     .material(@click='navigate', :style="{ backgroundImage: 'url(' + image + ')' }")
+      .icons
         .favorite(v-if="favorite === '1'")
-            p Favorite
+            img(src='../../assets/star_white.png')
         .special(v-if="special === '1'")
-            p Special
+            img(src='../../assets/badge.png')
     p  {{ processedName }}
 </template>
 
@@ -111,4 +112,19 @@ export default {
 
 .card-enter
   opacity: 0
+
+.favorite img
+  width: 25px
+  height: 25px
+
+.special img
+  width: 30px
+  height: 30px
+  transform: translate(-4px, 0px)
+
+.icons
+  width: 100%
+  display: flex
+  justify-content: space-between
+  padding: 5px
 </style>
