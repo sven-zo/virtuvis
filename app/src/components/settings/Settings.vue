@@ -9,24 +9,45 @@
       .settings(v-if="userLanguage === 'nl'")
         .upperBar
           p  Instellingen:
-        p  Hier komen de instellingen.
-        p  Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
-        p  Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
+        p Huidige gebruikersnaam: {{userName}}
+        a(href='#') Wijzig gebruikernaam
+        p Huidig metrisch stelsel: {{userMetric}}
+        a(href='#') Gebruik centimeters en kilo
+        br
+        a(href='#') Gebruik inches en pounds
+        p Language: {{userLanguage}}
+        p Waarschuwing! Herstart alsjeblieft de app na het zetten van een taal!
+        a(href='#', @click='setUserLanguage("nl")') Zet taal naar Nederlands
+        br
+        a(href='#', @click='setUserLanguage("en")') Zet taal naar Engels / Switch language to English
       .settings(v-if="userLanguage === 'en'")
         .upperBar
           p  Settings:
-        p  Here's where the settings are.
-        p  Omdat we een dummy-server gebruiken, moet je nu de taal manually aanpassen.
-        p  Maar, bijna alle pagina's hebben een Nederlandse en Engelse vertaling.
+        p Current username: {{userName}}
+        a(href='#', @click='setUserName()') Change username
+        p Current metric system: {{userMetric}}
+        a(href='#', @click='setUserMetric("cm")') Use centimeters and kilo
+        br
+        a(href='#', @click='setUserMetric("inch")') Use inches and pounds
+        p Language: {{userLanguage}}
+        p Warning! Please restart the app after selecting a new language!
+        a(href='#', @click='setUserLanguage("nl")') Switch language to Dutch / Zet taal naar Nederlands
+        br
+        a(href='#', @click='setUserLanguage("en")') Switch language to English
 </template>
 
 <script>
-import {getUserSettings} from '../../script/userSettings.js'
+import {getData} from '../../script/getData.js'
+import {getVirtuVisAPIUrl} from '../../../secret/API-url.js'
+
+import * as reqwest from 'Reqwest'
 
 export default {
   data: function () {
     return {
       userLanguage: null,
+      userMetric: null,
+      userName: null,
       loaded: false,
       loading: false,
       error: null,
@@ -50,11 +71,13 @@ export default {
     getUserSettings () {
       var self = this
       this.loading = true
-      getUserSettings().then(function (response) {
-        console.log('[Settings] Succes! (Settings)', response.language)
+      getData('user').then(function (response) {
+        console.log('[Settings] Succes! (Settings)', response)
         self.loading = false
         self.loaded = true
         self.userLanguage = response.language
+        self.userMetric = response.metric
+        self.userName = response.name
         console.log('[Settings] Language data attached')
         console.log('[Settings] Language: ', self.userLanguage)
       }, function (error) {
@@ -63,6 +86,79 @@ export default {
         self.loading = false
         self.error = true
       })
+    },
+    setUserLanguage (lang) {
+      getData('fingerprint').then(function (response) {
+        var r = response
+        reqwest({
+          url: getVirtuVisAPIUrl('user'),
+          contentType: 'application/json',
+          crossOrigin: true,
+          data: [
+              {name: 'action', value: 'UPDATE'},
+              {name: 'user', value: r},
+              {name: 'language', value: lang}
+          ]
+        })
+      })
+      this.$router.push('/')
+    },
+    setUserName () {
+      var newName = window.prompt(this.getLocalString('namePrompt'))
+      console.log(newName)
+      if (newName != null) {
+        if (newName.length > 15) {
+          alert(this.getLocalString('namePromptLong'))
+          this.editFishName(true)
+        } else {
+          getData('fingerprint').then(function (response) {
+            reqwest({
+              url: getVirtuVisAPIUrl('user'),
+              contentType: 'application/json',
+              crossOrigin: true,
+              data: {
+                action: 'UPDATE',
+                fingerprint: response,
+                username: newName
+              }
+            })
+          })
+          this.$router.push('/')
+        }
+      }
+    },
+    setUserMetric (metric) {
+      getData('fingerpint').then(function (response) {
+        reqwest({
+          url: getVirtuVisAPIUrl('user'),
+          contentType: 'application/json',
+          crossOrigin: true,
+          data: {
+            action: 'UPDATE',
+            fingerprint: response,
+            metric: metric
+          }
+        })
+      })
+    },
+    getLocalString (string) {
+      // TODO elegantere oplossing
+      switch (string) {
+        case 'namePromptLong':
+          if (this.userLanguage === 'nl') {
+            return 'Geef jezelf alsjeblieft een naam korter dan 15 letters.'
+          } else {
+            return 'Please give yourself a name with less than 15 letters.'
+          }
+        case 'namePrompt':
+          if (this.userLanguage === 'nl') {
+            return 'Hoe wil je jezelf noemen?'
+          } else {
+            return 'What do you want to call yourself?'
+          }
+        default:
+          return 'Error!'
+      }
     }
   }
 }
