@@ -26,16 +26,16 @@
           .button
             a(href='#', @click='editFishNameClickHandler')
               img(src='../../assets/edit.svg', onerror="this.src='./assets/edit.png'")
-          //-fish-button(@click='editFishNameClickHandler')
-          //-a.edit(href='#', @click='editFishName') BWRK
           .species ({{ fish.species_nl }})
         .fishDate Gevangen op: {{ date }}
     .fishName(v-if='userLanguage == "en"')
       .fishWrapper
-        .name {{processedName}}
-        //- fish-button(type='edit')
-        //-a.edit(href='#', @click='editFishName') EDIT
-        .species ({{ fish.species_en }})
+        .fishText
+          .name {{processedName}}
+          .button
+            a(href='#', @click='editFishNameClickHandler')
+              img(src='../../assets/edit.svg', onerror="this.src='./assets/edit.png'")
+          .species ({{ fish.species_en }})
         .fishDate Caught on: {{ date }}
     .fishInfo(v-if='userLanguage == "nl"')
       .fishLine
@@ -118,6 +118,11 @@ export default {
         console.log('[FishDetail] Detail data attached')
         self.loading = false
         self.loaded = true
+
+        if (self.fish.image === '') {
+          console.log('[FishDetail] There seems to be no image! Fallback to error image.')
+          self.fish.image = getVirtuVisAPIUrl('fallbackImage')
+        }
 
         console.log('[FishDetail] Getting palette for image:', self.fish.image)
         let v = new Vibrant(self.fish.image)
