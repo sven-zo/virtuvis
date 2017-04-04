@@ -37,7 +37,7 @@
               img(src='../../assets/edit.svg', onerror="this.src='./assets/edit.png'")
           .species ({{ fish.species_en }})
         .fishDate Caught on: {{ date }}
-    .fishInfo(v-if='userLanguage == "nl"')
+    .fishInfo(v-if='userMetric == "cm"')
       .fishLine
         .fishInfoLeft
           p Lengte: {{ fish.length }} centimeter
@@ -46,7 +46,7 @@
           indicator(number='1')
           indicator(number='4')
       p.fishDescription {{ fish.description }}
-    .fishInfo(v-if='userLanguage == "en"')
+    .fishInfo(v-if='userMetric == "inch"')
       .fishLine
         .fishInfoLeft
           p Length: {{ fish.length }} inches
@@ -74,6 +74,7 @@ export default {
       loading: false,
       error: null,
       userLanguage: null,
+      userMetric: null,
       image: null
     }
   },
@@ -96,6 +97,7 @@ export default {
       getData('user').then(function (response) {
         console.log(' [FishDetail]Succes! (Settings)', response)
         self.userLanguage = response.language
+        self.userMetric = response.metric
         console.log('[FishDetail] Language data attached')
         console.log('[FishDetail] Language: ', self.userLanguage)
       }, function (error) {
