@@ -23,7 +23,7 @@
         p
           | {{ caughtText }}
       home-recent(@buttonState='buttonStateManager($event)', :language="userLanguage")
-      home-sortbar(@setSort='setSort($event)')
+      home-sortbar(@setSort='setSort($event)', :language="userLanguage")
       //- De opgehaalde taal wordt in :language gezet zodat het component HomeCenter weet welke taal de gebruiker gebruikt.
       home-center(@buttonState='buttonStateManager($event)', :language="userLanguage", :sortOption="userSort")
 </template>

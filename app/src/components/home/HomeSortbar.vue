@@ -2,7 +2,7 @@
 .sortbarwrapper
   transition(appear, name='page')
     .sortbar
-      .text Sorteer:
+      .text {{sortText}}
       .button
         a(href='#', @click='setSort("nameA")')
           img(src='../../assets/abc.svg', onerror="this.src='./assets/edit.png'")
@@ -29,10 +29,20 @@
 
 <script>
 export default {
+  props: ['language'],
   methods: {
     setSort (sort) {
       console.log('[HomeSortbar] Setting sort: ', sort)
       this.$emit('setSort', sort)
+    }
+  },
+  computed: {
+    sortText () {
+      if (this.language === 'nl') {
+        return 'Sorteer:'
+      } else {
+        return 'Sort:'
+      }
     }
   }
 }
