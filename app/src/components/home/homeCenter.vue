@@ -13,7 +13,7 @@
       p Foutmelding: {{ errorMessage }}
     //- Extra bericht voor als wikipedia dood is
     .wikiError(v-if='wikiError')
-      p Sorry, de plaatjes kunnen niet worden geladen!
+      p {{wikiErrorText}}
     //-
       Als de vissen geladen zijn verschijnen de FishCards.
       Er zijn twee soorten FishCards, een voor Nederlands en een voor Engels.
@@ -97,6 +97,15 @@ export default {
       console.log('[HomeCenter] Got data from {userFish}: buttonState')
       console.log('[HomeCenter] Emitting buttonState to [Home]')
       this.$emit('buttonState', data)
+    }
+  },
+  computed: {
+    wikiErrorText () {
+      if (this.language === 'nl') {
+        return 'Sorry, de plaatje kunnen niet worden geladen!'
+      } else {
+        return 'Sorry, the images cannot be loaded right now!'
+      }
     }
   },
   watch: {
