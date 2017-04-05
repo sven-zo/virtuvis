@@ -26,18 +26,18 @@
           .button
             a(href='#', @click='editFishNameClickHandler')
               img(src='../../assets/edit.svg', onerror="this.src='./assets/edit.png'")
-          //-fish-button(@click='editFishNameClickHandler')
-          //-a.edit(href='#', @click='editFishName') BWRK
           .species ({{ fish.species_nl }})
         .fishDate Gevangen op: {{ date }}
     .fishName(v-if='userLanguage == "en"')
       .fishWrapper
-        .name {{processedName}}
-        //- fish-button(type='edit')
-        //-a.edit(href='#', @click='editFishName') EDIT
-        .species ({{ fish.species_en }})
+        .fishText
+          .name {{processedName}}
+          .button
+            a(href='#', @click='editFishNameClickHandler')
+              img(src='../../assets/edit.svg', onerror="this.src='./assets/edit.png'")
+          .species ({{ fish.species_en }})
         .fishDate Caught on: {{ date }}
-    .fishInfo(v-if='userLanguage == "nl"')
+    .fishInfo(v-if='userMetric == "cm"')
       .fishLine
         .fishInfoLeft
           p Lengte: {{ fish.length }} centimeter
@@ -46,7 +46,7 @@
           indicator(number='1')
           indicator(number='4')
       p.fishDescription {{ fish.description }}
-    .fishInfo(v-if='userLanguage == "en"')
+    .fishInfo(v-if='userMetric == "inch"')
       .fishLine
         .fishInfoLeft
           p Length: {{ fish.length }} inches
@@ -74,6 +74,7 @@ export default {
       loading: false,
       error: null,
       userLanguage: null,
+      userMetric: null,
       image: null
     }
   },
@@ -96,6 +97,7 @@ export default {
       getData('user').then(function (response) {
         console.log(' [FishDetail]Succes! (Settings)', response)
         self.userLanguage = response.language
+        self.userMetric = response.metric
         console.log('[FishDetail] Language data attached')
         console.log('[FishDetail] Language: ', self.userLanguage)
       }, function (error) {
@@ -118,6 +120,11 @@ export default {
         console.log('[FishDetail] Detail data attached')
         self.loading = false
         self.loaded = true
+
+        if (self.fish.image === '') {
+          console.log('[FishDetail] There seems to be no image! Fallback to error image.')
+          self.fish.image = getVirtuVisAPIUrl('fallbackImage')
+        }
 
         console.log('[FishDetail] Getting palette for image:', self.fish.image)
         let v = new Vibrant(self.fish.image)
