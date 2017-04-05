@@ -17,20 +17,32 @@
       .bottomBar
         p  Kies je vishengel:
       .rods(v-for='rod in rods')
-        .card
-          p ID: {{rod.id}}
-          p Vishengel: {{rod.fingerprint}}
-          p In use: {{rod.in_use}}
+        .card.norod(v-if='rod.fingerprint === "false"', @click="setRod(false)")
+          p Geen vishengel
+          p(v-if='rod.in_use == userRod') Je hebt nu geen vishengel geselecteerd.
+        .card(v-else, @click="setRod(rod.fingerprint)")
+          p Dit is vishengel: {{rod.fingerprint}}
+          p(v-if='rod.in_use == userRod') Je hebt deze vishengel geslecteerd.
     .settings(v-if='userLanguage == "en"')
       .upperBar
         p  Choose a fishing rod:
       .bottomBar
         p Choose your fishing rod:
+        .rods(v-for='rod in rods')
+          .card.norod(v-if='rod.fingerprint === "false"', @click="setRod(false)")
+            p No fishing rod
+            p(v-if='rod.in_use == userRod') You haven't selected a fishing rod.
+          .card(v-else, @click="setRod(rod.fingerprint)")
+            p This is fishing rod: {{rod.fingerprint}}
+            p(v-if='rod.in_use == userRod') You have selected this fishing rod.
 </template>
 
 <script>
 // import {getUserSettings} from '../../script/userSettings.js'
 import {getData} from '../../script/getData.js'
+import {getVirtuVisAPIUrl} from '../../../secret/API-url.js'
+
+import * as reqwest from 'Reqwest'
 
 export default {
   data: function () {
@@ -41,7 +53,8 @@ export default {
       error: null,
       errorMessage: 'Failed to get error message',
       caughtText: '...',
-      rods: null
+      rods: null,
+      userRod: 'geen'
     }
   },
   /*
@@ -60,8 +73,9 @@ export default {
     getFishingRodPage () {
       var self = this
       getData('user').then(function (response) {
-        console.log('[AddRod] Succes! (Settings)', response.language)
+        console.log('[AddRod] Succes! (Settings)', response)
         self.userLanguage = response.language
+        self.userRod = response.rod
         console.log('[AddRod] Language data attached')
         console.log('[AddRod] Language: ', self.userLanguage)
       }, function (error) {
@@ -80,6 +94,21 @@ export default {
         console.log('[AddRod] Failed! (Rodlist)', error)
         self.loading = false
         self.error = true
+      })
+    },
+    setRod (rodFingerprint) {
+      console.log('[AddRod] Click!')
+      getData('fingerprint').then(function (response) {
+        reqwest({
+          url: getVirtuVisAPIUrl('user'),
+          contentType: 'application/json',
+          crossOrigin: true,
+          data: {
+            action: 'UPDATE',
+            user: response,
+            rod: rodFingerprint
+          }
+        })
       })
     }
   }

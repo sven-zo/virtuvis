@@ -4,7 +4,7 @@ import Fingerprint2 from 'fingerprintjs2'
 import {getVirtuVisAPIUrl} from '../../secret/API-url.js'
 
 var fingerprint
-var debugMode = true
+var debugMode = false
 
 export function getData (source) {
   switch (source) {
