@@ -28,8 +28,10 @@ $json = '';
 if(isset($_GET['action']) && $_GET['action'] === 'CREATE' && isset($_GET['rod']) && !empty($_GET['rod'])) {
     $fingerprint = mysqli_real_escape_string($db->getConnection(), $_GET['rod']);
 
+    $result = $db->selectAllWhere('users','rod_id', 1);
+    $userId = $result[0]['id'];
 
-    $fish = new Fish( false, $db);
+    $fish = new Fish( false, $db, $userId);
     header('HTTP/1.1 200 OK');
 
     //var_dump();
@@ -59,7 +61,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
 
         //Array with all right sort values
         $sortColumn = ['date DESC', 'date ASC', 'species_' . $user->getLanguage() . ' DESC', 'species_' . $user->getLanguage() . ' ASC',
-            'caught_by_user.name DESC', 'caught_by_user.name ASC', 'caught_by_user.favorite'];
+            'caught_by_user.name DESC', 'caught_by_user.name ASC', 'caught_by_user.favorite DESC'];
 
         //check if the correct value isset
         $sortCheck = false;
@@ -98,18 +100,18 @@ if(isset($_GET['action']) && $_GET['action'] === 'LIST' && isset($_GET['user']) 
     }
 
     //Get the image form the wiki api
-    for ($i = 0; $i < count($fishList); $i++){
-        $wiki = new Wiki('en');
-        $image = $wiki->getImage($fishList[$i]['species_en']);
-        $fishList[$i]['image'] = $image;
-    }
-
-    //Get description from wiki api
-    for ($i = 0; $i < count($fishList); $i++){
-        $wiki = new Wiki($user->getLanguage());
-        $text = $wiki->getDescription($fishList[$i]['species_'.$user->getLanguage()]);
-        $fishList[$i]['description'] = $text;
-    }
+//    for ($i = 0; $i < count($fishList); $i++){
+//        $wiki = new Wiki('en');
+//        $image = $wiki->getImage($fishList[$i]['species_en']);
+//        $fishList[$i]['image'] = $image;
+//    }
+//
+//    //Get description from wiki api
+//    for ($i = 0; $i < count($fishList); $i++){
+//        $wiki = new Wiki($user->getLanguage());
+//        $text = $wiki->getDescription($fishList[$i]['species_'.$user->getLanguage()]);
+//        $fishList[$i]['description'] = $text;
+//    }
 
     $data = [
         'fish' => $fishList

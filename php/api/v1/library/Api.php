@@ -17,6 +17,7 @@ abstract class Api
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'VirtuVisAPI/1.0 (http://imanidap.nl/virtuvis; contact@imanidap.nl)');
 
         $data = curl_exec($ch);
         $returnCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

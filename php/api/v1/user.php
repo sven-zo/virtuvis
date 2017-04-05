@@ -73,6 +73,7 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
  *
  * @since v1
  */
+
 if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']) && !empty($_GET['user']) && isset($_GET['language'])
     && !empty($_GET['language'])) {
 
@@ -103,12 +104,6 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     header('HTTP/1.1 200 OK empty return');
 
 }
-
-//else {
-//
-//    echo 'Error: make sure you entered all required parameters';
-//    header('HTTP/1.1 400 Missing required parameters');
-//}
 
 
 /**
@@ -148,6 +143,67 @@ if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']
     $user->setMetric($metricId);
 
     header('HTTP/1.1 200 OK empty return');
+
+    //Echo the new object
+    $json = [
+        'id' => $user->getId(),
+        'name' => $user->getName(),
+        'language' => $user->getLanguage(),
+        'metric' => $user->getMetric(),
+        'rod' => $user->getRod()
+    ];
+
+    echo json_encode($json);
+
+}
+
+/**
+ * UPDATE rod
+ *
+ * Change the rod a user is holding from a specific user from the database
+ * @required action & user & rod
+ *
+ * @since v1
+ */
+
+if(isset($_GET['action']) && $_GET['action'] === 'UPDATE' && isset($_GET['user']) && !empty($_GET['user']) && isset($_GET['rod'])
+    && !empty($_GET['rod'])) {
+
+    $user = mysqli_real_escape_string($db->getConnection(), $_GET['user']);
+    $rod = mysqli_real_escape_string($db->getConnection(), $_GET['rod']);
+    $rodList = $db->selectAll('rods');
+
+    $rodCheck = false;
+    $rodId = false;
+
+    for($i = 0; $i < count($rodList); $i++){
+        if($rodList[$i]['fingerprint'] === $rod){
+            $rodCheck = true;
+            $rodId = $rodList[$i]['id'];
+            break;
+        }
+    }
+
+    if(!$rodCheck){
+        echo 'Error: incorrect values have been given';
+        header('HTTP/1.1 404 Not Found');
+        exit;
+    }
+
+    $user = new User($user, $db);
+    $user->setRod($rodId);
+
+    $json = [
+        'id' => $user->getId(),
+        'name' => $user->getName(),
+        'language' => $user->getLanguage(),
+        'metric' => $user->getMetric(),
+        'rod' => $user->getRod()
+    ];
+
+    header('HTTP/1.1 200 OK empty return');
+
+    echo json_encode($json);
 
 }
 

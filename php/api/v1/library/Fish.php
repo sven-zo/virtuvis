@@ -3,7 +3,7 @@
 /**
  * Fish Class
  * This class is written to speed up the process of retrieving fish related information from the database,
- * redering new fish information and combining fish information.
+ * rendering new fish information and combining fish information.
  */
 
 class Fish
@@ -22,13 +22,13 @@ class Fish
     private $special;
     private $db;
 
-    public function __construct( $id = false, $db)
+    public function __construct( $id = false, $db, $userId = false)
     {
         $this->db = $db;
 
         if(!$id){
             //make fish
-            $this->renderSpecies();
+            $this->renderSpecies($userId);
 
         } else {
 
@@ -222,7 +222,7 @@ class Fish
         $this->favorite = $favorite;
     }
 
-    private function renderSpecies()
+    private function renderSpecies($userId)
     {
         $db = $this->db;
         $species = '';
@@ -255,7 +255,7 @@ class Fish
         $length = $this->randomLength($species);
         $id = md5(time());
         $columns = ['id', 'user_id', 'species_id', 'name', 'weight', 'length', 'date', 'favorite'];
-        $values = [$id, 3, $species, $name, $weight, $length, time(), 0];
+        $values = [$id, $userId, $species, $name, $weight, $length, time(), 0];
 
         $db->insert('caught_by_user', $columns, $values);
 

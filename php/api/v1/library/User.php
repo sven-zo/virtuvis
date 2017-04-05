@@ -171,6 +171,16 @@ class User
     }
 
     /**
+     * @param $rodId
+     */
+    public function setRod($rodId){
+        $db = $this->db;
+        $db->update('users', 'rod_id', $rodId, 'id', $this->getId());
+
+        $this->rod = $rodId;
+    }
+
+    /**
      * addUser method
      * Adds user to the database
      * @param $fingerprint
