@@ -16,8 +16,11 @@
         p  Vishengel kiezen:
       .bottomBar
         p  Kies je vishengel:
-      .debug
-        p {{rods}}
+      .rods(v-for='rod in rods')
+        .card
+          p ID: {{rod.id}}
+          p Vishengel: {{rod.fingerprint}}
+          p In use: {{rod.in_use}}
     .settings(v-if='userLanguage == "en"')
       .upperBar
         p  Choose a fishing rod:
@@ -134,4 +137,8 @@ h1
 
 .loading-enter
   opacity: 0
+
+.card
+  background-color: blue
+  color: white
 </style>
