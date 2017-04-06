@@ -145,9 +145,15 @@ function sendPing(){
             success: sendPingSuccessHandler,
             error: sendPingErrorHandler
         });
+
+        var audio = new Audio('Audio/vis1.mp3');
+        audio.play();
+
         setTimeOut = true;
     }
 }
+
+
 
 /**
  * Callback after success sendPing
