@@ -9,31 +9,44 @@
       .settings(v-if="userLanguage === 'nl'")
         .upperBar
           p  Instellingen:
-        p Huidige gebruikersnaam: {{userName}}
-        a(href='#') Wijzig gebruikernaam
-        p Huidig metrisch stelsel: {{userMetric}}
-        a(href='#') Gebruik centimeters en kilo
-        br
-        a(href='#') Gebruik inches en pounds
-        p Language: {{userLanguage}}
-        p Waarschuwing! Herstart alsjeblieft de app na het zetten van een taal!
-        a(href='#', @click='setUserLanguage("nl")') Zet taal naar Nederlands
-        br
-        a(href='#', @click='setUserLanguage("en")') Zet taal naar Engels / Switch language to English
+        .text
+          p Huidige gebruikersnaam: {{userName}}
+          a(href='#') Wijzig gebruikernaam
+          p Huidig metrisch stelsel: {{userMetric}}
+          a(href='#') Gebruik centimeters en kilo
+          br
+          a(href='#') Gebruik inches en pounds
+          p Language: {{userLanguage}}
+          p Waarschuwing! Herstart alsjeblieft de app na het zetten van een taal!
+          a(href='#', @click='setUserLanguage("nl")') Zet taal naar Nederlands
+          br
+          a(href='#', @click='setUserLanguage("en")') Zet taal naar Engels / Switch language to English
       .settings(v-if="userLanguage === 'en'")
         .upperBar
           p  Settings:
-        p Current username: {{userName}}
-        a(href='#', @click='setUserName()') Change username
-        p Current metric system: {{userMetric}}
-        a(href='#', @click='setUserMetric("cm")') Use centimeters and kilo
-        br
-        a(href='#', @click='setUserMetric("inch")') Use inches and pounds
-        p Language: {{userLanguage}}
-        p Warning! Please restart the app after selecting a new language!
-        a(href='#', @click='setUserLanguage("nl")') Switch language to Dutch / Zet taal naar Nederlands
-        br
-        a(href='#', @click='setUserLanguage("en")') Switch language to English
+        .text
+          p Current username: {{userName}}
+          a(href='#', @click='setUserName()') Change username
+          p Current metric system: {{userMetric}}
+          a(href='#', @click='setUserMetric("cm")') Use centimeters and kilo
+          br
+          a(href='#', @click='setUserMetric("inch")') Use inches and pounds
+          p Language: {{userLanguage}}
+          p Warning! Please restart the app after selecting a new language!
+          a(href='#', @click='setUserLanguage("nl")') Switch language to Dutch / Zet taal naar Nederlands
+          br
+          a(href='#', @click='setUserLanguage("en")') Switch language to English
+  .credits
+    .text
+      br
+      br
+      p Credits:
+      p VirtuVis API: Imani Dap
+      p VirtuVision: Budi Han
+      p VirtuVijver: Emma van Klinken
+      p VirtuVis APP: Sven Hoffmann
+      br
+      p Special thanks aan iedereen die ons lief is <3
 </template>
 
 <script>
@@ -168,6 +181,9 @@ export default {
 @import '../../style/palette.sass'
 @import url('https://fonts.googleapis.com/css?family=Roboto')
 
+.text
+  padding-left: 10px
+
 .upperBar
   background-color: $primary-color-dark
   //height: 5vw
@@ -201,4 +217,8 @@ p
 
 .loading-enter
   opacity: 0
+
+.credits
+  color: grey
+  font-size: 80%
 </style>
