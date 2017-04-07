@@ -7,6 +7,7 @@ npm-debug.log
 yarn-error.log
 npm-debug.log
 .idea/
+php/settings.php
 
 # Secret API url's
 
