@@ -16,6 +16,7 @@
         p  Vishengel kiezen:
       .bottomBar
         p  Kies je vishengel:
+      p.info Deze vishengel heb je geselecteerd: {{userRod}}
       .rods(v-for='rod in rods')
         .card.norod(v-if='rod.fingerprint === "false"', @click="setRod(false)")
           p Geen vishengel
@@ -28,6 +29,7 @@
         p  Choose a fishing rod:
       .bottomBar
         p Choose your fishing rod:
+      p Deze vishengel heb je geselecteerd {{userRod}}
         .rods(v-for='rod in rods')
           .card.norod(v-if='rod.fingerprint === "false"', @click="setRod(false)")
             p No fishing rod
@@ -147,6 +149,10 @@ export default {
   padding-top: 4px
   font-family: 'Roboto', sans-serif
   font-size: 18px
+
+p.info
+  font-family: 'Roboto', sans-serif
+  text-align: center
 
 h1
   color: $primary-color
