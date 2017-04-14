@@ -14,20 +14,20 @@ var setTimeOut = false;
  * Send http request if the color green is detected inside the color box of yellow, cyan and magenta
  */
 function init(){
-    //Cam connection
+    //Handles webcam connection
     getCamConnection();
 
     var cam = document.getElementById('cam');
     canvas = document.getElementById('canvas');
     context = canvas.getContext('2d');
 
-    //register additional colors
+    //register additional colors to be tracked
     registerColors();
 
     //create colortracker, tracks Yellow, cyan, magneta (tracking.js) and green
-    tracker = new tracking.ColorTracker(['yellow', 'magenta']);
+    tracker = new tracking.ColorTracker(['yellow', 'magenta', 'green']);
 
-    //track color
+    //start tracking colour of connected webcam
     trackColor();
 
 }
@@ -65,10 +65,11 @@ function videoError(e) {
 }
 
 /**
- * register colors to be tracked
+ * register additional colors to be tracked
  */
 function registerColors() {
     tracking.ColorTracker.registerColor('green', function (r, g, b) {
+        //green values on RGB color model, pure green (0,255,0)
         if (r < 60 && g > 110 && b < 60) {
             return true;
         }
@@ -81,13 +82,15 @@ function registerColors() {
  */
 function trackColor(){
 
+    //connect tracker with video footage
     tracking.track('#cam', tracker, {camera: true});
 
+    //start event track, tracks the colors
     tracker.on('track', function(event) {
         //reset rect
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        //for each color draw rectangle
+        //for each event draw rectangle
         event.data.forEach(function (rect) {
 
             //if yellow detected, save the coordinates
@@ -96,10 +99,10 @@ function trackColor(){
                 cYtemp = rect.y;
             }
 
-            //get color
+            //get color of event
             context.strokeStyle = rect.color;
 
-            //draw rectangle
+            //draw rectangle for event
             context.strokeRect(rect.x, rect.y, rect.width, rect.height);
 
             //data of rect: font, color, position
@@ -146,9 +149,6 @@ function sendPing(){
             error: sendPingErrorHandler
         });
 
-        var audio = new Audio('Audio/vis1.mp3');
-        audio.play();
-
         setTimeOut = true;
     }
 }
@@ -160,6 +160,10 @@ function sendPing(){
  * @param data
  */
 function sendPingSuccessHandler(data) {
+    //play audio feedback after success
+    var audio = new Audio('Audio/vis1.mp3');
+    audio.play();
+    
     console.log('send ping');
     console.log(data);
 }
@@ -170,4 +174,5 @@ function sendPingSuccessHandler(data) {
  */
 function sendPingErrorHandler(data) {
     console.log('error trying to send ping, check server');
+    console.log(data);
 }
