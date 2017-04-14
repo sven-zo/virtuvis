@@ -163,7 +163,7 @@ function sendPingSuccessHandler(data) {
     //play audio feedback after success
     var audio = new Audio('Audio/vis1.mp3');
     audio.play();
-    
+
     console.log('send ping');
     console.log(data);
 }
